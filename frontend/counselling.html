@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Wellness & Counselling - Vima Sneha</title>
-    <link rel="icon" type="image/png" href="assets/images/logo.png"/>
-    
+    <link rel="icon" type="image/png" href="assets/images/logo.png" />
+    <link rel="shortcut icon" type="image/png" href="assets/images/logo.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo.png" />
+
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link href="assets/css/layout-shared.css?v=20260420-2" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,800&family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="assets/css/layout-shared.css?v=20260424-1" rel="stylesheet" />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: { DEFAULT: '#B47FA6', light: '#C9A0BB', dark: '#7A4F72' },
-              secondary: { DEFAULT: '#D4A853', light: '#F0D08A', dark: '#A6823D' },
-              surface: { DEFAULT: '#FAF5F9', dark: '#141214' }
-            },
-            fontFamily: { sans: ['"Plus Jakarta Sans"', 'Manrope', 'sans-serif'] },
-            borderRadius: { '2xl': '1.5rem', '3xl': '2rem', '4xl': '3rem' }
-          }
-        }
-      };
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#B47FA6', light: '#C9A0BB', dark: '#7A4F72' },
+                        secondary: { DEFAULT: '#D4A853', light: '#F0D08A', dark: '#A6823D' },
+                        surface: { DEFAULT: '#FAF5F9', dark: '#141214' }
+                    },
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'Manrope', 'sans-serif'] },
+                    borderRadius: { '2xl': '1.5rem', '3xl': '2rem', '4xl': '3rem' }
+                }
+            }
+        };
     </script>
-    
+
     <style type="text/tailwindcss">
-      @layer base {
+        @layer base {
         body { @apply bg-surface text-slate-800 font-sans selection:bg-primary/30 selection:text-primary-dark overflow-x-hidden; }
       }
       @layer components {
@@ -41,28 +47,330 @@
         .section-padding { @apply py-24 px-6 md:px-12 lg:px-24; }
       }
 
-      /* Infinite Scroll Marquee */
-      @keyframes scrollX {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
+      /* ── Mobile Expertise Carousel ── */
+      .expertise-carousel-wrapper { position: relative; }
+
+      /* Desktop: plain grid, hide accordion controls on large screens */
+      @media (min-width: 768px) {
+        .expertise-grid {
+          display: grid !important;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+        .expertise-accordion { display: none !important; }
       }
 
-      /* Mobile Horizontal Scroll overrides */
+      /* Mobile: Accordion Styles */
       @media (max-width: 767px) {
-        .mobile-products-track {
-          display: flex !important;
-          flex-direction: row !important;
-          width: max-content !important;
-          animation: scrollX 30s linear infinite;
-        }
-        .mobile-products-track:hover {
-          animation-play-state: paused;
-        }
-        .mobile-product-card {
-          width: 85vw !important;
-          flex-shrink: 0 !important;
-        }
+        .expertise-grid { display: none !important; }
+        .expertise-accordion { display: block !important; }
       }
+
+      .expertise-acc-item {
+        border: 1px solid rgba(180, 127, 166, 0.15);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.5);
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        overflow: hidden;
+      }
+      .expertise-acc-item.active {
+        background: #fff;
+        border-color: rgba(180, 127, 166, 0.3);
+        box-shadow: 0 20px 40px -12px rgba(180, 127, 166, 0.12);
+      }
+      .expertise-acc-header {
+        padding: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        cursor: pointer;
+      }
+      .expertise-acc-icon {
+        width: 48px; height: 48px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center; justify-content: center;
+        transition: all 0.3s ease;
+      }
+      .expertise-acc-item.active .expertise-acc-icon { transform: scale(1.1); }
+      
+      .expertise-acc-content {
+        max-height: 0;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .expertise-acc-item.active .expertise-acc-content {
+        max-height: 500px;
+        opacity: 1;
+        padding: 0 1.25rem 1.5rem 5.25rem; /* Aligned with title */
+      }
+      .expertise-acc-chevron {
+        margin-left: auto;
+        color: #7A4F72;
+        transition: transform 0.4s ease;
+      }
+      .expertise-acc-item.active .expertise-acc-chevron { transform: rotate(180deg); }
+
+      /* Card shine on hover */
+      .expertise-card {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s ease;
+      }
+      .expertise-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -8px rgba(180,127,166,0.18); }
+      .expertise-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+        opacity: 0;
+        transition: opacity 0.4s;
+        border-radius: inherit;
+        pointer-events: none;
+      }
+      .expertise-card:hover::before { opacity: 1; }
+
+      /* Dot indicators */
+      .expertise-dot {
+        width: 8px; height: 8px;
+        border-radius: 9999px;
+        background: rgba(180,127,166,0.25);
+        transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+        cursor: pointer;
+      }
+      .expertise-dot.active {
+        background: #B47FA6;
+        width: 24px;
+      }
+
+      /* Nav buttons */
+      .expertise-nav-btn {
+        width: 42px; height: 42px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.85);
+        backdrop-filter: blur(8px);
+        border: 1.5px solid rgba(180,127,166,0.2);
+        box-shadow: 0 4px 16px rgba(180,127,166,0.12);
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        color: #7A4F72;
+      }
+      .expertise-nav-btn:hover {
+        background: #B47FA6;
+        color: white;
+        border-color: #B47FA6;
+        transform: scale(1.08);
+      }
+      .expertise-nav-btn:active { transform: scale(0.95); }
+      .expertise-nav-btn:disabled { opacity: 0.3; cursor: default; transform: none; }
+
+      /* Scroll Reveal Animations */
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform, opacity;
+      }
+      .reveal-on-scroll.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-100 { transition-delay: 0.1s; }
+      .reveal-delay-200 { transition-delay: 0.2s; }
+      .reveal-delay-300 { transition-delay: 0.3s; }
+      .reveal-delay-400 { transition-delay: 0.4s; }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+            window.scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => window.scrollObserver.observe(el));
+        });
+
+        function openContactModal(svc) {
+            const modal = document.getElementById('contactModal');
+            const title = document.getElementById('modal-title');
+            const desc = document.getElementById('modal-desc');
+            const btnText = document.getElementById('modal-submit-text');
+            const badge = document.getElementById('modal-badge-text');
+            const badgeIcon = document.getElementById('modal-badge-icon');
+            const form = document.getElementById('modal-form');
+            const success = document.getElementById('modal-success');
+
+            modal.dataset.svc = svc;
+            form.classList.remove('hidden');
+            success.classList.add('hidden');
+
+            if (svc === 'virtual') {
+                badge.textContent = 'Booking Inquiry';
+                badgeIcon.textContent = 'calendar_today';
+                title.textContent = 'Book Virtual Session';
+                desc.textContent = "Fill in your details to schedule a secure HD video consultation from your home.";
+                btnText.textContent = 'Request Session';
+            } else if (svc === 'chat') {
+                badge.textContent = 'Instant Support';
+                badgeIcon.textContent = 'chat_bubble';
+                title.textContent = 'Start Real-time Chat';
+                desc.textContent = "Connect with us on WhatsApp for asynchronous or live text therapy sessions.";
+                btnText.textContent = 'Initialize Chat';
+            } else if (svc === 'clinic') {
+                badge.textContent = 'Clinic Visit';
+                badgeIcon.textContent = 'home_pin';
+                title.textContent = 'Find a Clinic';
+                desc.textContent = "Leave your location preference and we'll help you find the nearest sensory-designed clinic.";
+                btnText.textContent = 'Find Nearby Clinic';
+            } else {
+                badge.textContent = 'Inquiry';
+                badgeIcon.textContent = 'mail';
+                title.textContent = 'Book Your Session';
+                desc.textContent = "Our experts are here to help. Send us a message to start your wellness journey.";
+                btnText.textContent = 'Send Message';
+            }
+
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeContactModal() {
+            const modal = document.getElementById('contactModal');
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function handleModalSubmit(e) {
+            e.preventDefault();
+            const modal = document.getElementById('contactModal');
+            const form = document.getElementById('modal-form');
+            const success = document.getElementById('modal-success');
+            
+            const name = document.getElementById('modal-name').value;
+            const phone = document.getElementById('modal-phone').value;
+            const msg = document.getElementById('modal-message').value;
+            const svc = modal.dataset.svc || 'general';
+            
+            form.classList.add('hidden');
+            success.classList.remove('hidden');
+            
+            const waNum = '919972875970';
+            let svcText = 'Virtual Counselling Session';
+            if(svc === 'chat') svcText = 'Real-time Chat Therapy';
+            if(svc === 'clinic') svcText = 'In-Person Clinic Appointment';
+            
+            const text = encodeURIComponent(`Hi! I'm ${name} (${phone}). I'm interested in: ${svcText}. ${msg}`);
+            
+            setTimeout(() => {
+                window.open(`https://wa.me/${waNum}?text=${text}`, '_blank');
+                closeContactModal();
+                setTimeout(() => { form.reset(); }, 500);
+            }, 1500);
+        }
+
+        /* ── Floating Chat Logic ── */
+        function toggleChat() {
+            const window = document.getElementById('chat-window');
+            const bubble = document.getElementById('chat-bubble');
+            window.classList.toggle('hidden');
+            window.classList.toggle('chat-open');
+            if (!window.classList.contains('hidden')) {
+                // Initial message trigger if empty
+                const container = document.getElementById('chat-messages');
+                if (container.children.length === 0) {
+                    setTimeout(() => addChatMessage('bot', "Hi there! I'm Mildred. How are you feeling today? I'm here to listen."), 600);
+                }
+            }
+        }
+
+        function addChatMessage(type, text) {
+            const container = document.getElementById('chat-messages');
+            const msg = document.createElement('div');
+            msg.className = `flex ${type === 'user' ? 'justify-end' : 'justify-start'} animate-modal-in`;
+            
+            const inner = document.createElement('div');
+            inner.className = `max-w-[80%] px-4 py-2.5 rounded-2xl text-sm font-medium ${
+                type === 'user' 
+                ? 'bg-primary text-white rounded-tr-none' 
+                : 'bg-white/80 text-slate-700 rounded-tl-none border border-primary/10 shadow-sm'
+            }`;
+            inner.textContent = text;
+            
+            msg.appendChild(inner);
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+
+            if (type === 'user') {
+                showTypingIndicator();
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    addChatMessage('bot', "Thank you for sharing that. Your well-being is my priority. Would you like to book a quick session to talk more deeply?");
+                    setTimeout(() => {
+                        const btnMsg = document.createElement('div');
+                        btnMsg.className = 'flex justify-start animate-modal-in mt-2';
+                        btnMsg.innerHTML = `<button onclick="openContactModal('chat'); toggleChat();" class="text-xs font-bold text-primary bg-primary/10 px-4 py-2 rounded-full hover:bg-primary hover:text-white transition-all">Yes, let's talk</button>`;
+                        container.appendChild(btnMsg);
+                        container.scrollTop = container.scrollHeight;
+                    }, 800);
+                }, 2000);
+            }
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('chat-typing').classList.remove('hidden');
+            const container = document.getElementById('chat-messages');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('chat-typing').classList.add('hidden');
+        }
+
+        function sendChat() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+            addChatMessage('user', text);
+            input.value = '';
+        }
+    </script>
+    <style>
+        @keyframes modal-in {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-modal-in { animation: modal-in 0.4s cubic-bezier(0.23, 1, 0.32, 1) both; }
+
+        /* Floating Chat Styles */
+        #chat-bubble {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 2500;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #chat-bubble:hover { transform: scale(1.1) rotate(5deg); }
+        
+        .chat-open { animation: chat-window-in 0.5s cubic-bezier(0.23, 1, 0.32, 1) both; }
+        @keyframes chat-window-in {
+            from { opacity: 0; transform: translateY(40px) scale(0.9); transform-origin: bottom right; }
+            to { opacity: 1; transform: translateY(0) scale(1); transform-origin: bottom right; }
+        }
+
+        .dot-pulsate {
+            animation: dot-pulsate 2s infinite;
+        }
+        @keyframes dot-pulsate {
+            0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+        }
     </style>
 </head>
 
@@ -71,7 +379,7 @@
     <!-- Navbar Root (JS Mount) -->
     <div id="site-navbar-root"></div>
     <script src="assets/js/icons.js"></script>
-    <script src="assets/js/navbar.js?v=20260420-3"></script>
+    <script src="assets/js/navbar.js?v=20260424-1"></script>
 
     <!-- AURORA MESH -->
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -79,27 +387,33 @@
         <div class="absolute bottom-1/4 right-0 w-80 h-80 bg-secondary/5 rounded-full blur-[120px]"></div>
     </div>
 
-    <main class="pt-20 pb-32 md:pb-24 scroll-smooth">
-        
+    <main class="pt-20 lg:pt-32 pb-32 md:pb-24 scroll-smooth">
+
         <!-- Counselling Hero -->
-        <section class="section-padding !pt-4 lg:!pt-24 flex flex-col lg:flex-row items-center lg:items-center gap-10 lg:gap-16 min-h-[50vh] lg:min-h-[85vh]">
+        <section
+            class="section-padding reveal-on-scroll !pt-4 lg:!pt-16 flex flex-col lg:flex-row items-center lg:items-center gap-10 lg:gap-16 min-h-[50vh] lg:min-h-[85vh]">
             <div class="max-w-2xl space-y-8 text-center lg:text-left">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-primary-dark font-bold text-sm uppercase tracking-widest">
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-primary-dark font-bold text-sm uppercase tracking-widest">
                     <span class="material-symbols-outlined !text-sm">Psychology</span>
                     Mental Wellness
                 </div>
                 <h1 class="text-5xl lg:text-8xl font-extrabold text-slate-900 leading-[1.1]">
-                    Professional <br/><span class="text-primary italic underline decoration-primary/20 decoration-8">Counselling</span>
+                    Professional <br /><span
+                        class="text-primary italic underline decoration-primary/20 decoration-8">Counselling</span>
                 </h1>
                 <p class="text-lg lg:text-xl text-slate-500 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
-                    Safe, confidential, and compassionate mental health support designed for students, families, and individuals navigating life's challenges.
+                    Safe, confidential, and compassionate mental health support designed for students, families, and
+                    individuals navigating life's challenges.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-                    <button onclick="document.getElementById('counsellors')?.scrollIntoView({behavior:'smooth'})" class="btn-primary-premium w-full sm:w-auto">
+                    <button onclick="document.getElementById('counsellors')?.scrollIntoView({behavior:'smooth'})"
+                        class="btn-primary-premium w-full sm:w-auto">
                         Meet Our Experts
                     </button>
                     <a href="tel:+919972875970" class="flex items-center gap-3 font-extrabold text-slate-900 group">
-                        <span class="w-12 h-12 rounded-2xl bg-white shadow-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+                        <span
+                            class="w-12 h-12 rounded-2xl bg-white shadow-lg flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
                             <span class="material-symbols-outlined">call</span>
                         </span>
                         Call Now
@@ -109,271 +423,668 @@
 
             <!-- Decorative Image -->
             <div class="flex-grow w-full max-w-xl relative group">
-                <div class="absolute inset-0 bg-primary/20 blur-3xl rounded-[4rem] group-hover:bg-primary/30 transition-all duration-700"></div>
-                <div class="relative glass rounded-[3rem] p-4 overflow-hidden shadow-2xl rotate-2 group-hover:rotate-0 transition-transform duration-700">
-                    <img src="assets/images/hero-counselling-premium.png" class="w-full h-auto rounded-[2.5rem] shadow-xl" alt="Counselling Session">
-                    <div class="absolute bottom-8 left-8 right-8 glass p-6 rounded-3xl translate-y-4 group-hover:translate-y-0 transition-all">
-                        <p class="font-extrabold text-primary-dark text-center uppercase tracking-widest text-xs">Confidential & Supportive</p>
+                <div
+                    class="absolute inset-0 bg-primary/20 blur-3xl rounded-[4rem] group-hover:bg-primary/30 transition-all duration-700">
+                </div>
+                <div
+                    class="relative glass rounded-[3rem] p-4 overflow-hidden shadow-2xl rotate-2 group-hover:rotate-0 transition-transform duration-700">
+                    <img src="assets/images/hero-counselling-premium.png"
+                        class="w-full h-auto rounded-[2.5rem] shadow-xl" alt="Counselling Session">
+                    <div
+                        class="absolute bottom-8 left-8 right-8 glass p-6 rounded-3xl translate-y-4 group-hover:translate-y-0 transition-all">
+                        <p class="font-extrabold text-primary-dark text-center uppercase tracking-widest text-xs">
+                            Confidential & Supportive</p>
                     </div>
                 </div>
             </div>
         </section>
 
-            <!-- Counselling Medium Cards Section (Integrated from index.html) -->
-            <section class="section-padding max-w-7xl mx-auto">
-                <!-- Section Header -->
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-                    <div>
-                        <h2 class="text-3xl font-bold tracking-tight text-primary-dark mb-2">Counselling, Your Way</h2>
-                        <p class="text-slate-500 font-medium">Choose the medium that resonates with your comfort.</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="px-4 py-2 rounded-full border border-primary/20 text-sm font-semibold text-primary cursor-pointer hover:bg-white/60 transition-colors">
-                            View All Options
-                        </span>
-                    </div>
+        <!-- Counselling Medium Cards Section (Integrated from index.html) -->
+        <section id="mediums" class="section-padding max-w-7xl mx-auto">
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight text-primary-dark mb-2">Counselling, Your Way</h2>
+                    <p class="text-slate-500 font-medium">Choose the medium that resonates with your comfort.</p>
                 </div>
-
-                <!-- Glassmorphic Cards Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- In-Person Card -->
-                    <div class="group relative p-8 rounded-3xl glass hover:bg-white/80 transition-all duration-500 flex flex-col h-full">
-                        <div class="mb-12">
-                            <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined !text-3xl">home_pin</span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-4">In-Person</h3>
-                            <p class="text-slate-500 leading-relaxed mb-6">
-                                Traditional face-to-face sessions in our boutique, sensory-designed clinics for deep therapeutic connection.
-                            </p>
-                            <ul class="space-y-3">
-                                <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
-                                    <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                    Sensory-calm environments
-                                </li>
-                                <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
-                                    <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                    Premium lounge access
-                                </li>
-                            </ul>
-                        </div>
-                        <button class="mt-auto w-full py-4 rounded-xl bg-gradient-to-br from-primary to-primary-dark text-white font-bold tracking-wide shadow-lg shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all">
-                            Find a Clinic
-                        </button>
-                    </div>
-
-                    <!-- Online Video Card -->
-                    <div class="group relative p-8 rounded-3xl glass hover:bg-white/80 transition-all duration-500 flex flex-col h-full">
-                        <div class="mb-12">
-                            <div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary mb-6 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined !text-3xl">videocam</span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-4">Online Video</h3>
-                            <p class="text-slate-500 leading-relaxed mb-6">
-                                Secure, HD video consultations from the privacy of your home. High-trust encrypted platform for ultimate peace of mind.
-                            </p>
-                            <ul class="space-y-3">
-                                <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
-                                    <span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
-                                    Military-grade encryption
-                                </li>
-                                <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
-                                    <span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
-                                    Flexible scheduling 24/7
-                                </li>
-                            </ul>
-                        </div>
-                        <button class="mt-auto w-full py-4 rounded-xl bg-gradient-to-br from-secondary to-secondary-dark text-white font-bold tracking-wide shadow-lg shadow-secondary/20 hover:brightness-110 active:scale-[0.98] transition-all">
-                            Start Virtual Session
-                        </button>
-                    </div>
-
-                    <!-- Real-time Chat Card -->
-                    <div class="group relative p-8 rounded-3xl glass hover:bg-white/80 transition-all duration-500 flex flex-col h-full">
-                        <div class="mb-12">
-                            <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined !text-3xl">chat_bubble</span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-4">Real-time Chat</h3>
-                            <p class="text-slate-500 leading-relaxed mb-6">
-                                Asynchronous or live text therapy for those who express themselves best through the written word.
-                            </p>
-                            <ul class="space-y-3">
-                                <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
-                                    <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                    Unlimited messaging
-                                </li>
-                                <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
-                                    <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                    Expert therapist response
-                                </li>
-                            </ul>
-                        </div>
-                        <button class="mt-auto w-full py-4 rounded-xl bg-gradient-to-br from-primary to-primary-dark text-white font-bold tracking-wide shadow-lg shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all">
-                            Open Chatroom
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-
-        <!-- Specialized Services Grid -->
-        <section class="section-padding bg-white relative rounded-[3rem] lg:rounded-[6rem] mx-4 lg:mx-8 mb-24">
-            <div class="text-center mb-20 space-y-4">
-                <h2 class="text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight">Our Areas of <span class="text-secondary italic">Expertise</span></h2>
-            </div>
-
-            <div class="relative overflow-hidden -mx-4 px-4 lg:mx-0 lg:px-0"> 
-                <div class="mobile-products-track grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Original Items -->
-                    <div class="mobile-product-card glass p-10 rounded-4xl hover:-translate-y-2 transition-all duration-500 border-none flex flex-col gap-6">
-                        <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">school</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Exam Stress & Peer Pressure</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Navigate academic challenges and social environments with tailored resilience strategies.</p>
-                    </div>
-
-                    <div class="mobile-product-card glass p-10 rounded-4xl hover:-translate-y-2 transition-all duration-500 border-none flex flex-col gap-6">
-                        <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">sentiment_dissatisfied</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Anxiety & Depression</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Evidence-based therapeutic interventions to help manage and overcome emotional struggles.</p>
-                    </div>
-
-                    <div class="mobile-product-card glass p-10 rounded-4xl hover:-translate-y-2 transition-all duration-500 border-none flex flex-col gap-6">
-                        <div class="w-16 h-16 rounded-3xl bg-slate-900 text-white flex items-center justify-center shadow-xl shadow-slate-900/20">
-                            <span class="material-symbols-outlined !text-3xl">psychology_alt</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Hypnotherapy</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Harness the power of the subconscious for breakthrough behavioral and emotional healing.</p>
-                    </div>
-
-                    <div class="mobile-product-card glass p-10 rounded-4xl hover:-translate-y-2 transition-all duration-500 border-none flex flex-col gap-6">
-                        <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">family_restroom</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Family Dynamics</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Repairing relationships and improving communication within families for a harmonious home.</p>
-                    </div>
-
-                    <div class="mobile-product-card glass p-10 rounded-4xl hover:-translate-y-2 transition-all duration-500 border-none flex flex-col gap-6">
-                        <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">self_improvement</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Stress Management</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Learn practical mindfulness and coping techniques for sustainable daily wellness.</p>
-                    </div>
-
-                    <div class="mobile-product-card glass p-10 rounded-4xl hover:-translate-y-2 transition-all duration-500 border-none flex flex-col gap-6">
-                        <div class="w-16 h-16 rounded-3xl bg-primary/5 text-primary flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">rocket_launch</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Personal Growth</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Unlock your potential and build self-confidence for a fulfilling personal and professional life.</p>
-                    </div>
-
-                    <!-- Duplicate Originals (Mobile Only) -->
-                    <div class="mobile-product-card md:hidden glass p-10 rounded-4xl flex flex-col gap-6" aria-hidden="true">
-                        <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">school</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Exam Stress & Peer Pressure</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Navigate academic challenges and social environments with tailored resilience strategies.</p>
-                    </div>
-                    <div class="mobile-product-card md:hidden glass p-10 rounded-4xl flex flex-col gap-6" aria-hidden="true">
-                        <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">sentiment_dissatisfied</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Anxiety & Depression</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Evidence-based therapeutic interventions to help manage and overcome emotional struggles.</p>
-                    </div>
-                    <div class="mobile-product-card md:hidden glass p-10 rounded-4xl flex flex-col gap-6" aria-hidden="true">
-                        <div class="w-16 h-16 rounded-3xl bg-slate-900 text-white flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">psychology_alt</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Hypnotherapy</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Harness the power of the subconscious for breakthrough behavioral and emotional healing.</p>
-                    </div>
-                    <div class="mobile-product-card md:hidden glass p-10 rounded-4xl flex flex-col gap-6" aria-hidden="true">
-                        <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">family_restroom</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Family Dynamics</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Repairing relationships and improving communication within families for a harmonious home.</p>
-                    </div>
-                    <div class="mobile-product-card md:hidden glass p-10 rounded-4xl flex flex-col gap-6" aria-hidden="true">
-                        <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">self_improvement</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Stress Management</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Learn practical mindfulness and coping techniques for sustainable daily wellness.</p>
-                    </div>
-                    <div class="mobile-product-card md:hidden glass p-10 rounded-4xl flex flex-col gap-6" aria-hidden="true">
-                        <div class="w-16 h-16 rounded-3xl bg-primary/5 text-primary flex items-center justify-center">
-                            <span class="material-symbols-outlined !text-3xl">rocket_launch</span>
-                        </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Personal Growth</h3>
-                        <p class="text-slate-500 font-medium leading-relaxed">Unlock your potential and build self-confidence for a fulfilling personal and professional life.</p>
-                    </div>
+                <div class="flex gap-2">
+                    <span
+                        class="px-4 py-2 rounded-full border border-primary/20 text-sm font-semibold text-primary cursor-pointer hover:bg-white/60 transition-colors">
+                        View All Options
+                    </span>
                 </div>
             </div>
-        </section>
 
-        <!-- Counsellors List -->
-        <section id="counsellors" class="section-padding">
-            <div class="text-center mb-20 space-y-4">
-                <div class="section-tag inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 text-primary font-bold text-xs uppercase tracking-widest">
-                    Our Experts
-                </div>
-                <h2 class="text-4xl lg:text-7xl font-extrabold text-slate-900">Dedicated <span class="text-primary underline decoration-primary/20 underline-offset-8">Professionals</span></h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="relative group">
-                    <img src="assets/images/counsellor.jpg" class="w-full h-auto rounded-[3rem] shadow-2xl" alt="Maria Mildred D'Souza">
-                    <div class="absolute -bottom-10 right-10 glass p-8 rounded-3xl max-w-xs shadow-3xl">
-                        <p class="text-sm font-extrabold text-primary-dark mb-1 uppercase tracking-widest">Maria Mildred D'Souza</p>
-                        <p class="text-xs font-bold text-slate-500">Certified Student Counsellor & Hypnotherapy practitioner</p>
+            <!-- Glassmorphic Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- In-Person Card -->
+                <div
+                    class="group relative p-8 rounded-3xl glass hover:bg-white/80 transition-all duration-500 flex flex-col h-full reveal-on-scroll reveal-delay-100">
+                    <div class="mb-12">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined !text-3xl">home_pin</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">In-Person</h3>
+                        <p class="text-slate-500 leading-relaxed mb-6">
+                            Traditional face-to-face sessions in our boutique, sensory-designed clinics for deep
+                            therapeutic connection.
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
+                                <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                Sensory-calm environments
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
+                                <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                Premium lounge access
+                            </li>
+                        </ul>
                     </div>
+                    <button onclick="openContactModal('clinic')"
+                        class="mt-auto w-full py-4 rounded-xl bg-gradient-to-br from-primary to-primary-dark text-white font-bold tracking-wide shadow-lg shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all">
+                        Find a Clinic
+                    </button>
                 </div>
-                <div class="space-y-8 pl-0 lg:pl-10">
-                    <h3 class="text-3xl lg:text-5xl font-extrabold text-slate-900 leading-tight">Empowering you to <br/><span class="text-primary italic">heal and grow</span>.</h3>
-                    <p class="text-lg text-slate-500 font-medium leading-relaxed">With years of specialized experience, Mildred offers a safe, non-judgmental space to explore and resolve personal challenges.</p>
-                    <ul class="space-y-4">
-                        <li class="flex items-center gap-4 text-slate-700 font-extrabold">
-                            <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center">
-                                <span class="material-symbols-outlined !text-sm">check</span>
-                            </span>
-                            Confidential 1-on-1 Sessions
-                        </li>
-                        <li class="flex items-center gap-4 text-slate-700 font-extrabold">
-                            <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center">
-                                <span class="material-symbols-outlined !text-sm">check</span>
-                            </span>
-                            Strategic Group Workshops
-                        </li>
-                        <li class="flex items-center gap-4 text-slate-700 font-extrabold">
-                            <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center">
-                                <span class="material-symbols-outlined !text-sm">check</span>
-                            </span>
-                            Family Support Counselling
-                        </li>
-                    </ul>
-                    <button onclick="window.location.href='contact.html'" class="btn-primary-premium">
-                        Book a Private Session
+
+                <!-- Online Video Card -->
+                <div
+                    class="group relative p-8 rounded-3xl glass hover:bg-white/80 transition-all duration-500 flex flex-col h-full reveal-on-scroll reveal-delay-200">
+                    <div class="mb-12">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined !text-3xl">videocam</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Online Video</h3>
+                        <p class="text-slate-500 leading-relaxed mb-6">
+                            Secure, HD video consultations from the privacy of your home. High-trust encrypted platform
+                            for ultimate peace of mind.
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
+                                <span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                Military-grade encryption
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
+                                <span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                                Flexible scheduling 24/7
+                            </li>
+                        </ul>
+                    </div>
+                    <button onclick="openContactModal('virtual')"
+                        class="mt-auto w-full py-4 rounded-xl bg-gradient-to-br from-secondary to-secondary-dark text-white font-bold tracking-wide shadow-lg shadow-secondary/20 hover:brightness-110 active:scale-[0.98] transition-all">
+                        Book Virtual Session
+                    </button>
+                </div>
+
+                <!-- Real-time Chat Card -->
+                <div
+                    class="group relative p-8 rounded-3xl glass hover:bg-white/80 transition-all duration-500 flex flex-col h-full reveal-on-scroll reveal-delay-300">
+                    <div class="mb-12">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined !text-3xl">chat_bubble</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Real-time Chat</h3>
+                        <p class="text-slate-500 leading-relaxed mb-6">
+                            Asynchronous or live text therapy for those who express themselves best through the written
+                            word.
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
+                                <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                Unlimited messaging
+                            </li>
+                            <li class="flex items-center gap-3 text-sm font-medium text-slate-500">
+                                <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                                Expert therapist response
+                            </li>
+                        </ul>
+                    </div>
+                    <button onclick="toggleChat()"
+                        class="mt-auto w-full py-4 rounded-xl bg-gradient-to-br from-primary to-primary-dark text-white font-bold tracking-wide shadow-lg shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all">
+                        Open Chatroom
                     </button>
                 </div>
             </div>
         </section>
 
+
+        <!-- Expert Profile & Narrative -->
+        <section id="counsellors" class="section-padding overflow-hidden reveal-on-scroll">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+                    
+                    <!-- Left: Image with Premium Styling -->
+                    <div class="lg:col-span-5 relative group">
+                        <!-- Decorative background element -->
+                        <div class="absolute -top-12 -left-12 w-64 h-64 bg-primary/10 blur-[80px] rounded-full -z-10 animate-pulse"></div>
+                        <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-secondary/10 blur-[60px] rounded-full -z-10"></div>
+                        
+                        <!-- Main Image Container -->
+                        <div class="relative z-10 w-full aspect-[4/5] rounded-[3.5rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(180,127,166,0.2)] transform group-hover:-rotate-1 transition-all duration-700">
+                            <img class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000" 
+                                 src="assets/images/counsellor_premium.png" 
+                                 alt="Maria Mildred D'Souza - Chief Mental Wellness Practitioner">
+                            
+                            <!-- Glass Overlay for depth -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        </div>
+
+                        <!-- Floating Credential Card -->
+                        <div class="absolute -bottom-10 -right-4 md:-right-12 z-20 glass p-8 rounded-[2rem] border border-white/40 shadow-3xl max-w-[280px] transform rotate-3 group-hover:rotate-0 transition-all duration-500">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/30">
+                                    <span class="material-symbols-outlined !text-2xl">verified</span>
+                                </div>
+                                <div>
+                                    <p class="text-primary font-bold tracking-widest text-[10px] uppercase">Verified Expert</p>
+                                    <p class="text-slate-900 font-extrabold text-sm">Maria Mildred</p>
+                                </div>
+                            </div>
+                            <p class="text-slate-500 font-medium leading-relaxed italic text-xs">
+                                "Protection is not just a policy; it's a promise of peace for the mind and soul."
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right: The Narrative -->
+                    <div class="lg:col-span-7 space-y-10">
+                        <div>
+                            <span class="text-secondary font-bold tracking-widest text-xs uppercase mb-4 block">Empowering Minds & Souls</span>
+                            <h2 class="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
+                                Maria Mildred <br />
+                                <span class="text-primary">D'Souza</span>
+                            </h2>
+                        </div>
+
+                        <div class="space-y-6 max-w-2xl">
+                            <p class="text-xl text-slate-500 font-medium leading-relaxed">
+                                With over a decade of specialized experience in therapeutic guidance, Mildred creates a sanctuary of empathy and understanding. She bridges the gap between emotional struggle and psychological resilience.
+                            </p>
+                            <p class="text-lg text-slate-400 font-medium leading-relaxed">
+                                Her approach is deeply holistic, blending traditional counselling with advanced hypnotherapy to address the root causes of anxiety, stress, and behavioral patterns.
+                            </p>
+                        </div>
+
+                        <div class="pt-4 flex flex-wrap gap-4">
+                            <div class="px-8 py-4 bg-primary text-white rounded-2xl font-extrabold shadow-xl shadow-primary/20 hover:-translate-y-1 transition-all cursor-default">
+                                Student Specialist
+                            </div>
+                            <div class="px-8 py-4 glass text-secondary border border-secondary/10 rounded-2xl font-extrabold hover:-translate-y-1 transition-all cursor-default">
+                                Hypnotherapy Expert
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Content: Timeline -->
+                <div id="journey" class="mt-32 grid grid-cols-1 lg:grid-cols-12 gap-16 reveal-on-scroll">
+                    <div class="lg:col-span-8">
+                        <h2 class="text-3xl font-extrabold text-slate-900 mb-12 flex items-center gap-4">
+                            <span class="w-12 h-1 bg-primary rounded-full"></span>
+                            Professional Journey
+                        </h2>
+
+                        <div class="space-y-0 relative">
+                            <div class="absolute left-0 top-0 w-px h-full bg-slate-200 ml-[11px]"></div>
+
+                            <div class="relative pl-12 pb-12">
+                                <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-primary/20 border-4 border-surface shadow-sm z-10"></div>
+                                <div class="glass p-8 rounded-3xl border border-white/40 group hover:bg-white transition-all duration-500">
+                                    <span class="text-primary font-bold text-sm tracking-widest block mb-2">2012 — CLINICAL ROOTS</span>
+                                    <h3 class="text-xl font-bold text-slate-900 mb-3">Academic Excellence & Training</h3>
+                                    <p class="text-slate-500 font-medium leading-relaxed">Completed advanced certifications in student psychology, focusing on developmental challenges and peer dynamics in educational settings.</p>
+                                </div>
+                            </div>
+
+                            <div class="relative pl-12 pb-12">
+                                <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-secondary/20 border-4 border-surface shadow-sm z-10"></div>
+                                <div class="glass p-8 rounded-3xl border border-white/40 group hover:bg-white transition-all duration-500">
+                                    <span class="text-secondary font-bold text-sm tracking-widest block mb-2">2017 — EXPANSION</span>
+                                    <h3 class="text-xl font-bold text-slate-900 mb-3">Hypnotherapy Certification</h3>
+                                    <p class="text-slate-500 font-medium leading-relaxed">Integrated subconscious healing techniques into her practice, offering a unique dual approach to mental wellness and behavioral change.</p>
+                                </div>
+                            </div>
+
+                            <div class="relative pl-12">
+                                <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-primary border-4 border-surface shadow-sm z-10"></div>
+                                <div class="glass p-8 rounded-3xl border border-white/40 group hover:bg-white transition-all duration-500">
+                                    <span class="text-primary font-bold text-sm tracking-widest block mb-2">PRESENT — VIMA SNEHA</span>
+                                    <h3 class="text-xl font-bold text-slate-900 mb-3">Holistic Wellness Advocate</h3>
+                                    <p class="text-slate-500 font-medium leading-relaxed">Leading the counselling wing at Vima Sneha, dedicated to providing accessible, high-impact emotional support for individuals and families.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Reflection -->
+                    <div class="hidden lg:flex lg:col-span-4 flex-col justify-center">
+                        <div class="relative glass p-10 rounded-[3rem] shadow-3xl border border-white/20 reveal-on-scroll reveal-delay-200">
+                            <span class="material-symbols-outlined text-primary text-5xl opacity-20 absolute top-6 right-8">format_quote</span>
+                            <h4 class="text-2xl font-extrabold text-slate-900 mb-6 leading-tight">A Message on Healing</h4>
+                            <div class="space-y-6 text-slate-500 font-medium leading-relaxed">
+                                <p>"True healing begins the moment you feel heard. My mission is to provide that space where your voice is the most important thing in the room."</p>
+                                <p>"We don't just solve problems; we build the emotional infrastructure for a more fulfilling life."</p>
+                            </div>
+                            <div class="mt-8 pt-8 border-t border-slate-100 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                                    <span class="material-symbols-outlined">psychology</span>
+                                </div>
+                                <div>
+                                    <p class="font-extrabold text-slate-900">Mildred D'Souza</p>
+                                    <p class="text-sm text-primary font-bold">Chief Counsellor</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Specialized Services Grid -->
+                <!-- Specialized Services - Mobile Carousel / Desktop Grid -->
+        <section id="expertise" class="section-padding bg-white relative rounded-[3rem] lg:rounded-[6rem] mx-4 lg:mx-8 mb-24 reveal-on-scroll">
+            <div class="text-center mb-16 space-y-4">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary-dark font-bold text-xs uppercase tracking-widest mb-4">
+                    <span class="material-symbols-outlined !text-sm">psychiatry</span>
+                    What We Treat
+                </div>
+                <h2 class="text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight">Our Areas of <span class="text-secondary italic">Expertise</span></h2>
+                <p class="text-slate-500 font-medium max-w-xl mx-auto">Tailored therapeutic support across the full spectrum of mental wellness.</p>
+            </div>
+
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Desktop Grid Layout -->
+                <div class="expertise-grid">
+                    <!-- Item 1 -->
+                    <div class="expertise-card glass p-8 rounded-4xl flex flex-col gap-5 h-full reveal-on-scroll">
+                        <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center shadow-lg shadow-primary/10">
+                            <span class="material-symbols-outlined !text-3xl">school</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-800 mb-2">Exam Stress &amp; Peer Pressure</h3>
+                            <p class="text-slate-500 font-medium leading-relaxed text-sm">Navigate academic challenges and social environments with tailored resilience strategies.</p>
+                        </div>
+                        <div class="mt-auto flex flex-wrap gap-2">
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark">Students</span>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark">Resilience</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="expertise-card glass p-8 rounded-4xl flex flex-col gap-5 h-full reveal-on-scroll reveal-delay-100">
+                        <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center shadow-lg shadow-secondary/10">
+                            <span class="material-symbols-outlined !text-3xl">sentiment_dissatisfied</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-800 mb-2">Anxiety &amp; Depression</h3>
+                            <p class="text-slate-500 font-medium leading-relaxed text-sm">Evidence-based therapeutic interventions to help manage and overcome emotional struggles.</p>
+                        </div>
+                        <div class="mt-auto flex flex-wrap gap-2">
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-secondary/10 text-secondary-dark">CBT</span>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-secondary/10 text-secondary-dark">Evidence-Based</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="expertise-card glass p-8 rounded-4xl flex flex-col gap-5 h-full reveal-on-scroll reveal-delay-200">
+                        <div class="w-16 h-16 rounded-3xl bg-slate-800 text-white flex items-center justify-center shadow-xl shadow-slate-900/20">
+                            <span class="material-symbols-outlined !text-3xl">psychology_alt</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-800 mb-2">Hypnotherapy</h3>
+                            <p class="text-slate-500 font-medium leading-relaxed text-sm">Harness the power of the subconscious for breakthrough behavioral and emotional healing.</p>
+                        </div>
+                        <div class="mt-auto flex flex-wrap gap-2">
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-700">Subconscious</span>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-700">Healing</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="expertise-card glass p-8 rounded-4xl flex flex-col gap-5 h-full reveal-on-scroll">
+                        <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center shadow-lg shadow-primary/10">
+                            <span class="material-symbols-outlined !text-3xl">family_restroom</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-800 mb-2">Family Dynamics</h3>
+                            <p class="text-slate-500 font-medium leading-relaxed text-sm">Repairing relationships and improving communication within families for a harmonious home.</p>
+                        </div>
+                        <div class="mt-auto flex flex-wrap gap-2">
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark">Relationships</span>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark">Family</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="expertise-card glass p-8 rounded-4xl flex flex-col gap-5 h-full reveal-on-scroll reveal-delay-100">
+                        <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center shadow-lg shadow-secondary/10">
+                            <span class="material-symbols-outlined !text-3xl">self_improvement</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-800 mb-2">Stress Management</h3>
+                            <p class="text-slate-500 font-medium leading-relaxed text-sm">Learn practical mindfulness and coping techniques for sustainable daily wellness.</p>
+                        </div>
+                        <div class="mt-auto flex flex-wrap gap-2">
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-secondary/10 text-secondary-dark">Mindfulness</span>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-secondary/10 text-secondary-dark">Wellness</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 6 -->
+                    <div class="expertise-card glass p-8 rounded-4xl flex flex-col gap-5 h-full reveal-on-scroll reveal-delay-200">
+                        <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center shadow-lg shadow-primary/10">
+                            <span class="material-symbols-outlined !text-3xl">rocket_launch</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-800 mb-2">Personal Growth</h3>
+                            <p class="text-slate-500 font-medium leading-relaxed text-sm">Unlock your potential and build self-confidence for a fulfilling personal and professional life.</p>
+                        </div>
+                        <div class="mt-auto flex flex-wrap gap-2">
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark">Confidence</span>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark">Growth</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Accordion Layout (Layout D) -->
+                <div class="expertise-accordion space-y-4">
+                    <p class="text-center text-slate-400 font-bold text-[10px] uppercase tracking-[0.2em] mb-6">Tap to expand each area</p>
+                    
+                    <!-- Acc Item 1 -->
+                    <div class="expertise-acc-item active" onclick="toggleExpertiseAcc(this)">
+                        <div class="expertise-acc-header">
+                            <div class="expertise-acc-icon bg-primary/10 text-primary">
+                                <span class="material-symbols-outlined !text-2xl">school</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800">Exam Stress & Peer Pressure</h3>
+                            <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                        </div>
+                        <div class="expertise-acc-content">
+                            <p class="text-slate-500 text-sm leading-relaxed mb-4">Navigate academic challenges and social environments with tailored resilience strategies.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark uppercase">Students</span>
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark uppercase">Resilience</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acc Item 2 -->
+                    <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                        <div class="expertise-acc-header">
+                            <div class="expertise-acc-icon bg-secondary/10 text-secondary">
+                                <span class="material-symbols-outlined !text-2xl">sentiment_dissatisfied</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800">Anxiety & Depression</h3>
+                            <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                        </div>
+                        <div class="expertise-acc-content">
+                            <p class="text-slate-500 text-sm leading-relaxed mb-4">Evidence-based therapeutic interventions to help manage and overcome emotional struggles.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-secondary/10 text-secondary-dark uppercase">CBT</span>
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-secondary/10 text-secondary-dark uppercase">Evidence-Based</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acc Item 3 -->
+                    <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                        <div class="expertise-acc-header">
+                            <div class="expertise-acc-icon bg-slate-800 text-white">
+                                <span class="material-symbols-outlined !text-2xl">psychology_alt</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800">Hypnotherapy</h3>
+                            <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                        </div>
+                        <div class="expertise-acc-content">
+                            <p class="text-slate-500 text-sm leading-relaxed mb-4">Harness the power of the subconscious for breakthrough behavioral and emotional healing.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-700 uppercase">Subconscious</span>
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-700 uppercase">Healing</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acc Item 4 -->
+                    <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                        <div class="expertise-acc-header">
+                            <div class="expertise-acc-icon bg-primary/10 text-primary">
+                                <span class="material-symbols-outlined !text-2xl">family_restroom</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800">Family Dynamics</h3>
+                            <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                        </div>
+                        <div class="expertise-acc-content">
+                            <p class="text-slate-500 text-sm leading-relaxed mb-4">Repairing relationships and improving communication within families for a harmonious home.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark uppercase">Relationships</span>
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark uppercase">Family</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acc Item 5 -->
+                    <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                        <div class="expertise-acc-header">
+                            <div class="expertise-acc-icon bg-secondary/10 text-secondary">
+                                <span class="material-symbols-outlined !text-2xl">self_improvement</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800">Stress Management</h3>
+                            <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                        </div>
+                        <div class="expertise-acc-content">
+                            <p class="text-slate-500 text-sm leading-relaxed mb-4">Learn practical mindfulness and coping techniques for sustainable daily wellness.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-secondary/10 text-secondary-dark uppercase">Mindfulness</span>
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-secondary/10 text-secondary-dark uppercase">Wellness</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acc Item 6 -->
+                    <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                        <div class="expertise-acc-header">
+                            <div class="expertise-acc-icon bg-primary/10 text-primary">
+                                <span class="material-symbols-outlined !text-2xl">rocket_launch</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800">Personal Growth</h3>
+                            <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                        </div>
+                        <div class="expertise-acc-content">
+                            <p class="text-slate-500 text-sm leading-relaxed mb-4">Unlock your potential and build self-confidence for a fulfilling personal and professional life.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark uppercase">Confidence</span>
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-primary/10 text-primary-dark uppercase">Growth</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function toggleExpertiseAcc(el) {
+                    const isActive = el.classList.contains('active');
+                    document.querySelectorAll('.expertise-acc-item').forEach(item => item.classList.remove('active'));
+                    if (!isActive) el.classList.add('active');
+                }
+            </script>
+        </section>
+
+        <!-- Testimonials by Category -->
+        <section id="counselling-testimonials" class="section-padding reveal-on-scroll">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
+                    <div class="space-y-4 max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-bold text-xs uppercase tracking-widest">
+                            <span class="material-symbols-outlined !text-sm">forum</span>
+                            Client Feedback
+                        </div>
+                        <h2 class="text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight">Stories by <span class="text-primary italic">Care Area</span></h2>
+                        <p class="text-slate-500 font-medium text-lg leading-relaxed">A quick look at how counselling support helps different people move from overwhelm to steadier daily life.</p>
+                    </div>
+                    <a href="contact.html" class="inline-flex items-center gap-2 text-primary font-extrabold hover:gap-3 transition-all">
+                        Start a Conversation
+                        <span class="material-symbols-outlined !text-lg">arrow_forward</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                    <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-primary/5 flex flex-col gap-6">
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                                <span class="material-symbols-outlined !text-3xl">school</span>
+                            </div>
+                            <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-primary">Students</span>
+                        </div>
+                        <p class="text-slate-600 font-medium leading-relaxed">"The sessions helped me handle exam fear and speak more openly at home. I felt calmer within a few weeks."</p>
+                        <div class="mt-auto pt-6 border-t border-slate-100">
+                            <p class="font-extrabold text-slate-900">Student Client</p>
+                            <p class="text-sm text-slate-400 font-bold">Exam Stress Support</p>
+                        </div>
+                    </article>
+
+                    <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-secondary/5 flex flex-col gap-6">
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">
+                                <span class="material-symbols-outlined !text-3xl">sentiment_satisfied</span>
+                            </div>
+                            <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-secondary">Emotional Care</span>
+                        </div>
+                        <p class="text-slate-600 font-medium leading-relaxed">"I finally had practical ways to manage anxious thoughts instead of feeling controlled by them every day."</p>
+                        <div class="mt-auto pt-6 border-t border-slate-100">
+                            <p class="font-extrabold text-slate-900">Individual Client</p>
+                            <p class="text-sm text-slate-400 font-bold">Anxiety Counselling</p>
+                        </div>
+                    </article>
+
+                    <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-primary/5 flex flex-col gap-6">
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                                <span class="material-symbols-outlined !text-3xl">family_restroom</span>
+                            </div>
+                            <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-primary">Family</span>
+                        </div>
+                        <p class="text-slate-600 font-medium leading-relaxed">"The guidance helped us listen without reacting. Conversations at home became lighter and more respectful."</p>
+                        <div class="mt-auto pt-6 border-t border-slate-100">
+                            <p class="font-extrabold text-slate-900">Parent Client</p>
+                            <p class="text-sm text-slate-400 font-bold">Family Communication</p>
+                        </div>
+                    </article>
+
+                    <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-slate-900/5 flex flex-col gap-6">
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center">
+                                <span class="material-symbols-outlined !text-3xl">rocket_launch</span>
+                            </div>
+                            <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-slate-700">Growth</span>
+                        </div>
+                        <p class="text-slate-600 font-medium leading-relaxed">"Counselling gave me clarity, confidence, and a healthier routine when I was feeling stuck."</p>
+                        <div class="mt-auto pt-6 border-t border-slate-100">
+                            <p class="font-extrabold text-slate-900">Young Professional</p>
+                            <p class="text-sm text-slate-400 font-bold">Personal Growth</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section-padding reveal-on-scroll">
+            <div class="bg-surface-container-low rounded-[3rem] p-8 lg:p-20 relative overflow-hidden">
+                <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary opacity-5 blur-[100px] rounded-full"></div>
+
+                <div class="max-w-3xl mx-auto space-y-16">
+                    <div class="text-center space-y-4">
+                        <h2 class="text-4xl font-extrabold tracking-tight text-slate-900">Clarity &amp; Confidence</h2>
+                        <p class="text-slate-500 text-lg">Common questions about starting your journey to mental wellness.</p>
+                    </div>
+
+                    <div class="space-y-4 faq-container">
+                        <div class="bg-white rounded-2xl p-6 shadow-sm faq-item transition-all duration-300">
+                            <button class="w-full flex items-center justify-between text-left group faq-toggle">
+                                <span class="font-bold text-lg text-slate-900">Is what I share in sessions confidential?</span>
+                                <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-transform duration-300 flex-shrink-0 ml-4 icon">add</span>
+                            </button>
+                            <div class="faq-content grid grid-rows-[0fr] transition-all duration-300">
+                                <div class="overflow-hidden">
+                                    <div class="pt-4 text-slate-500 leading-relaxed text-sm pr-12">
+                                        Absolutely. Confidentiality is the cornerstone of our practice. Everything shared within your sessions is protected by strict ethical guidelines and legal standards, ensuring a safe space for open expression.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6 shadow-sm faq-item transition-all duration-300">
+                            <button class="w-full flex items-center justify-between text-left group faq-toggle">
+                                <span class="font-bold text-lg text-slate-900">How many sessions will I need?</span>
+                                <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-transform duration-300 flex-shrink-0 ml-4 icon">add</span>
+                            </button>
+                            <div class="faq-content grid grid-rows-[0fr] transition-all duration-300">
+                                <div class="overflow-hidden">
+                                    <div class="pt-4 text-slate-500 leading-relaxed text-sm pr-12">
+                                        The number of sessions varies depending on your individual goals and the complexity of the challenges you're facing. Some clients find relief in 4-6 sessions, while others prefer ongoing support. We'll discuss a tailored plan during your initial consultation.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6 shadow-sm faq-item transition-all duration-300">
+                            <button class="w-full flex items-center justify-between text-left group faq-toggle">
+                                <span class="font-bold text-lg text-slate-900">What is Hypnotherapy exactly?</span>
+                                <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-transform duration-300 flex-shrink-0 ml-4 icon">add</span>
+                            </button>
+                            <div class="faq-content grid grid-rows-[0fr] transition-all duration-300">
+                                <div class="overflow-hidden">
+                                    <div class="pt-4 text-slate-500 leading-relaxed text-sm pr-12">
+                                        Hypnotherapy is a guided state of focused relaxation that allows us to work directly with the subconscious mind. It's a highly effective tool for breaking habits, reducing anxiety, and uncovering deeper behavioral patterns in a safe and controlled environment.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-6 shadow-sm faq-item transition-all duration-300">
+                            <button class="w-full flex items-center justify-between text-left group faq-toggle">
+                                <span class="font-bold text-lg text-slate-900">Do you offer sessions for students?</span>
+                                <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-transform duration-300 flex-shrink-0 ml-4 icon">add</span>
+                            </button>
+                            <div class="faq-content grid grid-rows-[0fr] transition-all duration-300">
+                                <div class="overflow-hidden">
+                                    <div class="pt-4 text-slate-500 leading-relaxed text-sm pr-12">
+                                        Yes, we specialize in student counselling, addressing issues like exam anxiety, peer pressure, career confusion, and family dynamics. Our approach is designed to empower young minds with resilience and clarity.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                .faq-item.active .faq-content { grid-template-rows: 1fr; }
+                .faq-item.active .icon { transform: rotate(45deg); color: var(--primary); }
+                .faq-item.active { border-color: rgba(180, 127, 166, 0.2); shadow: 0 10px 30px rgba(180, 127, 166, 0.08); }
+            </style>
+
+            <script>
+                document.querySelectorAll('.faq-toggle').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const item = button.parentElement;
+                        const isActive = item.classList.contains('active');
+                        document.querySelectorAll('.faq-item').forEach(oi => oi.classList.remove('active'));
+                        if (!isActive) item.classList.add('active');
+                    });
+                });
+            </script>
+        </section>
+
         <!-- Final CTA -->
         <section class="section-padding flex items-center justify-center text-center">
             <div class="max-w-4xl space-y-10">
-                <h2 class="text-5xl lg:text-8xl font-extrabold text-slate-900 leading-tight">Ready to find <span class="text-primary">clarity</span>?</h2>
+                <h2 class="text-5xl lg:text-8xl font-extrabold text-slate-900 leading-tight">Your journey to <span class="text-primary">clarity</span> starts here.</h2>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <a href="contact.html" class="btn-primary-premium w-full sm:w-auto !px-12 !py-6 !text-xl shadow-2xl">Contact Us Now</a>
+                    <button onclick="openContactModal('general')" class="btn-primary-premium w-full sm:w-auto !px-12 !py-6 !text-xl shadow-2xl">Book Your Session</button>
                     <a href="tel:+919972875970" class="text-lg font-extrabold text-slate-400 hover:text-primary transition-all">Or click to call us directly</a>
                 </div>
             </div>
@@ -381,9 +1092,299 @@
 
     </main>
 
+    <!-- Contact Modal -->
+    <div id="contactModal" class="fixed inset-0 z-[2000] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-md transition-opacity" onclick="closeContactModal()"></div>
+
+        <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
+            <div class="relative w-full max-w-2xl transform overflow-hidden rounded-[3rem] glass p-8 lg:p-12 shadow-2xl transition-all animate-modal-in">
+                <!-- Close Button -->
+                <button onclick="closeContactModal()" class="absolute top-6 right-6 w-12 h-12 rounded-2xl bg-white/50 flex items-center justify-center text-slate-400 hover:text-primary hover:bg-white transition-all shadow-sm">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+
+                <div class="space-y-8">
+                    <div class="space-y-2">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary-dark font-bold text-[10px] uppercase tracking-widest">
+                            <span id="modal-badge-icon" class="material-symbols-outlined !text-xs">calendar_today</span>
+                            <span id="modal-badge-text">Booking Inquiry</span>
+                        </div>
+                        <h2 id="modal-title" class="text-3xl font-extrabold text-slate-900">Book Your Session</h2>
+                        <p id="modal-desc" class="text-slate-500 font-medium">Please fill in your details and we'll reach out to schedule your virtual session.</p>
+                    </div>
+
+                    <form id="modal-form" onsubmit="handleModalSubmit(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Full Name</label>
+                                <input type="text" id="modal-name" required placeholder="Your Name" class="w-full bg-white/50 border-none rounded-2xl px-6 py-4 focus:bg-white focus:ring-4 focus:ring-primary/10 transition-all font-bold text-slate-900 shadow-inner outline-none"/>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">WhatsApp Number</label>
+                                <input type="tel" id="modal-phone" required placeholder="+91 ..." class="w-full bg-white/50 border-none rounded-2xl px-6 py-4 focus:bg-white focus:ring-4 focus:ring-primary/10 transition-all font-bold text-slate-900 shadow-inner outline-none"/>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Preferred Time / Notes</label>
+                            <textarea id="modal-message" rows="3" placeholder="Any specific concerns or preferred timing?" class="w-full bg-white/50 border-none rounded-2xl px-6 py-4 focus:bg-white focus:ring-4 focus:ring-primary/10 transition-all font-bold text-slate-900 shadow-inner resize-none outline-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full btn-primary-premium h-16 !text-lg shadow-xl mt-4">
+                            <span id="modal-submit-text">Request Callback</span>
+                            <span class="material-symbols-outlined">send</span>
+                        </button>
+                    </form>
+
+                    <div id="modal-success" class="hidden text-center space-y-4 py-8">
+                        <div class="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto shadow-xl animate-bounce">
+                            <span class="material-symbols-outlined !text-4xl">check</span>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-slate-900">Inquiry Sent!</h3>
+                        <p class="text-slate-500 font-medium">We'll contact you shortly to confirm your session. Redirecting to WhatsApp...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Chat Widget -->
+    <div id="chat-bubble" class="hidden lg:block">
+        <button onclick="toggleChat()" class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark text-white shadow-2xl flex items-center justify-center group relative overflow-hidden">
+            <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+            <span class="material-symbols-outlined !text-3xl relative z-10">chat</span>
+            <!-- Pulsating indicator -->
+            <div class="absolute top-1 right-1 w-4 h-4 bg-green-400 border-2 border-white rounded-full dot-pulsate"></div>
+        </button>
+    </div>
+
+    <!-- Chat Window -->
+    <div id="chat-window" class="fixed bottom-32 right-8 w-[380px] h-[520px] glass rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(122,79,114,0.3)] z-[2500] hidden flex flex-col overflow-hidden border border-white/40">
+        <!-- Header -->
+        <div class="p-6 bg-gradient-to-r from-primary/10 to-secondary/5 border-bottom border-white/20 flex items-center gap-4">
+            <div class="relative">
+                <img src="assets/images/counsellor_premium.png" class="w-12 h-12 rounded-2xl object-cover border-2 border-white shadow-sm" alt="Mildred">
+                <div class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
+            </div>
+            <div>
+                <h4 class="font-extrabold text-slate-900 text-sm">Maria Mildred</h4>
+                <p class="text-[10px] font-bold text-green-600 uppercase tracking-widest">Active Now</p>
+            </div>
+            <button onclick="toggleChat()" class="ml-auto text-slate-400 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <!-- Messages -->
+        <div id="chat-messages" class="flex-1 p-6 overflow-y-auto space-y-4 scroll-smooth">
+            <!-- Messages injected here -->
+        </div>
+
+        <!-- Typing Indicator -->
+        <div id="chat-typing" class="px-6 py-2 hidden">
+            <div class="flex items-center gap-2 text-slate-400 font-bold text-[10px] uppercase tracking-widest italic">
+                <div class="flex gap-1">
+                    <div class="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce"></div>
+                    <div class="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                    <div class="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+                </div>
+                Mildred is typing
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-4 bg-white/40 border-t border-white/20">
+            <div class="relative flex items-center">
+                <input type="text" id="chat-input" onkeydown="if(event.key==='Enter') sendChat()" placeholder="Type a message..." class="w-full bg-white border-none rounded-2xl pl-6 pr-14 py-4 text-sm font-medium text-slate-900 shadow-inner focus:ring-4 focus:ring-primary/10 transition-all outline-none">
+                <button onclick="sendChat()" class="absolute right-2 w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition-colors shadow-lg">
+                    <span class="material-symbols-outlined !text-[18px]">send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer Root (JS Mount) -->
     <div id="site-footer-root"></div>
     <script src="assets/js/footer.js?v=20260420-5"></script>
 
+    <!-- Admin Data Sync Script -->
+    <script>
+    (function(){
+      try {
+        const data = localStorage.getItem('vima_counselling_data');
+        if(!data) return;
+        const d = JSON.parse(data);
+
+        // Helper to update text/HTML
+        const set = (sel, txt, isHtml=false) => {
+          const el = document.querySelector(sel);
+          if(!el) return;
+          if(isHtml) el.innerHTML = txt; else el.innerText = txt;
+        };
+        const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({
+          '&':'&amp;',
+          '<':'&lt;',
+          '>':'&gt;',
+          '"':'&quot;',
+          "'":'&#39;'
+        }[ch]));
+        const safeUrl = (value) => {
+          const url = String(value || '').trim();
+          if(!url || /^javascript:/i.test(url)) return '';
+          return url;
+        };
+
+        // Hero
+        if(d.hero){
+          const h = d.hero;
+          const badgeEl = document.querySelector('main section .inline-flex.bg-primary\\/10');
+          if(badgeEl) badgeEl.innerHTML = `<span class="material-symbols-outlined !text-sm">Psychology</span> ${escapeHtml(h.badge)}`;
+          
+          if(h.title && h.highlight) {
+            const parts = h.title.split(h.highlight);
+            set('h1.text-5xl', `${escapeHtml(parts[0] || '')} <br /><span class="text-primary italic underline decoration-primary/20 decoration-8">${escapeHtml(h.highlight)}</span>`, true);
+          }
+          set('main section p.text-lg.lg\\:text-xl', h.desc);
+          set('main section .btn-primary-premium', h.btn1);
+          
+          const callLink = document.querySelector('a[href^="tel:"]');
+          if(callLink && h.callNum) {
+            callLink.href = `tel:${h.callNum.replace(/\s/g,'')}`;
+            const textNode = Array.from(callLink.childNodes).find(n => n.nodeType === 3 && n.textContent.trim().length > 0);
+            if(textNode) textNode.textContent = h.callText;
+          }
+          const heroImg = document.querySelector('img[src*="hero-counselling"]');
+          if(heroImg && safeUrl(h.img)) heroImg.src = safeUrl(h.img);
+        }
+
+        // Mediums
+        const mGrid = document.querySelector('section#mediums div.grid');
+        if(mGrid && d.mediums) {
+          mGrid.innerHTML = d.mediums.map((m, idx) => `
+            <div class="group relative p-8 rounded-3xl glass hover:bg-white/80 transition-all duration-500 flex flex-col h-full reveal-on-scroll reveal-delay-${(idx + 1) * 100}">
+                <div class="mb-12">
+                    <div class="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500 mb-6">
+                        <span class="material-symbols-outlined !text-3xl">${escapeHtml(m.icon)}</span>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900 mb-4">${escapeHtml(m.title)}</h3>
+                    <p class="text-slate-500 font-medium leading-relaxed">${escapeHtml(m.desc)}</p>
+                </div>
+                <ul class="space-y-4 mb-10 flex-grow">
+                    ${(m.points || []).map(p => `
+                        <li class="flex items-center gap-3 text-sm font-bold text-slate-700">
+                            <span class="w-1.5 h-1.5 rounded-full bg-primary/40"></span> ${escapeHtml(p)}
+                        </li>
+                    `).join('')}
+                </ul>
+                <button class="w-full py-4 rounded-xl border-2 border-primary/20 text-primary font-extrabold hover:bg-primary hover:text-white hover:border-primary transition-all">
+                    ${escapeHtml(m.btn)}
+                </button>
+            </div>
+          `).join('');
+          // Observe new elements
+          mGrid.querySelectorAll('.reveal-on-scroll').forEach(el => window.scrollObserver?.observe(el));
+        }
+
+        // Expertise
+        const eGrid = document.querySelector('#expertiseTrack');
+        if(eGrid && d.expertise) {
+          eGrid.innerHTML = d.expertise.map((e, idx) => `
+            <div class="expertise-carousel-slide">
+              <div class="expertise-card glass p-8 rounded-4xl flex flex-col gap-5 h-full">
+                <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center shadow-lg shadow-primary/10">
+                  <span class="material-symbols-outlined !text-3xl">${escapeHtml(e.icon)}</span>
+                </div>
+                <div>
+                  <h3 class="text-xl font-extrabold text-slate-800 mb-2">${escapeHtml(e.title)}</h3>
+                  <p class="text-slate-500 font-medium leading-relaxed text-sm">${escapeHtml(e.desc)}</p>
+                </div>
+              </div>
+            </div>
+          `).join('');
+          // Observe new elements
+          eGrid.querySelectorAll('.reveal-on-scroll').forEach(el => window.scrollObserver?.observe(el));
+        }
+
+        // Profile
+        if(d.profile) {
+          const p = d.profile;
+          const pImg = document.querySelector('section#counsellors img');
+          if(pImg && safeUrl(p.img)) pImg.src = safeUrl(p.img);
+          
+          const pNameEl = document.querySelector('section#counsellors h2.text-5xl');
+          if(pNameEl && p.name){
+            const nameParts = p.name.split(' ');
+            const last = nameParts.pop();
+            pNameEl.innerHTML = `${escapeHtml(nameParts.join(' '))} <br /> <span class="text-primary">${escapeHtml(last)}</span>`;
+          }
+          
+          set('section#counsellors .glass p.text-slate-900', p.name);
+          set('section#counsellors .glass p.text-xs.font-bold', p.role);
+          
+          if(p.bioHead){
+            const bParts = p.bioHead.split(' ');
+            const last2 = bParts.splice(-2).join(' ');
+            set('section#counsellors h3.text-3xl', `${escapeHtml(bParts.join(' '))} <br /><span class="text-primary italic">${escapeHtml(last2)}</span>`, true);
+          }
+          set('section#counsellors p.text-xl.text-slate-500', p.bio);
+          
+          const fList = document.querySelector('section#counsellors div.pt-4.flex.flex-wrap.gap-4');
+          if(fList && p.features) {
+            fList.innerHTML = p.features.map((f, i) => `
+                <div class="${i === 0 ? 'bg-primary text-white' : 'glass text-secondary border border-secondary/10'} px-8 py-4 rounded-2xl font-extrabold shadow-xl transition-all cursor-default">
+                    ${escapeHtml(f)}
+                </div>
+            `).join('');
+          }
+        }
+
+        // Milestones
+        const mileContainer = document.querySelector('div#journey .space-y-0.relative');
+        if(mileContainer && d.milestones) {
+          mileContainer.innerHTML = `
+            <div class="absolute left-0 top-0 w-px h-full bg-slate-200 ml-[11px]"></div>
+            ${d.milestones.map((m, i) => `
+                <div class="relative pl-12 ${i < d.milestones.length-1 ? 'pb-12' : ''}">
+                    <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full ${i === d.milestones.length-1 ? 'bg-primary' : 'bg-secondary/20'} border-4 border-surface shadow-sm z-10"></div>
+                    <div class="glass p-8 rounded-3xl border border-white/40 group hover:bg-white transition-all duration-500">
+                        <span class="${i === d.milestones.length-1 ? 'text-primary' : 'text-secondary'} font-bold text-sm tracking-widest block mb-2">${escapeHtml(m.year)} — ${escapeHtml(String(m.title || '').toUpperCase())}</span>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">${escapeHtml(m.title)}</h3>
+                        <p class="text-slate-500 font-medium leading-relaxed">${escapeHtml(m.desc)}</p>
+                    </div>
+                </div>
+            `).join('')}`;
+        }
+
+        // FAQ
+        const faqContainer = document.querySelector('section .faq-container');
+        if(faqContainer && d.faq) {
+          faqContainer.innerHTML = d.faq.map(f => `
+            <div class="bg-white rounded-2xl p-6 shadow-sm faq-item transition-all duration-300">
+                <button class="w-full flex items-center justify-between text-left group faq-toggle">
+                    <span class="font-bold text-lg text-slate-900">${escapeHtml(f.q)}</span>
+                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-transform duration-300 flex-shrink-0 ml-4 icon">add</span>
+                </button>
+                <div class="faq-content grid grid-rows-[0fr] transition-all duration-300">
+                    <div class="overflow-hidden">
+                        <div class="pt-4 text-slate-500 leading-relaxed text-sm pr-12">${escapeHtml(f.a)}</div>
+                    </div>
+                </div>
+            </div>
+          `).join('');
+          
+          // Re-attach listeners
+          faqContainer.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(oi => oi.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+          });
+        }
+
+      } catch(e) { console.error("Sync error:", e); }
+    })();
+    </script>
 </body>
 </html>

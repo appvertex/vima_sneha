@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vima Sneha · Admin Panel</title>
-<link rel="shortcut icon" href="logo.svg" type="image/x-icon">
+<link rel="icon" type="image/png" href="../assets/images/logo.png" />
+<link rel="shortcut icon" type="image/png" href="../assets/images/logo.png" />
+<link rel="apple-touch-icon" href="../assets/images/logo.png" />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -24,86 +26,9 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
 ::-webkit-scrollbar-track{background:var(--plm);}
 ::-webkit-scrollbar-thumb{background:var(--pm);border-radius:3px;}
 
-/* ════════════════════ LOGIN PAGE ════════════════════ */
-#login-page{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#FAF5F9 0%,#F2E8EF 50%,#FBF4ED 100%);
-  position:relative;overflow:hidden;
-}
-.login-orbs{position:absolute;inset:0;pointer-events:none;}
-.login-orb{position:absolute;border-radius:50%;filter:blur(60px);animation:orbPulse 8s ease-in-out infinite alternate;}
-.login-orb:nth-child(1){width:500px;height:500px;background:radial-gradient(circle,rgba(180,127,166,.3),transparent 70%);top:-150px;left:-100px;animation-delay:0s;}
-.login-orb:nth-child(2){width:400px;height:400px;background:radial-gradient(circle,rgba(212,168,83,.25),transparent 70%);bottom:-100px;right:-80px;animation-delay:-3s;}
-.login-orb:nth-child(3){width:300px;height:300px;background:radial-gradient(circle,rgba(122,79,114,.2),transparent 70%);top:40%;left:40%;animation-delay:-5s;}
-@keyframes orbPulse{0%{transform:scale(1) translate(0,0);}100%{transform:scale(1.2) translate(20px,-30px);}}
 
-.login-card{
-  position:relative;z-index:10;width:420px;max-width:95vw;
-  background:rgba(255,255,255,.85);backdrop-filter:blur(20px);
-  border-radius:28px;padding:3rem 2.5rem;
-  border:1px solid rgba(180,127,166,.2);
-  box-shadow:0 30px 80px rgba(122,79,114,.18),0 0 0 1px rgba(255,255,255,.6) inset;
-  animation:loginFadeIn .8s cubic-bezier(.23,1,.32,1) both;
-}
-@keyframes loginFadeIn{from{opacity:0;transform:translateY(40px) scale(.95);}to{opacity:1;transform:translateY(0) scale(1);}}
 
-.login-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg,rgba(180,127,166,.15),rgba(212,168,83,.1));
-  border:1px solid rgba(180,127,166,.3);border-radius:20px;
-  padding:6px 14px;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--dm);margin-bottom:1.5rem;
-}
-.login-badge span{font-size:14px;}
 
-.login-card h1{
-  font-size:28px;font-weight:800;margin-bottom:.4rem;
-  background:linear-gradient(135deg,var(--dkm),var(--pm),var(--gold));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.login-card .sub{font-size:13px;color:var(--lt);margin-bottom:2rem;font-weight:300;}
-
-.form-group{margin-bottom:1.2rem;position:relative;}
-.form-group label{display:block;font-size:12px;font-weight:600;color:var(--dm);margin-bottom:.5rem;letter-spacing:.3px;}
-.form-group input{
-  width:100%;padding:12px 16px 12px 44px;border-radius:14px;
-  border:1.5px solid rgba(180,127,166,.3);background:rgba(255,255,255,.7);
-  font-family:'Poppins',sans-serif;font-size:14px;color:var(--dt);
-  transition:all .3s ease;outline:none;
-}
-.form-group input:focus{border-color:var(--pm);background:#fff;box-shadow:0 0 0 4px rgba(180,127,166,.12);}
-.form-group .field-icon{position:absolute;left:14px;top:37px;font-size:17px;pointer-events:none;}
-.form-group .toggle-pwd{position:absolute;right:14px;top:37px;font-size:16px;cursor:pointer;opacity:.6;transition:opacity .2s;}
-.form-group .toggle-pwd:hover{opacity:1;}
-
-.login-error{
-  display:none;background:rgba(244,67,54,.08);border:1px solid rgba(244,67,54,.25);
-  border-radius:10px;padding:10px 14px;font-size:13px;color:#c62828;margin-bottom:1rem;
-}
-.login-error.show{display:flex;align-items:center;gap:8px;}
-.login-error-ico{display:inline-flex;align-items:center;flex-shrink:0;color:#c62828;}
-.login-error-ico svg{width:18px;height:18px;}
-
-.btn-login{
-  width:100%;padding:13px;border:none;border-radius:16px;
-  background:linear-gradient(135deg,var(--dkm),var(--pm) 60%,var(--gold));
-  color:#fff;font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;
-  cursor:pointer;position:relative;overflow:hidden;
-  box-shadow:0 6px 25px rgba(122,79,114,.35);
-  transition:transform .3s ease,box-shadow .3s ease;
-}
-.btn-login::before{content:'';position:absolute;top:-100%;left:-100%;width:300%;height:300%;
-  background:conic-gradient(from 0deg,transparent 30%,rgba(255,255,255,.2) 50%,transparent 70%);
-  animation:loginBtnSpin 3s linear infinite;}
-@keyframes loginBtnSpin{to{transform:rotate(360deg);}}
-.btn-login span{position:relative;z-index:1;}
-.btn-login:hover{transform:translateY(-2px) scale(1.01);box-shadow:0 12px 40px rgba(122,79,114,.45);}
-.btn-login:active{transform:scale(.98);}
-.btn-login.loading{pointer-events:none;}
-.btn-login.loading::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.1);z-index:2;}
-
-.login-footer{text-align:center;margin-top:1.5rem;font-size:12px;color:var(--lt);}
-.login-footer span{color:var(--pm);font-weight:600;}
 
 /* ════════════════════ DASHBOARD LAYOUT ════════════════════ */
 #dashboard-page{display:none;min-height:100vh;}
@@ -521,39 +446,9 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
 </head>
 
 <body>
-<script src="icons.js"></script>
+<script src="../assets/js/icons.js"></script>
 
-<!-- Redesigned Admin Login Page -->
-<div id="login-page">
-  <div class="login-orbs">
-    <div class="login-orb"></div>
-    <div class="login-orb"></div>
-    <div class="login-orb"></div>
-  </div>
-  <div class="login-card">
-    <div class="login-badge"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> Admin Access</div>
-    <h1>Welcome to Vima Sneha Admin</h1>
-    <p class="sub">Sign in to manage and update your website content, services, and more.</p>
 
-    <div class="login-error" id="login-error"><span class="login-error-ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span><span id="login-error-msg">Invalid credentials. Please try again.</span></div>
-
-    <div class="form-group">
-      <label>Username</label>
-      <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-      <input type="text" id="login-user" placeholder="Enter admin username" autocomplete="username">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <span class="field-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
-      <input type="password" id="login-pwd" placeholder="Enter password" autocomplete="current-password">
-      <span class="toggle-pwd" onclick="togglePwd()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
-    </div>
-
-    <button class="btn-login" id="login-btn" onclick="doLogin()"><span>Sign In to Dashboard →</span></button>
-
-    <p class="login-footer">Default credentials: <span>admin</span> / <span>vimasneha2025</span></p>
-  </div>
-</div>
 
 <!-- ════════════════════════════════════════ DASHBOARD PAGE ════════════════════════════════════════ -->
 <div id="dashboard-page">
@@ -571,37 +466,44 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
     </div>
 
     <nav class="sidebar-nav">
-      <div class="nav-section-title">Website Sections</div>
+      <div class="nav-section-title">Main Dashboard</div>
       <div class="nav-item active" onclick="gotoPanel('navbar')">
-        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><span class="nav-label">Navbar & Branding</span>
+        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><span class="nav-label">Navbar & Branding</span>
       </div>
       <div class="nav-item" onclick="gotoPanel('hero')">
-        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="nav-label">Hero Section</span>
+        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="nav-label">Home Hero</span>
       </div>
       <div class="nav-item" onclick="gotoPanel('services')">
-        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><span class="nav-label">Services</span>
-      </div>
-      <div class="nav-item" onclick="gotoPanel('counselling')">
-        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div><span class="nav-label">Counselling</span>
-      </div>
-      <div class="nav-item" onclick="gotoPanel('insurance')">
-        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="nav-label">Insurance</span>
-      </div>
-      <div class="nav-item" onclick="gotoPanel('gallery')">
-        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><span class="nav-label">Gallery Cards</span>
-      </div>
-      <div class="nav-item" onclick="gotoPanel('testimonials')">
-        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="nav-label">Testimonials</span>
-      </div>
-      <div class="nav-item" onclick="gotoPanel('contact')">
-        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 13.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18l.01-.08v-1z"/></svg></div><span class="nav-label">Contact Info</span>
-      </div>
-      <div class="nav-item" onclick="gotoPanel('footer')">
-        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><span class="nav-label">Footer</span>
+        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><span class="nav-label">Home Services</span>
       </div>
 
-      <div class="nav-section-title">Settings</div>
-    </nav>
+      <div class="nav-section-title">Specialized Panels</div>
+      <a href="admin-counselling.html" class="nav-item" style="text-decoration:none;">
+        <div class="nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20ZM11,7h2v6H11Zm0,8h2v2H11Z"/></svg></div>
+        <span class="nav-label">Counselling Admin ↗</span>
+      </a>
+      <a href="admin-insurance.html" class="nav-item" style="text-decoration:none;">
+        <div class="nav-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 15l-4-4 1.41-1.41L10 13.17l5.59-5.59L17 9l-7 7z"/></svg></div>
+        <span class="nav-label">Insurance Admin ↗</span>
+      </a>
+
+      <div class="nav-section-title">Site Modules</div>
+      <div class="nav-item" onclick="gotoPanel('gallery')">
+        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><span class="nav-label">Gallery Cards</span>
+      </div>
+      <div class="nav-item" onclick="gotoPanel('testimonials')">
+        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="nav-label">Testimonials</span>
+      </div>
+      <div class="nav-item" onclick="gotoPanel('contact')">
+        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 13.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 10.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18l.01-.08v-1z"/></svg></div><span class="nav-label">Contact Info</span>
+      </div>
+      <div class="nav-item" onclick="gotoPanel('footer')">
+        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><span class="nav-label">Footer</span>
+      </div>
+      <div class="nav-item" onclick="gotoPanel('theme')">
+        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M12 12h10"/></svg></div><span class="nav-label">Theme Config</span>
+      </div>
+
 
     <div class="sidebar-footer">
       <div class="admin-info">
@@ -732,48 +634,36 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
         </div>
       </div>
 
-                  </div>
-                  <p class="photo-upload-label">Click to upload counsellor photo</p>
-                  <p class="photo-upload-hint">Saved into the admin content and shown automatically on the website.</p>
-                </div>
-              </div>
-              <input type="file" id="coun-photo-input" accept="image/*" style="display:none" onchange="previewPhoto(this,'coun-photo-preview','coun-photo-filename','counPhoto')">
-              <div class="photo-filename-row" id="coun-photo-filename-row" style="display:none">
-                <span id="coun-photo-filename"></span>
-                <button type="button" onclick="clearPhoto('coun-photo-preview','coun-photo-filename-row','coun-photo-input','counPhoto')" aria-label="Remove photo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-              </div>
-              <div class="photo-instructions">
-                <strong>How to use:</strong> Upload a photo here and click save. The image will be stored with the admin data and rendered on the profile card.
-              </div>
-            </div>
-          </div>
-      </div>
+      <!-- ── COUNSELLING (REDIRECT) ── -->
+      <div class="panel" id="panel-counselling">
+        <div class="section-head"><h2>Counselling Portal</h2><p>Management moved to specialized admin panel.</p></div>
+        <div class="edit-grid">
+           <div class="edit-card full-card" style="text-align:center; padding:4rem 2rem;">
+              <div style="font-size:64px; margin-bottom:1.5rem;">🧠</div>
+              <h3 style="font-size:24px; color:var(--dm); margin-bottom:1rem;">Advanced Counselling Management</h3>
+              <p style="color:var(--lt); max-width:500px; margin:0 auto 2.5rem; line-height:1.6;">
+                The counselling page now has its own dedicated admin system to handle complex profile details, service mediums, and specialized areas of expertise.
+              </p>
+              <a href="admin-counselling.html" class="save-all-btn" style="text-decoration:none; display:inline-block; padding:14px 40px; font-size:16px;">Open Counselling Panel ↗</a>
+           </div>
+        </div>
       </div>
 
-      <!-- ── INSURANCE ── -->
+      <!-- ── INSURANCE (REDIRECT) ── -->
       <div class="panel" id="panel-insurance">
-        <div class="section-head"><h2>Insurance Consultant</h2><p>Edit the insurance consultant profile and details.</p></div>
+        <div class="section-head"><h2>Insurance Portal</h2><p>Management moved to specialized admin panel.</p></div>
         <div class="edit-grid">
-          <div class="edit-card">
-            <div class="edit-card-header"><span class="ec-title"><span class="ec-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span> Section Header</span></div>
-            <div class="edit-card-body">
-              <div class="field"><label>Section Tag</label><input type="text" id="ins-tag" value="✦ Financial Security"></div>
-              <div class="field"><label>Profile Tag</label><input type="text" id="ins-profile-tag" value="✦ Meet the Consultant"></div>
-              <div class="field"><label>Section Title</label><input type="text" id="ins-title" value="Insurance & Financial Planning"></div>
-              <div class="field"><label>Description</label><textarea id="ins-desc">Sachin Suraj Noronha is an MDRT award-winning insurance consultant dedicated to creating personalised financial solutions for families and individuals with expert guidance and proven strategies.</textarea></div>
-            </div>
-          </div>
-              <div class="photo-filename-row" id="ins-photo-filename-row" style="display:none">
-                <span id="ins-photo-filename"></span>
-                <button type="button" onclick="clearPhoto('ins-photo-preview','ins-photo-filename-row','ins-photo-input','insPhoto')" aria-label="Remove photo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-              </div>
-              <div class="photo-instructions">
-                <strong>How to use:</strong> Upload a photo here and click save. The image will be stored with the admin data and rendered on the profile card.
-              </div>
-            </div>
-          </div>
+           <div class="edit-card full-card" style="text-align:center; padding:4rem 2rem;">
+              <div style="font-size:64px; margin-bottom:1.5rem;">🛡️</div>
+              <h3 style="font-size:24px; color:var(--gd); margin-bottom:1rem;">Advanced Insurance Management</h3>
+              <p style="color:var(--lt); max-width:500px; margin:0 auto 2.5rem; line-height:1.6;">
+                The insurance page now has its own dedicated admin system to handle product catalogs, professional journey milestones, and the consultant narrative.
+              </p>
+              <a href="admin-insurance.html" class="save-all-btn" style="text-decoration:none; display:inline-block; padding:14px 40px; font-size:16px; background:linear-gradient(135deg,var(--gd),var(--gold)); border-color:var(--gd);">Open Insurance Panel ↗</a>
+           </div>
+        </div>
       </div>
-      </div>
+
 
       <!-- ── GALLERY ── -->
       <div class="panel" id="panel-gallery">
@@ -1088,60 +978,50 @@ if (DATA.testTitle === undefined) DATA.testTitle = 'What Our Clients Say';
 if (DATA.testDesc === undefined) DATA.testDesc = 'Scroll horizontally to discover real testimonials from our clients';
 
 /* ═══════════════════════════════════════════════
-   AUTH
+   AUTH (Centralized)
 ═══════════════════════════════════════════════ */
-function doLogin(){
-  const u = document.getElementById('login-user').value.trim();
-  const p = document.getElementById('login-pwd').value;
-  const err = document.getElementById('login-error');
-  const btn = document.getElementById('login-btn');
-
-  if(!u || !p){
-    showError('Please enter both username and password.');
-    return;
-  }
-  btn.classList.add('loading');
-  btn.querySelector('span').textContent = 'Signing in...';
-
-  setTimeout(()=>{
-    if(u === DATA.creds.user && p === DATA.creds.pass){
-      document.getElementById('login-page').style.display='none';
-      document.getElementById('dashboard-page').style.display='block';
-      initDashboard();
-      toast('Welcome back, Admin!','success');
-    } else {
-      showError('Invalid username or password.');
-      btn.classList.remove('loading');
-      btn.querySelector('span').textContent='Sign In to Dashboard ->';
+function isAdminAuthenticated(){
+  try {
+    const session = JSON.parse(localStorage.getItem('vima_auth_token') || 'null');
+    if (!session || !session.expiresAt || Date.now() > session.expiresAt) {
+      localStorage.removeItem('vima_auth_token');
+      return false;
     }
-  }, 900);
-
-  function showError(msg){
-    err.classList.add('show');
-    document.getElementById('login-error-msg').textContent = msg;
-    setTimeout(()=>err.classList.remove('show'),4000);
+    return true;
+  } catch(e) {
+    localStorage.removeItem('vima_auth_token');
+    return false;
   }
 }
 
-document.getElementById('login-pwd').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
-document.getElementById('login-user').addEventListener('keydown', e=>{ if(e.key==='Enter') doLogin(); });
-
-function togglePwd(){
-  const inp = document.getElementById('login-pwd');
-  inp.type = inp.type==='password' ? 'text' : 'password';
+function checkAuth(){
+  if(!isAdminAuthenticated()){
+    window.location.href = 'admin-login.html?redirect=admin.html';
+  } else {
+    initDashboard();
+  }
 }
+checkAuth();
 
 function doLogout(){
   if(!confirm('Are you sure you want to log out?')) return;
-  document.getElementById('dashboard-page').style.display='none';
-  document.getElementById('login-page').style.display='flex';
-  document.getElementById('login-user').value='';
-  document.getElementById('login-pwd').value='';
+  localStorage.removeItem('vima_auth_token');
+  window.location.href = 'admin-login.html';
 }
 
 /* ═══════════════════════════════════════════════
    SIDEBAR / NAVIGATION
 ═══════════════════════════════════════════════ */
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[ch]));
+}
+
 let sidebarCollapsed = false;
 
 function toggleSidebar(){
@@ -1216,8 +1096,8 @@ function renderNavLinks(){
     row.className='list-item';
     row.innerHTML=`
       <span class="li-handle">::</span>
-      <input type="text" value="${lnk.label}" placeholder="Label" style="flex:1;" oninput="DATA.navLinks[${i}].label=this.value;markUnsaved();">
-      <input type="text" value="${lnk.href}" placeholder="#anchor" style="width:100px;" oninput="DATA.navLinks[${i}].href=this.value;markUnsaved();">
+      <input type="text" value="${escapeHtml(lnk.label)}" placeholder="Label" style="flex:1;" oninput="DATA.navLinks[${i}].label=this.value;markUnsaved();">
+      <input type="text" value="${escapeHtml(lnk.href)}" placeholder="#anchor" style="width:100px;" oninput="DATA.navLinks[${i}].href=this.value;markUnsaved();">
       <button type="button" class="li-del" onclick="DATA.navLinks.splice(${i},1);renderNavLinks();markUnsaved();" aria-label="Remove">${adminIcon('x')}</button>
     `;
     le.appendChild(row);
@@ -1244,12 +1124,12 @@ function renderHeroCards(){
       <div class="field-row" style="margin-bottom:.5rem;">
         <div class="field" style="margin:0;display:flex;align-items:flex-end;gap:8px;">
           <span class="admin-ico" style="display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;background:rgba(255,255,255,.35);border:1px solid rgba(180,127,166,.2);border-radius:10px;">${iconPreview}</span>
-          <div style="flex:1;"><label>Icon</label><input type="text" value="${card.icon}" placeholder="icon key" oninput="DATA.heroCards[${i}].icon=this.value;markUnsaved();"></div>
+          <div style="flex:1;"><label>Icon</label><input type="text" value="${escapeHtml(card.icon)}" placeholder="icon key" oninput="DATA.heroCards[${i}].icon=this.value;markUnsaved();"></div>
         </div>
-        <div class="field" style="margin:0;"><label>Title</label><input type="text" value="${card.title}" placeholder="Card title" oninput="DATA.heroCards[${i}].title=this.value;markUnsaved();"></div>
+        <div class="field" style="margin:0;"><label>Title</label><input type="text" value="${escapeHtml(card.title)}" placeholder="Card title" oninput="DATA.heroCards[${i}].title=this.value;markUnsaved();"></div>
       </div>
-      <div class="field" style="margin:0 0 .5rem;"><label>Badge</label><input type="text" value="${card.badge || ''}" placeholder="Short badge text" oninput="DATA.heroCards[${i}].badge=this.value;markUnsaved();"></div>
-      <div class="field" style="margin:0;"><label>Description</label><input type="text" value="${card.desc}" placeholder="Short description" oninput="DATA.heroCards[${i}].desc=this.value;markUnsaved();"></div>
+      <div class="field" style="margin:0 0 .5rem;"><label>Badge</label><input type="text" value="${escapeHtml(card.badge || '')}" placeholder="Short badge text" oninput="DATA.heroCards[${i}].badge=this.value;markUnsaved();"></div>
+      <div class="field" style="margin:0;"><label>Description</label><input type="text" value="${escapeHtml(card.desc)}" placeholder="Short description" oninput="DATA.heroCards[${i}].desc=this.value;markUnsaved();"></div>
     `;
     c.appendChild(div);
   });
@@ -1267,15 +1147,15 @@ function renderServicesList(){
     div.className='item-card';
     div.innerHTML=`
       <div class="item-card-head" onclick="toggleCard(this)">
-        <span class="ic-label"><span class="admin-ico" style="display:inline-flex;align-items:center;vertical-align:middle;">${iconPreview}</span> ${svc.title}</span>
+        <span class="ic-label"><span class="admin-ico" style="display:inline-flex;align-items:center;vertical-align:middle;">${iconPreview}</span> ${escapeHtml(svc.title)}</span>
         <span class="ic-toggle">&rsaquo;</span>
       </div>
       <div class="item-card-body">
         <div class="field-row">
-          <div class="field"><label>Icon (key or emoji)</label><input type="text" value="${svc.icon}" oninput="DATA.services[${i}].icon=this.value;renderServicesList();markUnsaved();"></div>
-          <div class="field"><label>Title</label><input type="text" value="${svc.title}" oninput="DATA.services[${i}].title=this.value;markUnsaved();"></div>
+          <div class="field"><label>Icon (key or emoji)</label><input type="text" value="${escapeHtml(svc.icon)}" oninput="DATA.services[${i}].icon=this.value;renderServicesList();markUnsaved();"></div>
+          <div class="field"><label>Title</label><input type="text" value="${escapeHtml(svc.title)}" oninput="DATA.services[${i}].title=this.value;markUnsaved();"></div>
         </div>
-        <div class="field"><label>Description</label><textarea oninput="DATA.services[${i}].desc=this.value;markUnsaved();">${svc.desc}</textarea></div>
+        <div class="field"><label>Description</label><textarea oninput="DATA.services[${i}].desc=this.value;markUnsaved();">${escapeHtml(svc.desc)}</textarea></div>
         <div class="ic-actions">
           <button type="button" class="ic-del-btn" onclick="DATA.services.splice(${i},1);renderServicesList();updateStatsCount();markUnsaved();"><span style="display:inline-flex;align-items:center;gap:6px;">${adminIcon('trash')}<span>Remove</span></span></button>
         </div>
@@ -1306,15 +1186,15 @@ function renderInsuranceServicesList(){
     div.className = 'item-card';
     div.innerHTML = `
       <div class="item-card-head" onclick="toggleCard(this)">
-        <span class="ic-label"><span class="admin-ico" style="display:inline-flex;align-items:center;vertical-align:middle;">${iconPreview}</span> ${svc.title}</span>
+        <span class="ic-label"><span class="admin-ico" style="display:inline-flex;align-items:center;vertical-align:middle;">${iconPreview}</span> ${escapeHtml(svc.title)}</span>
         <span class="ic-toggle">&rsaquo;</span>
       </div>
       <div class="item-card-body">
         <div class="field-row">
-          <div class="field"><label>Icon (key or emoji)</label><input type="text" value="${svc.icon}" oninput="DATA.insuranceServices[${i}].icon=this.value;renderInsuranceServicesList();markUnsaved();"></div>
-          <div class="field"><label>Title</label><input type="text" value="${svc.title}" oninput="DATA.insuranceServices[${i}].title=this.value;markUnsaved();"></div>
+          <div class="field"><label>Icon (key or emoji)</label><input type="text" value="${escapeHtml(svc.icon)}" oninput="DATA.insuranceServices[${i}].icon=this.value;renderInsuranceServicesList();markUnsaved();"></div>
+          <div class="field"><label>Title</label><input type="text" value="${escapeHtml(svc.title)}" oninput="DATA.insuranceServices[${i}].title=this.value;markUnsaved();"></div>
         </div>
-        <div class="field"><label>Description</label><textarea oninput="DATA.insuranceServices[${i}].desc=this.value;markUnsaved();">${svc.desc}</textarea></div>
+        <div class="field"><label>Description</label><textarea oninput="DATA.insuranceServices[${i}].desc=this.value;markUnsaved();">${escapeHtml(svc.desc)}</textarea></div>
         <div class="ic-actions">
           <button type="button" class="ic-del-btn" onclick="DATA.insuranceServices.splice(${i},1);renderInsuranceServicesList();markUnsaved();"><span style="display:inline-flex;align-items:center;gap:6px;">${adminIcon('trash')}<span>Remove</span></span></button>
         </div>
@@ -1348,7 +1228,7 @@ function renderListEditor(containerId, arr, onChange){
     row.className='list-item';
     row.innerHTML=`
       <span class="li-handle">::</span>
-      <input type="text" value="${item}" oninput="arr[${i}]=this.value;onChange?onChange():null;">
+      <input type="text" value="${escapeHtml(item)}" oninput="arr[${i}]=this.value;onChange?onChange():null;">
       <button type="button" class="li-del" onclick="arr.splice(${i},1);renderListEditor('${containerId}',arr,()=>markUnsaved());markUnsaved();" aria-label="Remove">${adminIcon('x')}</button>
     `;
     // Fix: bind actual array ref through closure
@@ -1386,10 +1266,10 @@ function renderGalleryCards(){
       <div class="item-card-head" onclick="toggleCard(this)">
         <span class="ic-label">
           ${hasImg
-            ? `<img src="${card.img}" style="width:22px;height:22px;border-radius:5px;object-fit:cover;flex-shrink:0;">`
+            ? `<img src="${escapeHtml(card.img)}" style="width:22px;height:22px;border-radius:5px;object-fit:cover;flex-shrink:0;">`
             : `<span class="admin-ico" style="display:inline-flex;align-items:center;vertical-align:middle;">${iconSvg}</span>`
           }
-          ${card.title}
+          ${escapeHtml(card.title)}
         </span>
         <span class="ic-toggle">&rsaquo;</span>
       </div>
@@ -1397,16 +1277,16 @@ function renderGalleryCards(){
         <div class="field-row">
           <div class="field">
             <label>Icon (used if no image)</label>
-            <input type="text" value="${card.icon||'image'}" placeholder="icon key (e.g. brain, star)" oninput="DATA.galleryCards[${i}].icon=this.value;renderGalleryCards();markUnsaved();">
+            <input type="text" value="${escapeHtml(card.icon||'image')}" placeholder="icon key (e.g. brain, star)" oninput="DATA.galleryCards[${i}].icon=this.value;renderGalleryCards();markUnsaved();">
           </div>
           <div class="field">
             <label>Title</label>
-            <input type="text" value="${card.title}" placeholder="Card title" oninput="DATA.galleryCards[${i}].title=this.value;markUnsaved();">
+            <input type="text" value="${escapeHtml(card.title)}" placeholder="Card title" oninput="DATA.galleryCards[${i}].title=this.value;markUnsaved();">
           </div>
         </div>
         <div class="field">
           <label>Description</label>
-          <textarea placeholder="Short description" oninput="DATA.galleryCards[${i}].desc=this.value;markUnsaved();">${card.desc||''}</textarea>
+          <textarea placeholder="Short description" oninput="DATA.galleryCards[${i}].desc=this.value;markUnsaved();">${escapeHtml(card.desc||'')}</textarea>
         </div>
 
         <div class="field">
@@ -1418,7 +1298,7 @@ function renderGalleryCards(){
             ondragleave="this.style.borderColor='rgba(180,127,166,.35)';this.style.background='var(--plm)';"
             ondrop="handleImgDrop(event,${i})">
             ${hasImg
-              ? `<img src="${card.img}" style="max-height:130px;max-width:100%;border-radius:8px;object-fit:cover;">`
+              ? `<img src="${escapeHtml(card.img)}" style="max-height:130px;max-width:100%;border-radius:8px;object-fit:cover;">`
               : `<div style="display:flex;align-items:center;justify-content:center;color:var(--pm);">${typeof vsIconHtml === 'function' ? vsIconHtml('image') : ''}</div><div style="font-size:12px;color:var(--lt);">Click or drag & drop an image</div><div style="font-size:11px;color:var(--lt);opacity:.6;">JPG, PNG, WebP - max ~2MB recommended</div>`
             }
           </div>
@@ -1518,14 +1398,14 @@ function renderTestimonials(){
     div.className='item-card';
     div.innerHTML=`
       <div class="item-card-head" onclick="toggleCard(this)">
-        <span class="ic-label" style="display:inline-flex;align-items:center;gap:6px;"><span class="admin-ico" style="display:inline-flex;">${adminIcon('message')}</span><span>${t.author}</span></span>
+        <span class="ic-label" style="display:inline-flex;align-items:center;gap:6px;"><span class="admin-ico" style="display:inline-flex;">${adminIcon('message')}</span><span>${escapeHtml(t.author)}</span></span>
         <span class="ic-toggle">&rsaquo;</span>
       </div>
       <div class="item-card-body">
-        <div class="field"><label>Quote</label><textarea oninput="DATA.testimonials[${i}].quote=this.value;markUnsaved();">${t.quote}</textarea></div>
+        <div class="field"><label>Quote</label><textarea oninput="DATA.testimonials[${i}].quote=this.value;markUnsaved();">${escapeHtml(t.quote)}</textarea></div>
         <div class="field-row">
-          <div class="field"><label>Author Name</label><input type="text" value="${t.author}" oninput="DATA.testimonials[${i}].author=this.value;renderTestimonials();markUnsaved();"></div>
-          <div class="field"><label>Role / Label</label><input type="text" value="${t.role}" oninput="DATA.testimonials[${i}].role=this.value;markUnsaved();"></div>
+          <div class="field"><label>Author Name</label><input type="text" value="${escapeHtml(t.author)}" oninput="DATA.testimonials[${i}].author=this.value;renderTestimonials();markUnsaved();"></div>
+          <div class="field"><label>Role / Label</label><input type="text" value="${escapeHtml(t.role)}" oninput="DATA.testimonials[${i}].role=this.value;markUnsaved();"></div>
         </div>
         <div class="field"><label>Rating (stars)</label>
           <select oninput="DATA.testimonials[${i}].rating=this.value;markUnsaved();">

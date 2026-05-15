@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vima Sneha · Live Session</title>
+<link rel="icon" type="image/png" href="assets/images/logo.png" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --pm:#B47FA6;--dm:#7A4F72;--dkm:#4E2E4A;--plm:#EFE3EA;
+  --gold:#D4A853;--gl:#F0D08A;
+  --bg:#FAF5F9;--white:#fff;
+  --text:#2d2430;--muted:#7a6878;
+  --sh:0 8px 32px rgba(122,79,114,.15);
+}
+html,body{height:100%;font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* WAITING LOBBY */
+#lobby{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2rem;position:relative;overflow:hidden;
+}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:pulse 8s ease-in-out infinite alternate;}
+.orb1{width:500px;height:500px;background:radial-gradient(circle,rgba(180,127,166,.25),transparent 70%);top:-150px;left:-150px;}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,rgba(212,168,83,.15),transparent 70%);bottom:-100px;right:-100px;}
+@keyframes pulse{0%{transform:scale(1);}100%{transform:scale(1.2) translate(15px,-20px);}}
+
+.lobby-card{
+  position:relative;z-index:10;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);
+  border-radius:28px;padding:3rem 2.5rem;max-width:520px;width:100%;
+  border:1px solid rgba(180,127,166,.2);box-shadow:0 30px 80px rgba(122,79,114,.15);
+  text-align:center;animation:fadeUp .8s cubic-bezier(.23,1,.32,1) both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+.brand-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,rgba(180,127,166,.15),rgba(212,168,83,.1));
+  border:1px solid rgba(180,127,166,.3);border-radius:20px;
+  padding:6px 16px;font-size:11px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--dm);margin-bottom:1.5rem;
+}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--pm);animation:blink 1.5s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+.lobby-card h1{
+  font-size:32px;font-weight:800;margin-bottom:.5rem;
+  background:linear-gradient(135deg,var(--dkm),var(--pm),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.lobby-card .subtitle{font-size:14px;color:var(--muted);margin-bottom:2rem;line-height:1.6;}
+
+.session-info-box{
+  background:var(--plm);border-radius:16px;padding:1.2rem 1.5rem;
+  margin-bottom:1.5rem;text-align:left;border:1px solid rgba(180,127,166,.2);
+}
+.session-info-box .label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--dm);margin-bottom:.3rem;}
+.session-info-box .value{font-size:15px;font-weight:700;color:var(--dkm);}
+.session-info-box .value.muted{font-size:13px;font-weight:400;color:var(--muted);}
+
+.name-input-group{margin-bottom:1.5rem;text-align:left;}
+.name-input-group label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--dm);margin-bottom:.5rem;}
+.name-input-group input{
+  width:100%;padding:13px 16px;border-radius:14px;
+  border:1.5px solid rgba(180,127,166,.25);background:rgba(255,255,255,.7);
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.name-input-group input:focus{border-color:var(--pm);box-shadow:0 0 0 4px rgba(180,127,166,.12);}
+
+.join-btn{
+  width:100%;padding:14px;border:none;border-radius:16px;
+  background:linear-gradient(135deg,var(--dkm),var(--pm) 60%,var(--gold));
+  color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;box-shadow:0 6px 25px rgba(122,79,114,.3);
+  transition:all .3s ease;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.join-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(122,79,114,.4);}
+.join-btn:active{transform:translateY(0);}
+.join-btn svg{width:18px;height:18px;}
+
+.privacy-note{font-size:11px;color:var(--muted);margin-top:1rem;line-height:1.6;}
+
+/* INVALID SESSION */
+#invalid-view{display:none;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:2rem;}
+#invalid-view h2{font-size:24px;font-weight:800;color:var(--dkm);margin-bottom:.5rem;}
+#invalid-view p{color:var(--muted);font-size:14px;}
+
+/* ACTIVE CALL */
+#call-view{display:none;flex-direction:column;height:100vh;}
+
+.call-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1.5rem;
+  background:rgba(78,46,74,.97);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0;z-index:10;
+}
+.call-topbar .logo-area{display:flex;align-items:center;gap:10px;}
+.call-topbar .logo-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--pm),var(--gold));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;}
+.call-topbar .logo-text{color:#fff;font-weight:700;font-size:14px;}
+.call-topbar .logo-sub{color:rgba(255,255,255,.45);font-size:10px;font-weight:400;display:block;}
+
+.call-status-pill{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,.7);
+}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#4CAF50;animation:blink 1.5s infinite;}
+
+.session-name-pill{font-size:12px;color:rgba(255,255,255,.6);font-weight:600;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+.call-frame-wrap{flex:1;position:relative;background:#1a1420;}
+#jitsi-frame{width:100%;height:100%;border:none;display:block;}
+
+.end-session-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1.5rem;background:rgba(78,46,74,.97);
+  border-top:1px solid rgba(255,255,255,.08);flex-shrink:0;
+}
+.timer-display{color:rgba(255,255,255,.7);font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;}
+
+.end-btn{
+  padding:8px 20px;border-radius:12px;border:none;
+  background:rgba(244,67,54,.2);border:1px solid rgba(244,67,54,.4);
+  color:#ff6b6b;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13px;
+  cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;
+}
+.end-btn:hover{background:rgba(244,67,54,.35);border-color:rgba(244,67,54,.6);}
+
+.copy-link-btn{
+  padding:8px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:12px;
+  cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;
+}
+.copy-link-btn:hover{background:rgba(255,255,255,.14);}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:1000;
+  background:rgba(78,46,74,.95);color:#fff;padding:12px 20px;
+  border-radius:14px;font-size:13px;font-weight:600;
+  border:1px solid rgba(180,127,166,.3);
+  transform:translateX(120%);transition:transform .4s cubic-bezier(.23,1,.32,1);
+  pointer-events:none;max-width:280px;
+}
+.toast.show{transform:translateX(0);}
+</style>
+</head>
+<body>
+
+<!-- LOBBY -->
+<div id="lobby">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="lobby-card">
+    <div class="brand-badge"><div class="brand-dot"></div>Vima Sneha · Live Session</div>
+    <h1 id="lobby-title">Counselling Session</h1>
+    <p class="subtitle">You're about to join a private, encrypted video session with your counsellor.</p>
+
+    <div class="session-info-box">
+      <div class="label">Session</div>
+      <div class="value" id="session-label">Loading...</div>
+      <div class="value muted" id="session-time"></div>
+    </div>
+
+    <div class="name-input-group">
+      <label>Your Name (as it appears in the call)</label>
+      <input type="text" id="participant-name" placeholder="e.g. Priya Sharma" autocomplete="name">
+    </div>
+
+    <button class="join-btn" onclick="joinSession()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 10l4.553-2.276A1 1 0 0121 8.724v6.552a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
+      Join Session Now
+    </button>
+    <p class="privacy-note">🔒 End-to-end encrypted via Jitsi Meet. No account required. Your session is completely private.</p>
+  </div>
+</div>
+
+<!-- INVALID -->
+<div id="invalid-view">
+  <div>
+    <div style="font-size:48px;margin-bottom:1rem;">🔗</div>
+    <h2>Invalid Session Link</h2>
+    <p>This session link may have expired or is incorrect.<br>Please contact Vima Sneha for a new link.</p>
+    <a href="counselling.html" style="display:inline-block;margin-top:1.5rem;padding:12px 28px;border-radius:14px;background:linear-gradient(135deg,#4E2E4A,#B47FA6);color:#fff;font-weight:700;text-decoration:none;font-size:14px;">Back to Counselling</a>
+  </div>
+</div>
+
+<!-- ACTIVE CALL -->
+<div id="call-view">
+  <div class="call-topbar">
+    <div class="logo-area">
+      <div class="logo-icon">VS</div>
+      <div class="logo-text">Vima Sneha<span class="logo-sub">Private Counselling Session</span></div>
+    </div>
+    <div class="call-status-pill"><div class="live-dot"></div>Live</div>
+    <div class="session-name-pill" id="topbar-session-name">Session</div>
+  </div>
+
+  <div class="call-frame-wrap">
+    <iframe id="jitsi-frame" allow="camera; microphone; fullscreen; display-capture" allowfullscreen></iframe>
+  </div>
+
+  <div class="end-session-bar">
+    <div class="timer-display">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <span id="call-timer">00:00</span>
+    </div>
+    <button class="copy-link-btn" onclick="copyRoomLink()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copy Link
+    </button>
+    <button class="end-btn" onclick="leaveCall()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.68 13.31a16 16 0 003.41 2.6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7 2 2 0 011.72 2v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07C9.44 16.29 7.71 14.56 6.46 12.54A19.79 19.79 0 013.39 3.91 2 2 0 015.36 1.72h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L9.34 9.62"/><line x1="23" y1="1" x2="1" y2="23"/></svg>
+      Leave Session
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const roomId = params.get('room');
+const sessionName = params.get('name') ? decodeURIComponent(params.get('name')) : 'Counselling Session';
+const sessionTime = params.get('time') ? decodeURIComponent(params.get('time')) : '';
+
+let timerInterval = null;
+let secondsElapsed = 0;
+
+function init(){
+  if(!roomId){
+    const stored = localStorage.getItem('vima_sessions');
+    if(!stored){
+      showInvalid();
+      return;
+    }
+    showInvalid();
+    return;
+  }
+
+  document.getElementById('lobby-title').textContent = sessionName;
+  document.getElementById('session-label').textContent = sessionName;
+  document.getElementById('session-time').textContent = sessionTime;
+
+  const saved = localStorage.getItem('participant_name');
+  if(saved) document.getElementById('participant-name').value = saved;
+
+  document.getElementById('participant-name').addEventListener('keydown', e => {
+    if(e.key === 'Enter') joinSession();
+  });
+}
+
+function joinSession(){
+  const name = document.getElementById('participant-name').value.trim() || 'Guest';
+  localStorage.setItem('participant_name', name);
+
+  document.getElementById('lobby').style.display = 'none';
+  document.getElementById('call-view').style.display = 'flex';
+  document.getElementById('topbar-session-name').textContent = sessionName;
+
+  const jitsiRoom = 'vimasneha-' + roomId;
+  const src = `https://meet.jit.si/${encodeURIComponent(jitsiRoom)}#userInfo.displayName="${encodeURIComponent(name)}"&config.startWithAudioMuted=false&config.startWithVideoMuted=false&config.disableInviteFunctions=true&config.toolbarButtons=["microphone","camera","closedcaptions","desktop","fullscreen","fodeviceselection","hangup","chat","raisehand","videoquality","filmstrip","tileview","download","help","mute-everyone"]&interfaceConfig.TOOLBAR_ALWAYS_VISIBLE=true&interfaceConfig.SHOW_JITSI_WATERMARK=false&interfaceConfig.SHOW_WATERMARK_FOR_GUESTS=false&interfaceConfig.BRAND_WATERMARK_LINK=https://vimasneha.in`;
+
+  document.getElementById('jitsi-frame').src = src;
+
+  secondsElapsed = 0;
+  timerInterval = setInterval(() => {
+    secondsElapsed++;
+    const m = String(Math.floor(secondsElapsed/60)).padStart(2,'0');
+    const s = String(secondsElapsed%60).padStart(2,'0');
+    document.getElementById('call-timer').textContent = m + ':' + s;
+  }, 1000);
+}
+
+function leaveCall(){
+  if(!confirm('Leave this session?')) return;
+  clearInterval(timerInterval);
+  document.getElementById('jitsi-frame').src = '';
+  document.getElementById('call-view').style.display = 'none';
+  document.getElementById('lobby').style.display = 'flex';
+  showToast('Session ended. Thank you!');
+}
+
+function copyRoomLink(){
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    showToast('Session link copied!');
+  });
+}
+
+function showInvalid(){
+  document.getElementById('lobby').style.display = 'none';
+  document.getElementById('invalid-view').style.display = 'flex';
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>News & Updates | Vima Sneha</title>
+    <meta name="description" content="Stay updated with the latest news, announcements, and insights from Vima Sneha — covering mental health, counselling, insurance, and community events." />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/logo.png" />
+    <link rel="shortcut icon" type="image/png" href="assets/images/logo.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo.png" />
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,800&family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="assets/css/layout-shared.css?v=20260424-1" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#B47FA6', light: '#C9A0BB', dark: '#7A4F72' },
+                        secondary: { DEFAULT: '#D4A853', light: '#F0D08A', dark: '#A6823D' },
+                        surface: { DEFAULT: '#FAF5F9', dark: '#141214' }
+                    },
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'Manrope', 'sans-serif'] },
+                    borderRadius: { '2xl': '1.5rem', '3xl': '2rem', '4xl': '3rem' },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            --primary-mauve: #B47FA6;
+            --secondary-mauve: #C9A0BB;
+            --deep-mauve: #7A4F72;
+            --light-mauve: #DCC5D5;
+            --pale-mauve: #EFE3EA;
+            --darkest-mauve: #4E2E4A;
+            --gold: #D4A853;
+            --gold-light: #F0D08A;
+            --gold-dark: #A07830;
+            --white: #ffffff;
+            --dark-text: #2d2430;
+            --light-text: #7a6878;
+            --bg-base: #FAF5F9;
+            --shadow-md: 0 8px 24px rgba(180, 127, 166, 0.22);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            background-color: var(--pale-mauve);
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+
+        /* ── GLASS ── */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ── PAGE BANNER ── */
+        .news-hero {
+            position: relative;
+            min-height: 340px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #4E2E4A 0%, #7A4F72 40%, #B47FA6 70%, #D4A853 100%);
+            border-radius: 0 0 2rem 2rem;
+            margin-top: -5rem;
+            padding-top: 5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .news-hero {
+                margin-top: -10rem;
+                padding-top: 10rem;
+                min-height: 420px;
+            }
+        }
+
+        .news-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(212, 168, 83, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(180, 127, 166, 0.3) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .news-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(to top, var(--pale-mauve) 0%, transparent 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.04em;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-content p {
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .news-hero {
+                min-height: 260px;
+                padding-top: 4rem;
+                margin-top: -5rem;
+            }
+            .hero-content h1 {
+                font-size: 2.25rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+        }
+
+        /* ── DECORATIVE PARTICLES ── */
+        .hero-particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes hero-float-1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -30px) scale(1.2); }
+        }
+        @keyframes hero-float-2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-15px, -25px) scale(0.8); }
+        }
+        @keyframes hero-float-3 {
+            0%, 100% { transform: translate(0, 0); opacity: 0.4; }
+            50% { transform: translate(25px, 15px); opacity: 0.8; }
+        }
+
+        /* ── FEATURED NEWS CARD ── */
+        .featured-card {
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+            min-height: 420px;
+            display: flex;
+            align-items: flex-end;
+            cursor: pointer;
+            transition: transform 500ms ease, box-shadow 500ms ease;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(122, 79, 114, 0.3);
+        }
+
+        .featured-card-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #7A4F72 0%, #4E2E4A 50%, #2d1a2a 100%);
+            z-index: 0;
+        }
+
+        .featured-card-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .featured-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(20, 6, 18, 0.95) 0%, rgba(36, 14, 34, 0.6) 50%, transparent 100%);
+            z-index: 1;
+        }
+
+        .featured-card-content {
+            position: relative;
+            z-index: 2;
+            padding: 2.5rem;
+            width: 100%;
+        }
+
+        .featured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(212, 168, 83, 0.4);
+        }
+
+        .featured-card-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+        }
+
+        .featured-card-content p {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+        }
+
+        .featured-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .featured-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        /* ── CATEGORY FILTERS ── */
+        .category-bar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+
+        .category-pill {
+            padding: 0.6rem 1.4rem;
+            border-radius: 9999px;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1.5px solid rgba(180, 127, 166, 0.2);
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--light-text);
+            transition: all 300ms ease;
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+        }
+
+        .category-pill:hover {
+            border-color: var(--primary-mauve);
+            color: var(--deep-mauve);
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(180, 127, 166, 0.15);
+        }
+
+        .category-pill.active {
+            background: linear-gradient(135deg, var(--primary-mauve), var(--deep-mauve));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 8px 24px rgba(180, 127, 166, 0.35);
+        }
+
+        /* ── NEWS CARD GRID ── */
+        .news-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(122, 79, 114, 0.2);
+            border-color: rgba(180, 127, 166, 0.3);
+        }
+
+        .news-card-img-wrap {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .news-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 600ms ease;
+        }
+
+        .news-card:hover .news-card-img-wrap img {
+            transform: scale(1.08);
+        }
+
+        .news-card-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(78, 46, 74, 0.5) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .news-card-category {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: white;
+            z-index: 2;
+        }
+
+        .news-card-category.cat-counselling {
+            background: linear-gradient(135deg, var(--primary-mauve), var(--deep-mauve));
+        }
+        .news-card-category.cat-insurance {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        }
+        .news-card-category.cat-wellness {
+            background: linear-gradient(135deg, #8B5E7E, #4E2E4A);
+        }
+        .news-card-category.cat-community {
+            background: linear-gradient(135deg, #C9A0BB, #7A4F72);
+        }
+        .news-card-category.cat-announcement {
+            background: linear-gradient(135deg, #A6823D, #7A5F28);
+        }
+
+        .news-card-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card-date {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-mauve);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .news-card-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--dark-text);
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            margin-bottom: 0.75rem;
+            transition: color 300ms ease;
+        }
+
+        .news-card:hover .news-card-title {
+            color: var(--deep-mauve);
+        }
+
+        .news-card-excerpt {
+            font-size: 0.875rem;
+            color: var(--light-text);
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+            flex: 1;
+        }
+
+        .news-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(180, 127, 166, 0.1);
+            padding-top: 1rem;
+        }
+
+        .news-card-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .news-card-author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary-mauve), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .news-card-author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card-author-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+
+        .news-card-read-time {
+            font-size: 0.65rem;
+            color: var(--light-text);
+            font-weight: 500;
+        }
+
+        .news-card-arrow {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(180, 127, 166, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-mauve);
+            transition: all 300ms ease;
+        }
+
+        .news-card:hover .news-card-arrow {
+            background: var(--primary-mauve);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        /* ── SCROLL REVEAL ── */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── NEWSLETTER SECTION ── */
+        .newsletter-section {
+            position: relative;
+            background: linear-gradient(135deg, #4E2E4A 0%, #7A4F72 60%, #B47FA6 100%);
+            border-radius: 2rem;
+            overflow: hidden;
+            padding: 4rem 2rem;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 10% 90%, rgba(212, 168, 83, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.08) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .newsletter-glass-input {
+            background: #ffffff;
+            border: 1.5px solid transparent;
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            font-size: 0.9375rem;
+            color: #1a202c;
+            outline: none;
+            transition: all 300ms ease;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .newsletter-glass-input::placeholder {
+            color: #a0aec0;
+            font-weight: 500;
+        }
+
+        .newsletter-glass-input:focus {
+            border-color: var(--gold);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(212, 168, 83, 0.15);
+        }
+
+        .newsletter-btn {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            font-weight: 800;
+            font-size: 0.9375rem;
+            border: none;
+            cursor: pointer;
+            transition: all 300ms ease;
+            white-space: nowrap;
+            box-shadow: 0 8px 24px rgba(212, 168, 83, 0.35);
+        }
+
+        .newsletter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(212, 168, 83, 0.45);
+        }
+
+        /* ── STAGGERED ANIMATION DELAYS ── */
+        .news-card:nth-child(1) .scroll-reveal { transition-delay: 0.05s; }
+        .news-card:nth-child(2) .scroll-reveal { transition-delay: 0.10s; }
+        .news-card:nth-child(3) .scroll-reveal { transition-delay: 0.15s; }
+        .news-card:nth-child(4) .scroll-reveal { transition-delay: 0.20s; }
+        .news-card:nth-child(5) .scroll-reveal { transition-delay: 0.25s; }
+        .news-card:nth-child(6) .scroll-reveal { transition-delay: 0.30s; }
+
+        /* ── GRADIENT MESH ── */
+        .gradient-mesh {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(at 0% 0%, rgba(180, 127, 166, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(212, 168, 83, 0.1) 0px, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ── PAGINATION ── */
+        .pagination-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            border: 1.5px solid rgba(180, 127, 166, 0.2);
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--light-text);
+            cursor: pointer;
+            transition: all 300ms ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .pagination-btn:hover {
+            border-color: var(--primary-mauve);
+            color: var(--deep-mauve);
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(180, 127, 166, 0.15);
+        }
+
+        .pagination-btn.active {
+            background: linear-gradient(135deg, var(--primary-mauve), var(--deep-mauve));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(180, 127, 166, 0.35);
+        }
+
+        .pagination-btn.nav-arrow {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(180, 127, 166, 0.2);
+        }
+
+        .pagination-btn.nav-arrow:hover {
+            background: var(--primary-mauve);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* ── LOADING SHIMMER ── */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        .shimmer-line {
+            height: 16px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, rgba(180,127,166,0.08) 25%, rgba(180,127,166,0.15) 50%, rgba(180,127,166,0.08) 75%);
+            background-size: 2000px 100%;
+            animation: shimmer 2s infinite;
+        }
+    </style>
+</head>
+
+<body class="safe-bottom">
+
+    <!-- ── AURORA BACKGROUND ── -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div class="gradient-mesh"></div>
+        <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow"></div>
+    </div>
+
+    <!-- Shared Navbar (JS Mount) -->
+    <div id="site-navbar-root"></div>
+    <script src="assets/js/icons.js"></script>
+    <script src="assets/js/navbar.js?v=20260424-1"></script>
+
+    <!-- ── MAIN CONTENT ── -->
+    <main class="pt-20 lg:pt-40 pb-32 md:pb-24 scroll-smooth" style="background-color: #EFE3EA;">
+
+        <!-- ── HERO BANNER ── -->
+        <section class="news-hero">
+        <!-- Decorative particles -->
+        <div class="hero-particle w-3 h-3 bg-white/30" style="top: 20%; left: 15%; animation: hero-float-1 6s ease-in-out infinite;"></div>
+        <div class="hero-particle w-4 h-4 bg-gold-light/40" style="top: 35%; right: 20%; animation: hero-float-2 8s ease-in-out infinite;"></div>
+        <div class="hero-particle w-2 h-2 bg-white/20" style="bottom: 30%; left: 25%; animation: hero-float-3 7s ease-in-out infinite;"></div>
+        <div class="hero-particle w-5 h-5 bg-primary-light/20" style="top: 15%; right: 35%; animation: hero-float-1 9s ease-in-out infinite 1s;"></div>
+        <div class="hero-particle w-2.5 h-2.5 bg-white/25" style="bottom: 40%; right: 10%; animation: hero-float-2 5s ease-in-out infinite 0.5s;"></div>
+
+        <!-- Blurred decorative orbs -->
+        <div class="absolute w-80 h-80 rounded-full blur-[80px] opacity-20 bg-[#D4A853]" style="top: -50px; right: -40px; z-index: 0;"></div>
+        <div class="absolute w-64 h-64 rounded-full blur-[60px] opacity-15 bg-white" style="bottom: -30px; left: -20px; z-index: 0;"></div>
+
+        <div class="hero-content">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white/90 text-xs font-bold tracking-widest uppercase mb-6">
+                <span class="material-symbols-outlined text-sm" style="font-size: 14px;">newspaper</span>
+                News & Updates
+            </div>
+            <h1>Latest <span class="italic" style="background: linear-gradient(135deg, #F0D08A, #D4A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">News</span></h1>
+            <p>Stay informed with the latest insights, events, and announcements from our mental health and financial security practice.</p>
+        </div>
+        </section>
+
+        <!-- CATEGORY FILTERS -->
+        <section class="max-w-7xl mx-auto px-6 -mt-6 relative z-10 mb-12">
+            <div class="category-bar scroll-reveal" id="category-filter">
+                <button class="category-pill active" data-category="all">All News</button>
+                <button class="category-pill" data-category="counselling">
+                    <span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">spa</span>
+                    Counselling
+                </button>
+                <button class="category-pill" data-category="insurance">
+                    <span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">shield</span>
+                    Insurance
+                </button>
+                <button class="category-pill" data-category="wellness">
+                    <span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">favorite</span>
+                    Wellness
+                </button>
+                <button class="category-pill" data-category="community">
+                    <span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">groups</span>
+                    Community
+                </button>
+                <button class="category-pill" data-category="announcement">
+                    <span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">campaign</span>
+                    Announcements
+                </button>
+            </div>
+        </section>
+
+        <!-- FEATURED ARTICLE -->
+        <section class="max-w-7xl mx-auto px-6 mb-16">
+            <div class="featured-card scroll-reveal" data-category="counselling" id="featured-article">
+                <div class="featured-card-bg">
+                    <img src="assets/images/hero-counselling.png" alt="Featured article – Mental health awareness" />
+                </div>
+                <div class="featured-card-overlay"></div>
+                <div class="featured-card-content">
+                    <div class="featured-badge">
+                        <span class="material-symbols-outlined" style="font-size: 13px;">star</span>
+                        Featured Story
+                    </div>
+                    <h2>Breaking the Stigma: Why Mental Health <br class="hidden md:block"/>Awareness Matters More Than Ever</h2>
+                    <p>As we navigate an increasingly complex world, understanding and prioritising mental health has become essential. Discover how Vima Sneha is leading the way in compassionate counselling and community support.</p>
+                    <div class="featured-meta">
+                        <span>
+                            <span class="material-symbols-outlined" style="font-size: 16px;">calendar_today</span>
+                            April 20, 2026
+                        </span>
+                        <span>
+                            <span class="material-symbols-outlined" style="font-size: 16px;">schedule</span>
+                            5 min read
+                        </span>
+                        <span>
+                            <span class="material-symbols-outlined" style="font-size: 16px;">person</span>
+                            Maria Mildred D'Souza
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEWS GRID -->
+        <section class="max-w-7xl mx-auto px-6 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="news-grid">
+
+                <!-- Article 1 -->
+                <article class="news-card scroll-reveal" data-category="counselling">
+                    <div class="news-card-img-wrap">
+                        <img src="assets/images/counselling_session.jpg" alt="Counselling session at Vima Sneha" />
+                        <div class="news-card-img-overlay"></div>
+                        <span class="news-card-category cat-counselling">
+                            <span class="material-symbols-outlined" style="font-size: 12px;">spa</span>
+                            Counselling
+                        </span>
+                    </div>
+                    <div class="news-card-body">
+                        <div class="news-card-date">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
+                            April 18, 2026
+                        </div>
+                        <h3 class="news-card-title">Understanding Exam Stress: A Guide for Students and Parents</h3>
+                        <p class="news-card-excerpt">Learn practical strategies to manage exam anxiety and create a supportive environment for academic success without compromising mental well-being.</p>
+                        <div class="news-card-footer">
+                            <div class="news-card-author">
+                                <div class="news-card-author-avatar">MM</div>
+                                <div class="news-card-author-info">
+                                    <span class="news-card-author-name">Maria D'Souza</span>
+                                    <span class="news-card-read-time">4 min read</span>
+                                </div>
+                            </div>
+                            <div class="news-card-arrow">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="news-card scroll-reveal" data-category="insurance">
+                    <div class="news-card-img-wrap">
+                        <img src="assets/images/hero-insurance.png" alt="Insurance planning consultation" />
+                        <div class="news-card-img-overlay"></div>
+                        <span class="news-card-category cat-insurance">
+                            <span class="material-symbols-outlined" style="font-size: 12px;">shield</span>
+                            Insurance
+                        </span>
+                    </div>
+                    <div class="news-card-body">
+                        <div class="news-card-date">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
+                            April 15, 2026
+                        </div>
+                        <h3 class="news-card-title">5 Essential Insurance Plans Every Family Should Consider</h3>
+                        <p class="news-card-excerpt">Discover the key insurance plans that form the foundation of a robust financial safety net for your family's future security.</p>
+                        <div class="news-card-footer">
+                            <div class="news-card-author">
+                                <div class="news-card-author-avatar">SN</div>
+                                <div class="news-card-author-info">
+                                    <span class="news-card-author-name">Sachin Noronha</span>
+                                    <span class="news-card-read-time">6 min read</span>
+                                </div>
+                            </div>
+                            <div class="news-card-arrow">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="news-card scroll-reveal" data-category="wellness">
+                    <div class="news-card-img-wrap">
+                        <img src="assets/images/hero-counselling-premium.png" alt="Wellness and mental health" />
+                        <div class="news-card-img-overlay"></div>
+                        <span class="news-card-category cat-wellness">
+                            <span class="material-symbols-outlined" style="font-size: 12px;">favorite</span>
+                            Wellness
+                        </span>
+                    </div>
+                    <div class="news-card-body">
+                        <div class="news-card-date">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
+                            April 12, 2026
+                        </div>
+                        <h3 class="news-card-title">The Power of Hypnotherapy: Transforming Lives Through Inner Healing</h3>
+                        <p class="news-card-excerpt">Explore the science behind hypnotherapy and how it's helping individuals overcome deep-seated challenges for lasting positive change.</p>
+                        <div class="news-card-footer">
+                            <div class="news-card-author">
+                                <div class="news-card-author-avatar">MM</div>
+                                <div class="news-card-author-info">
+                                    <span class="news-card-author-name">Maria D'Souza</span>
+                                    <span class="news-card-read-time">7 min read</span>
+                                </div>
+                            </div>
+                            <div class="news-card-arrow">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 4 -->
+                <article class="news-card scroll-reveal" data-category="community">
+                    <div class="news-card-img-wrap">
+                        <img src="assets/images/hero-counselling.png" alt="Community event at Vima Sneha" />
+                        <div class="news-card-img-overlay"></div>
+                        <span class="news-card-category cat-community">
+                            <span class="material-symbols-outlined" style="font-size: 12px;">groups</span>
+                            Community
+                        </span>
+                    </div>
+                    <div class="news-card-body">
+                        <div class="news-card-date">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
+                            April 8, 2026
+                        </div>
+                        <h3 class="news-card-title">Community Workshop: Building Emotional Resilience Together</h3>
+                        <p class="news-card-excerpt">Our recent community workshop brought together families and educators to discuss practical approaches to building emotional strength.</p>
+                        <div class="news-card-footer">
+                            <div class="news-card-author">
+                                <div class="news-card-author-avatar">VS</div>
+                                <div class="news-card-author-info">
+                                    <span class="news-card-author-name">Vima Sneha Team</span>
+                                    <span class="news-card-read-time">3 min read</span>
+                                </div>
+                            </div>
+                            <div class="news-card-arrow">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 5 -->
+                <article class="news-card scroll-reveal" data-category="announcement">
+                    <div class="news-card-img-wrap">
+                        <img src="assets/images/hero-insurance.png" alt="Vima Sneha announcement" />
+                        <div class="news-card-img-overlay"></div>
+                        <span class="news-card-category cat-announcement">
+                            <span class="material-symbols-outlined" style="font-size: 12px;">campaign</span>
+                            Announcement
+                        </span>
+                    </div>
+                    <div class="news-card-body">
+                        <div class="news-card-date">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
+                            April 5, 2026
+                        </div>
+                        <h3 class="news-card-title">MDRT Recognition: Sachin Noronha Honoured for Excellence</h3>
+                        <p class="news-card-excerpt">We're proud to announce that our insurance consultant has received the prestigious MDRT recognition for outstanding client service.</p>
+                        <div class="news-card-footer">
+                            <div class="news-card-author">
+                                <div class="news-card-author-avatar">SN</div>
+                                <div class="news-card-author-info">
+                                    <span class="news-card-author-name">Sachin Noronha</span>
+                                    <span class="news-card-read-time">2 min read</span>
+                                </div>
+                            </div>
+                            <div class="news-card-arrow">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 6 -->
+                <article class="news-card scroll-reveal" data-category="insurance">
+                    <div class="news-card-img-wrap">
+                        <img src="assets/images/hero-counselling-premium.png" alt="Financial planning tips" />
+                        <div class="news-card-img-overlay"></div>
+                        <span class="news-card-category cat-insurance">
+                            <span class="material-symbols-outlined" style="font-size: 12px;">shield</span>
+                            Insurance
+                        </span>
+                    </div>
+                    <div class="news-card-body">
+                        <div class="news-card-date">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
+                            April 1, 2026
+                        </div>
+                        <h3 class="news-card-title">Child Education Plans: Investing in Your Child's Tomorrow</h3>
+                        <p class="news-card-excerpt">A comprehensive guide to choosing the right education plan that ensures your child's academic dreams are financially secured.</p>
+                        <div class="news-card-footer">
+                            <div class="news-card-author">
+                                <div class="news-card-author-avatar">SN</div>
+                                <div class="news-card-author-info">
+                                    <span class="news-card-author-name">Sachin Noronha</span>
+                                    <span class="news-card-read-time">5 min read</span>
+                                </div>
+                            </div>
+                            <div class="news-card-arrow">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- No Results Message (hidden by default) -->
+            <div class="hidden text-center py-16" id="no-results">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-white/50 mb-6">
+                    <span class="material-symbols-outlined text-primary text-4xl">search_off</span>
+                </div>
+                <h3 class="text-xl font-bold text-dark-text mb-2">No articles found</h3>
+                <p class="text-light-text font-medium">Try selecting a different category to explore more content.</p>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex items-center justify-center gap-2 mt-12" id="pagination">
+                <button class="pagination-btn nav-arrow" aria-label="Previous page">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span>
+                </button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn nav-arrow" aria-label="Next page">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- NEWSLETTER SECTION -->
+        <section class="max-w-5xl mx-auto px-6 mb-16">
+            <div class="newsletter-section scroll-reveal">
+                <div class="relative z-10 text-center max-w-2xl mx-auto">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/80 text-xs font-bold tracking-widest uppercase mb-6">
+                        <span class="material-symbols-outlined" style="font-size: 14px;">mail</span>
+                        Stay Updated
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">Never Miss an <span class="italic" style="color: #F0D08A;">Update</span></h2>
+                    <p class="text-white/70 font-medium mb-8 text-base md:text-lg leading-relaxed">Subscribe to our newsletter for the latest counselling insights, insurance tips, and community events delivered straight to your inbox.</p>
+                    <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                        <input type="email" class="newsletter-glass-input" placeholder="Enter your email address" id="newsletter-email" />
+                        <button class="newsletter-btn" id="newsletter-subscribe">Subscribe</button>
+                    </div>
+                    <p class="text-white/40 text-xs font-medium mt-4">No spam, ever. Unsubscribe anytime.</p>
+                </div>
+
+                <!-- Floating decoration -->
+                <div class="absolute w-32 h-32 rounded-full blur-[50px] opacity-20 bg-[#F0D08A]" style="bottom: -20px; left: -20px;"></div>
+                <div class="absolute w-24 h-24 rounded-full blur-[40px] opacity-15 bg-white" style="top: -10px; right: -10px;"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SITE FOOTER -->
+    <div id="site-footer-root"></div>
+    <script src="assets/js/footer.js?v=20260420-5"></script>
+
+    <!-- ── INTERACTIVE SCRIPTS ── -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ── SCROLL REVEAL OBSERVER ──
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
+
+            // ── CATEGORY FILTER LOGIC ──
+            const categoryBtns = document.querySelectorAll('.category-pill');
+            const newsCards = document.querySelectorAll('#news-grid .news-card');
+            const featuredArticle = document.getElementById('featured-article');
+            const noResults = document.getElementById('no-results');
+
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active state
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const category = btn.dataset.category;
+                    let visibleCount = 0;
+
+                    // Filter cards
+                    newsCards.forEach(card => {
+                        const cardCategory = card.dataset.category;
+                        const shouldShow = category === 'all' || cardCategory === category;
+
+                        if (shouldShow) {
+                            card.style.display = '';
+                            visibleCount++;
+                            // Re-trigger reveal animation
+                            card.classList.remove('revealed');
+                            setTimeout(() => card.classList.add('revealed'), 50);
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Filter featured
+                    if (featuredArticle) {
+                        const featuredCategory = featuredArticle.dataset.category;
+                        const showFeatured = category === 'all' || featuredCategory === category;
+                        featuredArticle.closest('section').style.display = showFeatured ? '' : 'none';
+                        if (showFeatured) visibleCount++;
+                    }
+
+                    // Show/hide no results
+                    if (noResults) {
+                        noResults.classList.toggle('hidden', visibleCount > 0);
+                    }
+                });
+            });
+
+            // ── PAGINATION LOGIC ──
+            const paginationBtns = document.querySelectorAll('#pagination .pagination-btn:not(.nav-arrow)');
+            paginationBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    paginationBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // ── NEWSLETTER SUBSCRIBE ──
+            const subscribeBtn = document.getElementById('newsletter-subscribe');
+            const emailInput = document.getElementById('newsletter-email');
+
+            if (subscribeBtn && emailInput) {
+                subscribeBtn.addEventListener('click', () => {
+                    const email = emailInput.value.trim();
+                    if (email && email.includes('@')) {
+                        subscribeBtn.textContent = 'Subscribed ✓';
+                        subscribeBtn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
+                        emailInput.value = '';
+                        setTimeout(() => {
+                            subscribeBtn.textContent = 'Subscribe';
+                            subscribeBtn.style.background = '';
+                        }, 3000);
+                    } else {
+                        emailInput.style.borderColor = '#ff6b6b';
+                        emailInput.style.boxShadow = '0 0 0 3px rgba(255, 107, 107, 0.2)';
+                        setTimeout(() => {
+                            emailInput.style.borderColor = '';
+                            emailInput.style.boxShadow = '';
+                        }, 2000);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

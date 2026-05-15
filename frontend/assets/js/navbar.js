@@ -1,19 +1,25 @@
 (() => {
+  const basePath = window.location.pathname.includes('/insurance/') ? '../' : '';
   const storageKey = "vs_admin_data";
   const defaultBrandName = "Vima Sneha";
   const defaultTagline = "Guiding Minds, Assuring Lives";
   const navItems = [
-    { page: "index", href: "index.html", label: "Home", icon: "home" },
-    { page: "counselling", href: "counselling.html", label: "Counselling", icon: "spa" },
-    { page: "insurance", href: "insurance.html", label: "Insurance", icon: "shield" },
-    { page: "gallery", href: "gallery.html", label: "Gallery", icon: "photo_library" },
-    { page: "contact", href: "contact.html", label: "Contact", icon: "mail" },
+    { page: "index", href: basePath + "index.html", label: "Home", icon: "home" },
+    { page: "counselling", href: basePath + "counselling.html", label: "Counselling", icon: "spa" },
+    { page: "insurance", href: basePath + "insurance.html", label: "Insurance", icon: "shield" },
+    { page: "news", href: basePath + "news.html", label: "News", icon: "newspaper" },
+    { page: "gallery", href: basePath + "gallery.html", label: "Gallery", icon: "photo_library" },
+    { page: "contact", href: basePath + "contact.html", label: "Contact", icon: "mail" },
   ];
-  const mobileBottomNavItems = navItems.filter((item) => item.page !== "gallery");
+  const mobileBottomNavItems = navItems.filter((item) => item.page !== "gallery" && item.page !== "news");
 
   const styles = `
 .vs-menu-open {
   overflow: hidden;
+}
+
+:root {
+  --vs-mobile-bottom-nav-offset: calc(3.5rem + env(safe-area-inset-bottom));
 }
 
 /* Mobile header */
@@ -379,6 +385,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  transform: translateZ(0);
   z-index: 70;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -577,6 +584,10 @@
 }
 
 @media (max-width: 1023px) {
+  body:not(.safe-bottom) {
+    padding-bottom: var(--vs-mobile-bottom-nav-offset);
+  }
+
   .nav-island-container {
     display: none !important;
   }
@@ -635,7 +646,7 @@
             <p>${defaultTagline}</p>
           </div>
         </div>
-        <img class="mobile-profile-img" alt="Vima Sneha logo" src="assets/images/logo.png"/>
+        <img class="mobile-profile-img" alt="Vima Sneha logo" src="${basePath}assets/images/logo.png"/>
       </div>
     </header>
 
@@ -651,7 +662,7 @@
         <div class="mobile-menu-content">
           <div class="mobile-menu-badge">
             <div class="mobile-menu-badge-icon">
-              <img alt="Vima Sneha logo" src="assets/images/logo.png" style="width: 32px; height: 32px; object-fit: contain;"/>
+              <img alt="Vima Sneha logo" src="${basePath}assets/images/logo.png" style="width: 32px; height: 32px; object-fit: contain;"/>
             </div>
             <div class="mobile-menu-brand-block">
               <span class="mobile-menu-brand-name">${defaultBrandName}</span>
@@ -676,7 +687,7 @@
         </div>
 
         <div class="mobile-menu-footer">
-          <a href="contact.html" class="mobile-menu-cta">
+          <a href="${basePath}contact.html" class="mobile-menu-cta">
             <span>Book Consultation</span>
             <span class="mobile-menu-cta-icon">
               <span class="material-symbols-outlined">arrow_forward</span>
@@ -688,8 +699,8 @@
 
     <div class="nav-island-container">
       <div class="nav-island" id="island-header">
-        <a href="index.html" class="nav-island-logo">
-          <img src="assets/images/logo.png" alt="Vima Sneha logo" style="display: block; width: 42px; height: 42px; border-radius: 12px; object-fit: contain;"/>
+        <a href="${basePath}index.html" class="nav-island-logo">
+          <img src="${basePath}assets/images/logo.png" alt="Vima Sneha logo" style="display: block; width: 42px; height: 42px; border-radius: 12px; object-fit: contain;"/>
           <span class="nav-brand-name">${defaultBrandName}</span>
         </a>
 
@@ -698,7 +709,7 @@
           ${buildNavLinks("nav-island-link")}
         </nav>
 
-        <a href="contact.html" class="nav-island-cta">Book Now</a>
+        <a href="${basePath}contact.html" class="nav-island-cta">Book Now</a>
       </div>
     </div>
 
@@ -708,10 +719,12 @@
   `;
 
   const mount = document.getElementById("site-navbar-root");
-  if (mount) {
-    mount.outerHTML = navbarMarkup;
-  } else if (!document.querySelector(".nav-island-container, .mobile-top-header, .mobile-bottom-nav")) {
-    document.body.insertAdjacentHTML("afterbegin", navbarMarkup);
+  if (!document.querySelector(".nav-island-container, .mobile-top-header, .mobile-bottom-nav")) {
+    if (mount) {
+      mount.outerHTML = navbarMarkup;
+    } else {
+      document.body.insertAdjacentHTML("afterbegin", navbarMarkup);
+    }
   }
 
   const applyNavbarBranding = () => {
@@ -728,10 +741,23 @@
   };
 
   const path = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
+  const insuranceSubpages = [
+    "insurance",
+    "children-plans",
+    "endowment-plans",
+    "health-plans",
+    "micro-insurance",
+    "money-back-plans",
+    "pension-plans",
+    "term-life-insurance",
+    "ulip-plans",
+    "whole-life-plans",
+  ];
   const page =
     path === "index.html" || path === "" ? "index" :
     path.includes("counselling") ? "counselling" :
-    path.includes("insurance") ? "insurance" :
+    insuranceSubpages.some((slug) => path.includes(slug)) ? "insurance" :
+    path.includes("news") ? "news" :
     path.includes("gallery") ? "gallery" :
     path.includes("contact") ? "contact" :
     "index";

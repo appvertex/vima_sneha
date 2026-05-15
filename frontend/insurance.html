@@ -8,6 +8,8 @@
   <meta name="description"
     content="Comprehensive insurance advisory and financial planning services by Vima Sneha. Life, health, and investment solutions in Bantwal & Mangaluru." />
   <link rel="icon" type="image/png" href="assets/images/logo.png" />
+  <link rel="shortcut icon" type="image/png" href="assets/images/logo.png" />
+  <link rel="apple-touch-icon" href="assets/images/logo.png" />
 
   <!-- Fonts -->
   <link
@@ -15,7 +17,7 @@
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
-    <link href="assets/css/layout-shared.css?v=20260420-2" rel="stylesheet" />
+  <link href="assets/css/layout-shared.css?v=20260424-1" rel="stylesheet" />
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -25,7 +27,6 @@
       theme: {
         extend: {
           colors: {
-            // Merged existing variants with new material palette requested by user
             primary: { DEFAULT: '#7b4c70', light: '#C9A0BB', dark: '#7A4F72', fixed: '#ffd7f1', container: '#97658a' },
             secondary: { DEFAULT: '#7b5804', light: '#F0D08A', dark: '#A6823D', fixed: '#ffdea6', container: '#fdcd74' },
             surface: { DEFAULT: '#fcf9f8', dark: '#141214', 'container-low': '#f6f3f2', 'container-lowest': '#ffffff', container: '#f0eded' },
@@ -60,11 +61,9 @@
         .section-padding { @apply py-24 px-6 md:px-12 lg:px-24; }
       }
       
-      /* Hide scrollbar utility */
       .no-scrollbar::-webkit-scrollbar { display: none; }
       .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-      /* Custom utilities used in About Section */
       .glass-reflection { 
         backdrop-filter: blur(20px); 
         background: rgba(255, 255, 255, 0.4); 
@@ -73,7 +72,6 @@
         border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
       }
 
-      /* Infinite Scroll Marquee */
       @keyframes scrollX {
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
@@ -86,38 +84,131 @@
         animation-play-state: paused;
       }
 
-      /* Glass card utility */
       .glass-card {
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
       }
 
-      /* Mobile Horizontal Scroll overrides */
+      /* ── Expertise Section (Accordion/Grid) ── */
+      .expertise-carousel-wrapper { position: relative; }
+
+      /* Desktop: 3-column Grid */
+      @media (min-width: 768px) {
+        .expertise-grid {
+          display: grid !important;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+        .expertise-accordion { display: none !important; }
+      }
+
+      /* Mobile: Layout D Accordion */
       @media (max-width: 767px) {
-        .mobile-products-track {
-          display: flex !important;
-          flex-direction: row !important;
-          width: max-content !important;
-          animation: scrollX 30s linear infinite;
-        }
-        .mobile-products-track:hover {
-          animation-play-state: paused;
-        }
-        .mobile-product-card {
-          width: 85vw !important;
-          flex-shrink: 0 !important;
-        }
+        .expertise-grid { display: none !important; }
+        .expertise-accordion { display: block !important; }
+      }
+
+      .expertise-acc-item {
+        border: 1px solid rgba(123, 76, 112, 0.15);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.5);
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        overflow: hidden;
+        margin-bottom: 1rem;
+      }
+      .expertise-acc-item.active {
+        background: #fff;
+        border-color: rgba(123, 76, 112, 0.3);
+        box-shadow: 0 20px 40px -12px rgba(123, 76, 112, 0.12);
+      }
+      .expertise-acc-header {
+        padding: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        cursor: pointer;
+      }
+      .expertise-acc-icon {
+        width: 48px; height: 48px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center; justify-content: center;
+        transition: all 0.3s ease;
+      }
+      .expertise-acc-item.active .expertise-acc-icon { transform: scale(1.1); }
+      
+      .expertise-acc-content {
+        max-height: 0;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+      .expertise-acc-item.active .expertise-acc-content {
+        max-height: 500px;
+        opacity: 1;
+        padding: 0 1.25rem 1.5rem 5.25rem;
+      }
+      .expertise-acc-chevron {
+        margin-left: auto;
+        color: #7b4c70;
+        transition: transform 0.4s ease;
+      }
+      .expertise-acc-item.active .expertise-acc-chevron { transform: rotate(180deg); }
+
+      .expertise-card {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s ease;
+      }
+      .expertise-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -8px rgba(123,76,112,0.18); }
+      .expertise-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+        opacity: 0;
+        transition: opacity 0.4s;
+        border-radius: inherit;
+        pointer-events: none;
+      }
+      .expertise-card:hover::before { opacity: 1; }
+
+      .reveal-on-scroll {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform, opacity;
+      }
+      .reveal-on-scroll.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-100 { transition-delay: 0.1s; }
+      .reveal-delay-200 { transition-delay: 0.2s; }
+      
+      @keyframes modalIn {
+        from { opacity: 0; transform: scale(0.9) translateY(20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      .animate-modal-in { animation: modalIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+      
+      .dot-pulsate {
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
       }
     </style>
 </head>
 
-<body>
+<body class="safe-bottom">
 
   <!-- Navbar -->
   <div id="site-navbar-root"></div>
   <script src="assets/js/icons.js"></script>
-    <script src="assets/js/navbar.js?v=20260420-3"></script>
+  <script src="assets/js/navbar.js?v=20260424-1"></script>
 
   <!-- Aurora Mesh -->
   <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -125,11 +216,11 @@
     <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[120px]"></div>
   </div>
 
-  <main class="pt-20 pb-32 md:pb-24 scroll-smooth">
+  <main class="pt-20 lg:pt-32 pb-32 md:pb-24 scroll-smooth">
 
     <!-- Hero -->
     <section
-      class="section-padding !pt-4 lg:!pt-24 flex flex-col lg:flex-row items-center lg:items-center gap-10 lg:gap-16 min-h-[50vh] lg:min-h-[85vh]">
+      class="section-padding !pt-4 lg:!pt-16 flex flex-col lg:flex-row items-center lg:items-center gap-10 lg:gap-16 min-h-[50vh] lg:min-h-[85vh]">
       <div class="max-w-2xl space-y-8 text-center lg:text-left">
         <div
           class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-secondary-dark font-bold text-sm uppercase tracking-widest">
@@ -145,7 +236,7 @@
           with the right policies and investments.
         </p>
         <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-          <button onclick="window.location.href='contact.html'" class="btn-gold w-full sm:w-auto">
+          <button onclick="openContactModal('consult')" class="btn-gold w-full sm:w-auto">
             Get Free Consultation
             <span class="material-symbols-outlined">arrow_forward</span>
           </button>
@@ -181,40 +272,68 @@
       <div class="hidden lg:block flex-grow w-full max-w-xl relative">
         <div class="grid grid-cols-2 gap-4">
           <div
-            class="glass rounded-4xl p-8 flex flex-col justify-end gap-3 aspect-square group hover:-translate-y-2 transition-all duration-500">
+            class="glass rounded-4xl p-8 flex flex-col justify-end gap-3 aspect-square group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
+            <img src="assets/images/hero-family.png" alt="" aria-hidden="true"
+              class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 pointer-events-none" />
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/85 to-white/40 pointer-events-none"></div>
             <div
-              class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
+              class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all relative z-10">
               <span class="material-symbols-outlined !text-3xl">favorite</span>
             </div>
-            <h3 class="font-extrabold text-slate-800">Life Insurance</h3>
-            <p class="text-xs text-slate-500 font-medium">Secure your family's future</p>
+            <h3 class="font-extrabold text-slate-800 relative z-10">Life Insurance</h3>
+            <ul class="space-y-1 text-[11px] leading-relaxed text-slate-500 font-bold relative z-10">
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>Income protection</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>Term / Whole life</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>Family security</li>
+            </ul>
           </div>
           <div
-            class="glass rounded-4xl p-8 flex flex-col justify-end gap-3 aspect-square group hover:-translate-y-2 transition-all duration-500">
+            class="glass rounded-4xl p-8 flex flex-col justify-end gap-3 aspect-square group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
+            <img src="assets/images/hero-wellness.png" alt="" aria-hidden="true"
+              class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 pointer-events-none" />
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/85 to-white/40 pointer-events-none"></div>
             <div
-              class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+              class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all relative z-10">
               <span class="material-symbols-outlined !text-3xl">health_and_safety</span>
             </div>
-            <h3 class="font-extrabold text-slate-800">Health Cover</h3>
-            <p class="text-xs text-slate-500 font-medium">Premium healthcare access</p>
+            <h3 class="font-extrabold text-slate-800 relative z-10">Health Cover</h3>
+            <ul class="space-y-1 text-[11px] leading-relaxed text-slate-500 font-bold relative z-10">
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary/60"></span>Cashless hospital care</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary/60"></span>Family floater</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary/60"></span>Senior citizen plans</li>
+            </ul>
           </div>
           <div
-            class="glass rounded-4xl p-8 flex flex-col justify-end gap-3 aspect-square group hover:-translate-y-2 transition-all duration-500">
+            class="glass rounded-4xl p-8 flex flex-col justify-end gap-3 aspect-square group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
+            <img src="assets/images/hero-insurance.png" alt="" aria-hidden="true"
+              class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 pointer-events-none" />
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/85 to-white/40 pointer-events-none"></div>
             <div
-              class="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-xl shadow-slate-900/20">
+              class="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-xl shadow-slate-900/20 relative z-10">
               <span class="material-symbols-outlined !text-3xl">trending_up</span>
             </div>
-            <h3 class="font-extrabold text-slate-800">Investments</h3>
-            <p class="text-xs text-slate-500 font-medium">Grow your wealth</p>
+            <h3 class="font-extrabold text-slate-800 relative z-10">Investments</h3>
+            <ul class="space-y-1 text-[11px] leading-relaxed text-slate-500 font-bold relative z-10">
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-900/60"></span>ULIP / Endowment</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-900/60"></span>Wealth + protection</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-900/60"></span>Goal-based returns</li>
+            </ul>
           </div>
           <div
-            class="glass rounded-4xl p-8 flex flex-col justify-end gap-3 aspect-square group hover:-translate-y-2 transition-all duration-500">
+            class="glass rounded-4xl p-8 flex flex-col justify-end gap-3 aspect-square group hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
+            <img src="assets/images/hero-family.png" alt="" aria-hidden="true"
+              class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700 pointer-events-none" />
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/85 to-white/40 pointer-events-none"></div>
             <div
-              class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
+              class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all relative z-10">
               <span class="material-symbols-outlined !text-3xl">child_care</span>
             </div>
-            <h3 class="font-extrabold text-slate-800">Child Plans</h3>
-            <p class="text-xs text-slate-500 font-medium">Education & marriage fund</p>
+            <h3 class="font-extrabold text-slate-800 relative z-10">Child Plans</h3>
+            <ul class="space-y-1 text-[11px] leading-relaxed text-slate-500 font-bold relative z-10">
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>Education planning</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>Marriage fund</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-secondary/60"></span>Long-term savings</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -224,111 +343,124 @@
     <section class="relative min-h-screen py-24 px-6 md:px-12 lg:px-24 overflow-hidden">
       <!-- Organic Floating Background Elements -->
       <div class="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
-        <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary-fixed opacity-30 blur-[100px] asymmetric-shape"></div>
-        <div class="absolute top-1/2 right-[-10%] w-[500px] h-[500px] bg-secondary-fixed opacity-20 blur-[120px] asymmetric-shape"></div>
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary-fixed opacity-30 blur-[100px] asymmetric-shape">
+        </div>
+        <div
+          class="absolute top-1/2 right-[-10%] w-[500px] h-[500px] bg-secondary-fixed opacity-20 blur-[120px] asymmetric-shape">
+        </div>
       </div>
 
       <div class="max-w-7xl mx-auto">
-        <!-- Top Content: The Intro Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          <!-- Left: Image with Asymmetric Frame -->
-          <div class="lg:col-span-5 relative" style="position: relative;">
-            <div class="relative z-10 w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(123,76,112,0.06)]">
-              <img class="w-full h-full object-cover" data-alt="Professional portrait of a middle-aged male consultant with a warm, empathetic expression, soft studio lighting in warm mauve tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4E4ZX4o2mt_iVtBJkjG8Rwa2SPhwKQCnTfV9CI0vdc1a4V1dax-QS2wue-xO9cUOA7tbnOo-yDQACM5kDJJFv1D5LzgDtT3SszegLfJTy1bgDjbSNAm8UVaB-K5qNYz2cAybFcj7Y8SOni0RWYTnBTy8D2H1BV2aIeA_8nQJ0G6xkaJ0jYeL76-Yl_HenqmdIIKLbxYOU6oRXIQ5rEu1BqJO27AXOC3VzTF1Tps_qwGC-5USqs9GcJII5Yv5FuWsm9m6-Qi_p0zc"/>
+          <div class="lg:col-span-5 relative">
+            <div
+              class="relative z-10 w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(123,76,112,0.06)]">
+              <img class="w-full h-full object-cover object-top"
+                src="assets/images/insurance_consultant.png"
+                alt="Sachin Suraj Noronha - Principal Insurance Consultant" />
             </div>
-            <!-- Decorative floating card -->
-            <div class="absolute -bottom-6 -right-6 md:-right-12 z-20 glass-reflection p-6 rounded-xl border border-outline-variant/15 shadow-xl max-w-[280px]">
+            <div
+              class="absolute -bottom-6 -right-6 md:-right-12 z-20 glass-reflection p-6 rounded-xl border border-outline-variant/15 shadow-xl max-w-[280px]">
               <p class="text-secondary font-bold tracking-widest text-[10px] uppercase mb-2">MDRT STATUS</p>
-              <p class="text-on-surface font-medium leading-relaxed italic">"Protection is not a transaction; it is a promise kept to the people we love most."</p>
+              <p class="text-on-surface font-medium leading-relaxed italic">"Protection is not a transaction; it is a
+                promise kept to the people we love most."</p>
             </div>
           </div>
 
-          <!-- Right: The Narrative -->
           <div class="lg:col-span-7 space-y-8">
             <div>
               <span class="text-primary font-bold tracking-widest text-xs uppercase mb-4 block">Guiding Minds & Assuring Lives</span>
               <h2 class="text-5xl md:text-6xl font-extrabold text-on-surface tracking-[-0.02em] leading-[1.1]">
-                Sachin Suraj <br/>
+                Sachin Suraj <br />
                 <span class="text-primary">Noronha</span>
               </h2>
             </div>
-            
+
             <div class="space-y-6 max-w-2xl">
               <p class="text-xl text-on-surface-variant leading-relaxed">
-                With over fifteen years in the financial advisory landscape, Sachin bridges the gap between cold numbers and the warmth of human security. His approach is rooted in empathy, treating every client's legacy as if it were his own family's.
+                With over fifteen years in the financial advisory landscape, Sachin bridges the gap between cold numbers
+                and the warmth of human security. His approach is rooted in empathy, treating every client's legacy as
+                if it were his own family's.
               </p>
               <p class="text-lg text-on-surface-variant/80 leading-relaxed">
-                His journey began with a simple observation: most insurance conversations were filled with fear. Sachin chose to fill them with clarity and peace, evolving into a specialist who harmonizes financial strategies with emotional well-being.
+                His journey began with a simple observation: most insurance conversations were filled with fear. Sachin
+                chose to fill them with clarity and peace, evolving into a specialist who harmonizes financial
+                strategies with emotional well-being.
               </p>
             </div>
 
             <div class="pt-4 flex flex-wrap gap-4">
-              <div class="px-6 py-3 bg-gradient-to-tr from-primary to-primary-container text-white rounded-xl font-semibold shadow-lg shadow-primary/20">
+              <div
+                class="px-6 py-3 bg-gradient-to-tr from-primary to-primary-container text-white rounded-xl font-semibold shadow-lg shadow-primary/20">
                 Personal Advisory
               </div>
-              <div class="px-6 py-3 bg-surface-container-low text-secondary border border-secondary/10 rounded-xl font-semibold">
+              <div
+                class="px-6 py-3 bg-surface-container-low text-secondary border border-secondary/10 rounded-xl font-semibold">
                 Legacy Planning
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Bottom Content: The Timeline & Values -->
         <div class="mt-32 grid grid-cols-1 lg:grid-cols-12 gap-16">
-          
-          <!-- Left: The Career Milestones (Timeline) -->
           <div class="lg:col-span-8">
             <h2 class="text-3xl font-bold text-on-surface mb-12 flex items-center gap-3">
               <span class="w-8 h-1 bg-secondary rounded-full"></span>
               Professional Journey
             </h2>
-            
+
             <div class="space-y-0 relative">
-              <!-- Timeline Line -->
               <div class="absolute left-0 top-0 w-px h-full bg-outline-variant/30 ml-[11px]"></div>
-              
-              <!-- Milestone 1 -->
+
               <div class="relative pl-12 pb-12">
-                <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-secondary-container border-4 border-surface shadow-sm z-10"></div>
+                <div
+                  class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-secondary-container border-4 border-surface shadow-sm z-10">
+                </div>
                 <div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/5">
                   <span class="text-secondary font-bold text-sm tracking-widest block mb-2">2010 — FOUNDATIONS</span>
                   <h3 class="text-xl font-bold text-on-surface mb-3">Early Career in Risk Management</h3>
-                  <p class="text-on-surface-variant leading-relaxed">Recognized as the Rising Star of the Year, Sachin began his mission to redefine insurance as an empathetic service rather than a sales pitch.</p>
+                  <p class="text-on-surface-variant leading-relaxed">Recognized as the Rising Star of the Year, Sachin
+                    began his mission to redefine insurance as an empathetic service rather than a sales pitch.</p>
                 </div>
               </div>
 
-              <!-- Milestone 2 -->
               <div class="relative pl-12 pb-12">
-                <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-primary-container border-4 border-surface shadow-sm z-10"></div>
+                <div
+                  class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-primary-container border-4 border-surface shadow-sm z-10">
+                </div>
                 <div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/5">
                   <span class="text-primary font-bold text-sm tracking-widest block mb-2">2018 — EXPERTISE</span>
                   <h3 class="text-xl font-bold text-on-surface mb-3">MDRT Lifetime Achievement</h3>
-                  <p class="text-on-surface-variant leading-relaxed">Joined the Million Dollar Round Table, setting a new standard for ethical advisory and client-first insurance solutions.</p>
+                  <p class="text-on-surface-variant leading-relaxed">Joined the Million Dollar Round Table, setting a
+                    new standard for ethical advisory and client-first insurance solutions.</p>
                 </div>
               </div>
 
-              <!-- Milestone 3 -->
               <div class="relative pl-12">
-                <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-secondary border-4 border-surface shadow-sm z-10"></div>
+                <div
+                  class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-secondary border-4 border-surface shadow-sm z-10">
+                </div>
                 <div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/5">
                   <span class="text-secondary font-bold text-sm tracking-widest block mb-2">PRESENT — SERENE SENTINEL</span>
                   <h3 class="text-xl font-bold text-on-surface mb-3">Founding The Serene Sentinel</h3>
-                  <p class="text-on-surface-variant leading-relaxed">Launched a bespoke advisory firm dedicated to the intersection of mental peace and financial security for families across the globe.</p>
+                  <p class="text-on-surface-variant leading-relaxed">Launched a bespoke advisory firm dedicated to the
+                    intersection of mental peace and financial security for families across the globe.</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Right: The "Reflection" Component -->
           <div class="hidden lg:flex lg:col-span-4 flex-col justify-center">
-            <div class="relative bg-surface-container-lowest p-10 rounded-[2rem] shadow-[0_30px_60px_rgba(123,76,112,0.08)] border border-outline-variant/10">
-              <span class="material-symbols-outlined text-secondary text-5xl opacity-20 absolute top-6 right-8" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+            <div
+              class="relative bg-surface-container-lowest p-10 rounded-[2rem] shadow-[0_30px_60px_rgba(123,76,112,0.08)] border border-outline-variant/10">
+              <span class="material-symbols-outlined text-secondary text-5xl opacity-20 absolute top-6 right-8"
+                style="font-variation-settings: 'FILL' 1;">format_quote</span>
               <h4 class="text-2xl font-bold text-on-surface mb-6 leading-tight">A Message on Family Protection</h4>
-              
+
               <div class="space-y-6 text-on-surface-variant leading-relaxed">
                 <p>
-                  "In my years of practice, I've seen that the greatest asset isn't a portfolio, it's the <strong>confidence</strong> of knowing your family is safe no matter what tomorrow brings."
+                  "In my years of practice, I've seen that the greatest asset isn't a portfolio, it's the
+                  <strong>confidence</strong> of knowing your family is safe no matter what tomorrow brings."
                 </p>
                 <p>
                   "We don't just sell policies; we build sanctuaries of peace. My role is to be the architect of that serenity."
@@ -346,398 +478,532 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- Products Section (Dark) -->
-    <section
-      class="section-padding bg-white rounded-[3rem] lg:rounded-[6rem] mx-4 lg:mx-8 mb-24 relative overflow-hidden shadow-sm border border-slate-100">
+    <!-- Products Section (Accordion/Grid) -->
+    <section id="insurance-products" class="section-padding bg-white rounded-[3rem] lg:rounded-[6rem] mx-4 lg:mx-8 mb-24 relative overflow-hidden shadow-sm border border-slate-100">
       <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[150px]"></div>
       </div>
 
-      <div class="relative z-10 text-center mb-20 space-y-6">
-        <div
-          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 text-secondary font-bold text-xs uppercase tracking-widest">
+      <div class="relative z-10 text-center mb-16 space-y-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 text-secondary font-bold text-xs uppercase tracking-widest">
           Our Services
         </div>
-        <h2 class="text-4xl lg:text-6xl font-extrabold text-slate-900">Comprehensive <span
-            class="text-secondary italic">Coverage</span></h2>
-        <p class="text-slate-500 max-w-2xl mx-auto font-medium text-lg">From term insurance to retirement planning — we
-          offer tailored solutions for every life stage.</p>
+        <h2 class="text-4xl lg:text-6xl font-extrabold text-slate-900">Comprehensive <span class="text-secondary italic">Coverage</span></h2>
+        <p class="text-slate-500 max-w-2xl mx-auto font-medium text-lg">Tailored solutions for every stage of your life's journey.</p>
       </div>
 
-      <div class="relative z-10 overflow-hidden -mx-4 px-4 lg:mx-0 lg:px-0">
-        <div class="mobile-products-track grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Product Card 1 -->
-          <div
-            class="mobile-product-card glass rounded-4xl p-10 hover:-translate-y-2 transition-all duration-500 flex flex-col gap-6 group">
-            <div
-              class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">shield_with_heart</span>
-            </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Term Life Insurance</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">Maximum coverage at minimal cost. Pure financial
-              protection for your loved ones.</p>
-          </div>
+      <div class="expertise-carousel-wrapper relative z-10 max-w-7xl mx-auto">
+        <!-- Desktop Grid -->
+        <div class="expertise-grid">
+            <a href="insurance/term-life-insurance.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll">
+                <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined !text-3xl">shield_with_heart</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Term Life Insurance</h3>
+                <p class="text-slate-500 font-medium leading-relaxed">Maximum coverage at minimal cost. Pure financial protection for your loved ones.</p>
+                <div class="mt-auto flex items-center gap-2 text-secondary font-bold">
+                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </a>
+            <a href="insurance/health-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-100">
+                <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined !text-3xl">local_hospital</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Health Insurance</h3>
+                <p class="text-slate-500 font-medium leading-relaxed">Cashless hospitalization and comprehensive medical coverage for your entire family.</p>
+                <div class="mt-auto flex items-center gap-2 text-primary font-bold">
+                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </a>
+            <a href="insurance/endowment-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-200">
+                <div class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined !text-3xl">savings</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Endowment Plans</h3>
+                <p class="text-slate-500 font-medium leading-relaxed">Savings and insurance combined. Build a corpus while staying protected.</p>
+                <div class="mt-auto flex items-center gap-2 text-slate-900 font-bold">
+                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </a>
+            <a href="insurance/pension-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll">
+                <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined !text-3xl">elderly</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Retirement Planning</h3>
+                <p class="text-slate-500 font-medium leading-relaxed">Pension plans and annuities to ensure a comfortable, worry-free retirement.</p>
+                <div class="mt-auto flex items-center gap-2 text-secondary font-bold">
+                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </a>
+            <a href="insurance/children-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-100">
+                <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined !text-3xl">school</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Children Plans</h3>
+                <p class="text-slate-500 font-medium leading-relaxed">Secure your child's educational milestones with disciplined, goal-based savings.</p>
+                <div class="mt-auto flex items-center gap-2 text-primary font-bold">
+                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </a>
+            <a href="insurance/ulip-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-200">
+                <div class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined !text-3xl">real_estate_agent</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">ULIP Plans</h3>
+                <p class="text-slate-500 font-medium leading-relaxed">ULIPs and market-linked plans to grow your wealth with market participation.</p>
+                <div class="mt-auto flex items-center gap-2 text-slate-900 font-bold">
+                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </a>
+            <a href="insurance/money-back-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll">
+                <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined !text-3xl">payments</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Money Back Plans</h3>
+                <p class="text-slate-500 font-medium leading-relaxed">Periodic returns during the policy term to support short-term financial goals.</p>
+                <div class="mt-auto flex items-center gap-2 text-secondary font-bold">
+                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </a>
+            <a href="insurance/whole-life-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-100">
+                <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined !text-3xl">all_inclusive</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Whole Life Plans</h3>
+                <p class="text-slate-500 font-medium leading-relaxed">Lifelong protection and savings that help build a legacy for your family.</p>
+                <div class="mt-auto flex items-center gap-2 text-primary font-bold">
+                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </a>
+            <a href="insurance/micro-insurance.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-200">
+                <div class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
+                    <span class="material-symbols-outlined !text-3xl">groups</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Micro Insurance</h3>
+                <p class="text-slate-500 font-medium leading-relaxed">Affordable insurance solutions for low-income individuals and small groups.</p>
+                <div class="mt-auto flex items-center gap-2 text-slate-900 font-bold">
+                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+                </div>
+            </a>
+        </div>
 
-          <!-- Product Card 2 -->
-          <div
-            class="mobile-product-card glass rounded-4xl p-10 hover:-translate-y-2 transition-all duration-500 flex flex-col gap-6 group">
-            <div
-              class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">local_hospital</span>
+        <!-- Mobile Accordion (Layout D) -->
+        <div class="expertise-accordion space-y-4 px-4">
+            <p class="text-center text-slate-400 font-bold text-[10px] uppercase tracking-[0.2em] mb-6">Tap to expand coverage details</p>
+            
+            <!-- Acc Item 1 -->
+            <div class="expertise-acc-item active" onclick="toggleExpertiseAcc(this)">
+                <div class="expertise-acc-header">
+                    <div class="expertise-acc-icon bg-secondary/10 text-secondary">
+                        <span class="material-symbols-outlined !text-2xl">shield_with_heart</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800">Term Life Insurance</h3>
+                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                </div>
+                <div class="expertise-acc-content">
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Maximum coverage at minimal cost. Pure financial protection for your loved ones.</p>
+                    <a href="insurance/term-life-insurance.html" class="inline-flex items-center gap-2 text-xs font-bold text-secondary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
+                </div>
             </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Health Insurance</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">Cashless hospitalization and comprehensive medical
-              coverage for your entire family.</p>
-          </div>
 
-          <!-- Product Card 3 -->
-          <div
-            class="mobile-product-card glass rounded-4xl p-10 hover:-translate-y-2 transition-all duration-500 flex flex-col gap-6 group">
-            <div
-              class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">savings</span>
+            <!-- Acc Item 2 -->
+            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                <div class="expertise-acc-header">
+                    <div class="expertise-acc-icon bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined !text-2xl">local_hospital</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800">Health Insurance</h3>
+                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                </div>
+                <div class="expertise-acc-content">
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Cashless hospitalization and comprehensive medical coverage for your entire family.</p>
+                    <a href="insurance/health-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-primary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
+                </div>
             </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Endowment Plans</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">Savings and insurance combined. Build a corpus while
-              staying protected.</p>
-          </div>
 
-          <!-- Product Card 4 -->
-          <div
-            class="mobile-product-card glass rounded-4xl p-10 hover:-translate-y-2 transition-all duration-500 flex flex-col gap-6 group">
-            <div
-              class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">elderly</span>
+            <!-- Acc Item 3 -->
+            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                <div class="expertise-acc-header">
+                    <div class="expertise-acc-icon bg-slate-100 text-slate-900">
+                        <span class="material-symbols-outlined !text-2xl">savings</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800">Endowment Plans</h3>
+                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                </div>
+                <div class="expertise-acc-content">
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Savings and insurance combined. Build a corpus while staying protected.</p>
+                    <a href="insurance/endowment-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-900">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
+                </div>
             </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Retirement Planning</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">Pension plans and annuities to ensure a comfortable,
-              worry-free retirement.</p>
-          </div>
 
-          <!-- Product Card 5 -->
-          <div
-            class="mobile-product-card glass rounded-4xl p-10 hover:-translate-y-2 transition-all duration-500 flex flex-col gap-6 group">
-            <div
-              class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">school</span>
+            <!-- Acc Item 4 -->
+            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                <div class="expertise-acc-header">
+                    <div class="expertise-acc-icon bg-secondary/10 text-secondary">
+                        <span class="material-symbols-outlined !text-2xl">elderly</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800">Retirement Planning</h3>
+                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                </div>
+                <div class="expertise-acc-content">
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Pension plans and annuities to ensure a comfortable, worry-free retirement.</p>
+                    <a href="insurance/pension-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-secondary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
+                </div>
             </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Child Education Plans</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">Secure your child's educational milestones with
-              disciplined, goal-based savings.</p>
-          </div>
 
-          <!-- Product Card 6 -->
-          <div
-            class="mobile-product-card glass rounded-4xl p-10 hover:-translate-y-2 transition-all duration-500 flex flex-col gap-6 group">
-            <div
-              class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">real_estate_agent</span>
+            <!-- Acc Item 5 -->
+            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                <div class="expertise-acc-header">
+                    <div class="expertise-acc-icon bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined !text-2xl">school</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800">Children Plans</h3>
+                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                </div>
+                <div class="expertise-acc-content">
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Secure your child's educational milestones with disciplined, goal-based savings.</p>
+                    <a href="insurance/children-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-primary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
+                </div>
             </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Wealth Creation</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">ULIPs and market-linked plans to grow your wealth with
-              market participation.</p>
-          </div>
 
-          <!-- Duplicate Set for Mobile Infinite Scroll -->
-          <div
-            class="mobile-product-card md:hidden glass rounded-4xl p-10 flex flex-col gap-6 group" aria-hidden="true">
-            <div
-              class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">shield_with_heart</span>
+            <!-- Acc Item 6 -->
+            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                <div class="expertise-acc-header">
+                    <div class="expertise-acc-icon bg-slate-100 text-slate-900">
+                        <span class="material-symbols-outlined !text-2xl">real_estate_agent</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800">ULIP Plans</h3>
+                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                </div>
+                <div class="expertise-acc-content">
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">ULIPs and market-linked plans to grow your wealth with market participation.</p>
+                    <a href="insurance/ulip-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-900">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
+                </div>
             </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Term Life Insurance</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">Maximum coverage at minimal cost. Pure financial
-              protection for your loved ones.</p>
-          </div>
-          <div
-            class="mobile-product-card md:hidden glass rounded-4xl p-10 flex flex-col gap-6 group" aria-hidden="true">
-            <div
-              class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">local_hospital</span>
+
+            <!-- Acc Item 7 -->
+            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                <div class="expertise-acc-header">
+                    <div class="expertise-acc-icon bg-secondary/10 text-secondary">
+                        <span class="material-symbols-outlined !text-2xl">payments</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800">Money Back Plans</h3>
+                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                </div>
+                <div class="expertise-acc-content">
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Periodic returns during the policy term to support short-term financial goals.</p>
+                    <a href="insurance/money-back-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-secondary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
+                </div>
             </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Health Insurance</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">Cashless hospitalization and comprehensive medical
-              coverage for your entire family.</p>
-          </div>
-          <div
-            class="mobile-product-card md:hidden glass rounded-4xl p-10 flex flex-col gap-6 group" aria-hidden="true">
-            <div
-              class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">savings</span>
+
+            <!-- Acc Item 8 -->
+            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                <div class="expertise-acc-header">
+                    <div class="expertise-acc-icon bg-primary/10 text-primary">
+                        <span class="material-symbols-outlined !text-2xl">all_inclusive</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800">Whole Life Plans</h3>
+                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                </div>
+                <div class="expertise-acc-content">
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Lifelong protection and savings that help build a legacy for your family.</p>
+                    <a href="insurance/whole-life-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-primary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
+                </div>
             </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Endowment Plans</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">Savings and insurance combined. Build a corpus while
-              staying protected.</p>
-          </div>
-          <div
-            class="mobile-product-card md:hidden glass rounded-4xl p-10 flex flex-col gap-6 group" aria-hidden="true">
-            <div
-              class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">elderly</span>
+
+            <!-- Acc Item 9 -->
+            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+                <div class="expertise-acc-header">
+                    <div class="expertise-acc-icon bg-slate-100 text-slate-900">
+                        <span class="material-symbols-outlined !text-2xl">groups</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800">Micro Insurance</h3>
+                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+                </div>
+                <div class="expertise-acc-content">
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Affordable insurance solutions for low-income individuals and small groups.</p>
+                    <a href="insurance/micro-insurance.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-900">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
+                </div>
             </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Retirement Planning</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">Pension plans and annuities to ensure a comfortable,
-              worry-free retirement.</p>
-          </div>
-          <div
-            class="mobile-product-card md:hidden glass rounded-4xl p-10 flex flex-col gap-6 group" aria-hidden="true">
-            <div
-              class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">school</span>
-            </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Child Education Plans</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">Secure your child's educational milestones with
-              disciplined, goal-based savings.</p>
-          </div>
-          <div
-            class="mobile-product-card md:hidden glass rounded-4xl p-10 flex flex-col gap-6 group" aria-hidden="true">
-            <div
-              class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
-              <span class="material-symbols-outlined !text-3xl">real_estate_agent</span>
-            </div>
-            <h3 class="text-2xl font-extrabold text-slate-900">Wealth Creation</h3>
-            <p class="text-slate-500 font-medium leading-relaxed">ULIPs and market-linked plans to grow your wealth with
-              market participation.</p>
-          </div>
         </div>
       </div>
+      
+      <script>
+          function toggleExpertiseAcc(el) {
+              const isActive = el.classList.contains('active');
+              document.querySelectorAll('.expertise-acc-item').forEach(item => item.classList.remove('active'));
+              if (!isActive) el.classList.add('active');
+          }
 
-      <div class="mt-20 text-center relative z-10">
-        <button onclick="window.location.href='contact.html'"
-          class="bg-secondary hover:bg-secondary-light text-slate-900 font-bold px-12 py-5 rounded-2xl transition-all shadow-xl shadow-secondary/20 active:scale-95 text-lg">
-          Get Free Advisor Call
-        </button>
-      </div>
+          document.addEventListener('DOMContentLoaded', () => {
+              const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+              const observer = new IntersectionObserver((entries) => {
+                  entries.forEach(entry => {
+                      if (entry.isIntersecting) entry.target.classList.add('active');
+                  });
+              }, observerOptions);
+              document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+          });
+          
+          function openContactModal(svc) {
+              const modal = document.getElementById('contactModal');
+              const title = document.getElementById('modal-title');
+              const desc = document.getElementById('modal-desc');
+              const btnText = document.getElementById('modal-submit-text');
+              const badge = document.getElementById('modal-badge-text');
+              const badgeIcon = document.getElementById('modal-badge-icon');
+              
+              if (svc === 'consult') {
+                  badge.textContent = 'Free Consultation';
+                  badgeIcon.textContent = 'shield';
+                  title.textContent = 'Book Free Consultation';
+                  desc.textContent = "Leave your details and our senior advisor will contact you to discuss your protection needs.";
+                  btnText.textContent = 'Request Consultation';
+              } else if (svc === 'chat') {
+                  badge.textContent = 'Instant Support';
+                  badgeIcon.textContent = 'chat_bubble';
+                  title.textContent = 'Insurance Inquiry';
+                  desc.textContent = "Connect with us on WhatsApp for quick answers to your insurance questions.";
+                  btnText.textContent = 'Start Inquiry';
+              }
+              
+              modal.classList.remove('hidden');
+              document.body.classList.add('overflow-hidden');
+          }
+
+          function closeContactModal() {
+              const modal = document.getElementById('contactModal');
+              modal.classList.add('hidden');
+              document.body.classList.remove('overflow-hidden');
+          }
+
+          function handleModalSubmit(e) {
+              e.preventDefault();
+              const form = document.getElementById('modal-form');
+              const success = document.getElementById('modal-success');
+              form.classList.add('hidden');
+              success.classList.remove('hidden');
+              setTimeout(() => {
+                  const name = document.getElementById('modal-name').value;
+                  window.open(`https://wa.me/919945933822?text=Hi, I am ${name}. I'm interested in an insurance consultation.`);
+                  closeContactModal();
+              }, 2000);
+          }
+      </script>
     </section>
-
 
     <!-- Horizontal Filmstrip Gallery -->
     <section class="relative overflow-hidden py-12 group/section">
-      <!-- Added gradient masks for smoother entry/exit of cards -->
-      <div
-        class="absolute inset-y-0 left-0 w-8 md:w-24 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none">
-      </div>
-      <div
-        class="absolute inset-y-0 right-0 w-8 md:w-24 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none">
-      </div>
+      <div class="absolute inset-y-0 left-0 w-8 md:w-24 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute inset-y-0 right-0 w-8 md:w-24 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none"></div>
 
       <div class="flex animate-scrollX pb-8">
-
-        <!-- Set 1 -->
         <div class="flex shrink-0 gap-6 pr-6">
-          <!-- Frame 1: Protection -->
-          <div class="flex-shrink-0 w-[70vw] md:w-[35vw] lg:w-[25vw] group">
-            <div
-              class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
-              <img
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                data-alt="a calm father holding his newborn child in a softly sunlit nursery with warm morning light"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRfyg0rdEchNKHMTN7WOCy6-UO8v2FYBnnzPZleu6w2TisY9y-39s4giqQN0k3SWGD2zwuocy0azHwQLvwyjfV8WIPkO9fPFScYq0guZTTEyDVy2x9A6T6TnY5zxg1u0A-93I55JmkkDcztj64EYL8XnmG2zqK-EJYfZIUqH6VTZ8x4D5nSGNCu9axsYEKxnoetyBAPR4YkuHkumaN3qXm1ZS4St5SMQ_p0a2j8mphJNcnQsGnNjVLKoUQrjIBiAMRLFBsQWtvZ_s" />
+          <div class="flex-shrink-0 w-[55vw] md:w-[28vw] lg:w-[20vw] group">
+            <div class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
+              <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="assets/images/hero-family.png" />
               <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
               <div class="absolute bottom-0 left-0 p-8 md:p-10 w-full">
-                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter
-                  I</span>
+                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter I</span>
                 <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">The First Shield</h3>
-                <p
-                  class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  Protection that breathes with you. Securing the moments that define the beginning of your legacy.
-                </p>
+                <p class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">Protection that breathes with you. Securing the moments that define the beginning of your legacy.</p>
                 <div class="mt-6 flex items-center gap-2 text-secondary-fixed">
-                  <span class="material-symbols-outlined" data-icon="shield">shield</span>
+                  <span class="material-symbols-outlined">shield</span>
                   <span class="text-xs font-bold tracking-widest uppercase">Legacy Secured</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Frame 2: Wellness -->
-          <div class="flex-shrink-0 w-[70vw] md:w-[35vw] lg:w-[25vw] group">
-            <div
-              class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
-              <img
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                data-alt="young woman practicing meditation in a lush green garden at sunrise with soft golden highlights"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaOpPlFN6TxwduRt7qnr4rvNqkTBmIxyYyR7ppHdKEwtHUL2IrpPUPtjGDnlTY1b9E4CnAJBNSqcnpligd14NeE0fJW37PC1kUxBevqzaD4nhxZUnE4DdEAdh1kBYxyTySnDwWlK3gyvrRS-jGTwP2ezo9HA6P6GAN4M6eGCcOifCwon3Mv9C96fFYNjoLytRFBaTp-vGYkt40vW87JKmhAtBvI6fqnE-ppYaQYKXefZCQM5DJ8tWqZEDDae2WtDFYvSiLGR7-ACc" />
+          <div class="flex-shrink-0 w-[55vw] md:w-[28vw] lg:w-[20vw] group">
+            <div class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
+              <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="assets/images/hero-wellness.png" />
               <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
               <div class="absolute bottom-0 left-0 p-8 md:p-10 w-full">
-                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter
-                  II</span>
+                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter II</span>
                 <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Mending Minds</h3>
-                <p
-                  class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  Wellness isn't a luxury; it's the foundation. Our proactive support ensures clarity through the
-                  storms.
-                </p>
+                <p class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">Wellness isn't a luxury; it's the foundation. Our proactive support ensures clarity through the storms.</p>
                 <div class="mt-6 flex items-center gap-2 text-secondary-fixed">
-                  <span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+                  <span class="material-symbols-outlined">psychology</span>
                   <span class="text-xs font-bold tracking-widest uppercase">Holistic Care</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Frame 3: Growth -->
-          <div class="flex-shrink-0 w-[70vw] md:w-[35vw] lg:w-[25vw] group">
-            <div
-              class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
-              <img
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                data-alt="majestic mountain peak during blue hour with a single tiny hiker light illuminating the path"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqqM_oi46harVFy0ip8NvTCEjMmYZt9HN3iO726v97y501lA1InyUxBi0PQtMUjndsc1CvjJEC8SxRFWmFU7G-DXcezsIkFpTX7LC9kYpBWUsQmMNIAmUp3JenkwVgmpyDY382Yaqrtx97ixWxA7GNxUtsEjuMShCFRWKoGEd4KG0SUQGmtSBLC4YnOqvwzv9BYduaJqQdVHUnI31IRlY10WJ1yW2yKZAh9ifmR8sujPs7pnVF9IMrQ4qtwAkFEEcTJbV-aY6ujUk" />
+          <div class="flex-shrink-0 w-[55vw] md:w-[28vw] lg:w-[20vw] group">
+            <div class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
+              <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="assets/images/hero-insurance.png" />
               <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
               <div class="absolute bottom-0 left-0 p-8 md:p-10 w-full">
-                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter
-                  III</span>
+                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter III</span>
                 <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Climbing Higher</h3>
-                <p
-                  class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  Every peak is within reach when you have the right safety net. We invest in your ambition as much as
-                  your safety.
-                </p>
+                <p class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">Every peak is within reach when you have the right safety net. We invest in your ambition as much as your safety.</p>
                 <div class="mt-6 flex items-center gap-2 text-secondary-fixed">
-                  <span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+                  <span class="material-symbols-outlined">trending_up</span>
                   <span class="text-xs font-bold tracking-widest uppercase">Ascent Prepared</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Frame 4: Assurance -->
-          <div class="flex-shrink-0 w-[70vw] md:w-[35vw] lg:w-[25vw] group">
-            <div
-              class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
-              <img
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                data-alt="a group of friends laughing together around a dinner table with soft candlelight and warm atmosphere"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBL1lEbpYRvyUKcew0Rz15EE5-bwPD3WsKUL7rTVUbNiTkJFjvkHJVgue7R2xRk5FBOppnVTR_slgq2bHeTAyT9MEYH9dkkNhA0lQF1CsyVaeYMF6NZqUnSSK3ccjcZQrmmsGim4xsGLjl06NvMjyKlAqPbb7WyA-W2C-P4FPRqCN2mCKGvCuB2YGm-yDyoACuxy7TMF2EbBUxBguHvLVUwElk3CnRZ68DOjpTFK6JSlsSMQ97Sa9H7e_o7YQdkq7jWO_VcWUnja8k" />
+          <div class="flex-shrink-0 w-[55vw] md:w-[28vw] lg:w-[20vw] group">
+            <div class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
+              <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="assets/images/counselling_session.jpg" />
               <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
               <div class="absolute bottom-0 left-0 p-8 md:p-10 w-full">
-                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter
-                  IV</span>
+                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter IV</span>
                 <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Total Assurance</h3>
-                <p
-                  class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  The ultimate goal is to forget we are even there. Unseen protection for the seen joy of living.
-                </p>
+                <p class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">The ultimate goal is to forget we are even there. Unseen protection for the seen joy of living.</p>
                 <div class="mt-6 flex items-center gap-2 text-secondary-fixed">
-                  <span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+                  <span class="material-symbols-outlined">verified_user</span>
                   <span class="text-xs font-bold tracking-widest uppercase">Peace of Mind</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- Set 2 (Duplicated for seamless infinite loop) -->
+        <!-- Duplicated Set -->
         <div class="flex shrink-0 gap-6 pr-6" aria-hidden="true">
-          <!-- Frame 1: Protection -->
-          <div class="flex-shrink-0 w-[70vw] md:w-[35vw] lg:w-[25vw] group">
-            <div
-              class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
-              <img
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                data-alt="a calm father holding his newborn child in a softly sunlit nursery with warm morning light"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRfyg0rdEchNKHMTN7WOCy6-UO8v2FYBnnzPZleu6w2TisY9y-39s4giqQN0k3SWGD2zwuocy0azHwQLvwyjfV8WIPkO9fPFScYq0guZTTEyDVy2x9A6T6TnY5zxg1u0A-93I55JmkkDcztj64EYL8XnmG2zqK-EJYfZIUqH6VTZ8x4D5nSGNCu9axsYEKxnoetyBAPR4YkuHkumaN3qXm1ZS4St5SMQ_p0a2j8mphJNcnQsGnNjVLKoUQrjIBiAMRLFBsQWtvZ_s" />
+          <div class="flex-shrink-0 w-[55vw] md:w-[28vw] lg:w-[20vw] group">
+            <div class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
+              <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="assets/images/hero-family.png" />
               <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
               <div class="absolute bottom-0 left-0 p-8 md:p-10 w-full">
-                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter
-                  I</span>
+                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter I</span>
                 <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">The First Shield</h3>
-                <p
-                  class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  Protection that breathes with you. Securing the moments that define the beginning of your legacy.
-                </p>
                 <div class="mt-6 flex items-center gap-2 text-secondary-fixed">
-                  <span class="material-symbols-outlined" data-icon="shield">shield</span>
+                  <span class="material-symbols-outlined">shield</span>
                   <span class="text-xs font-bold tracking-widest uppercase">Legacy Secured</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Frame 2: Wellness -->
-          <div class="flex-shrink-0 w-[70vw] md:w-[35vw] lg:w-[25vw] group">
-            <div
-              class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
-              <img
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                data-alt="young woman practicing meditation in a lush green garden at sunrise with soft golden highlights"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaOpPlFN6TxwduRt7qnr4rvNqkTBmIxyYyR7ppHdKEwtHUL2IrpPUPtjGDnlTY1b9E4CnAJBNSqcnpligd14NeE0fJW37PC1kUxBevqzaD4nhxZUnE4DdEAdh1kBYxyTySnDwWlK3gyvrRS-jGTwP2ezo9HA6P6GAN4M6eGCcOifCwon3Mv9C96fFYNjoLytRFBaTp-vGYkt40vW87JKmhAtBvI6fqnE-ppYaQYKXefZCQM5DJ8tWqZEDDae2WtDFYvSiLGR7-ACc" />
+          <div class="flex-shrink-0 w-[55vw] md:w-[28vw] lg:w-[20vw] group">
+            <div class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
+              <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="assets/images/hero-wellness.png" />
               <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
               <div class="absolute bottom-0 left-0 p-8 md:p-10 w-full">
-                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter
-                  II</span>
+                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter II</span>
                 <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Mending Minds</h3>
-                <p
-                  class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  Wellness isn't a luxury; it's the foundation. Our proactive support ensures clarity through the
-                  storms.
-                </p>
                 <div class="mt-6 flex items-center gap-2 text-secondary-fixed">
-                  <span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+                  <span class="material-symbols-outlined">psychology</span>
                   <span class="text-xs font-bold tracking-widest uppercase">Holistic Care</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Frame 3: Growth -->
-          <div class="flex-shrink-0 w-[70vw] md:w-[35vw] lg:w-[25vw] group">
-            <div
-              class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
-              <img
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                data-alt="majestic mountain peak during blue hour with a single tiny hiker light illuminating the path"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqqM_oi46harVFy0ip8NvTCEjMmYZt9HN3iO726v97y501lA1InyUxBi0PQtMUjndsc1CvjJEC8SxRFWmFU7G-DXcezsIkFpTX7LC9kYpBWUsQmMNIAmUp3JenkwVgmpyDY382Yaqrtx97ixWxA7GNxUtsEjuMShCFRWKoGEd4KG0SUQGmtSBLC4YnOqvwzv9BYduaJqQdVHUnI31IRlY10WJ1yW2yKZAh9ifmR8sujPs7pnVF9IMrQ4qtwAkFEEcTJbV-aY6ujUk" />
+          <div class="flex-shrink-0 w-[55vw] md:w-[28vw] lg:w-[20vw] group">
+            <div class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
+              <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="assets/images/hero-insurance.png" />
               <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
               <div class="absolute bottom-0 left-0 p-8 md:p-10 w-full">
-                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter
-                  III</span>
+                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter III</span>
                 <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Climbing Higher</h3>
-                <p
-                  class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  Every peak is within reach when you have the right safety net. We invest in your ambition as much as
-                  your safety.
-                </p>
                 <div class="mt-6 flex items-center gap-2 text-secondary-fixed">
-                  <span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+                  <span class="material-symbols-outlined">trending_up</span>
                   <span class="text-xs font-bold tracking-widest uppercase">Ascent Prepared</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Frame 4: Assurance -->
-          <div class="flex-shrink-0 w-[70vw] md:w-[35vw] lg:w-[25vw] group">
-            <div
-              class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
-              <img
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                data-alt="a group of friends laughing together around a dinner table with soft candlelight and warm atmosphere"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBL1lEbpYRvyUKcew0Rz15EE5-bwPD3WsKUL7rTVUbNiTkJFjvkHJVgue7R2xRk5FBOppnVTR_slgq2bHeTAyT9MEYH9dkkNhA0lQF1CsyVaeYMF6NZqUnSSK3ccjcZQrmmsGim4xsGLjl06NvMjyKlAqPbb7WyA-W2C-P4FPRqCN2mCKGvCuB2YGm-yDyoACuxy7TMF2EbBUxBguHvLVUwElk3CnRZ68DOjpTFK6JSlsSMQ97Sa9H7e_o7YQdkq7jWO_VcWUnja8k" />
+          <div class="flex-shrink-0 w-[55vw] md:w-[28vw] lg:w-[20vw] group">
+            <div class="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low transition-transform duration-700 group-hover:scale-[1.02]">
+              <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="assets/images/counselling_session.jpg" />
               <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
               <div class="absolute bottom-0 left-0 p-8 md:p-10 w-full">
-                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter
-                  IV</span>
+                <span class="text-secondary-fixed font-semibold tracking-widest uppercase text-xs mb-3 block">Chapter IV</span>
                 <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Total Assurance</h3>
-                <p
-                  class="text-primary-fixed text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  The ultimate goal is to forget we are even there. Unseen protection for the seen joy of living.
-                </p>
                 <div class="mt-6 flex items-center gap-2 text-secondary-fixed">
-                  <span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+                  <span class="material-symbols-outlined">verified_user</span>
                   <span class="text-xs font-bold tracking-widest uppercase">Peace of Mind</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
+    <!-- Testimonials by Category -->
+    <section id="insurance-testimonials" class="section-padding bg-white rounded-[3rem] lg:rounded-[6rem] mx-4 lg:mx-8 mb-24 relative overflow-hidden shadow-sm border border-slate-100">
+      <div class="absolute -top-24 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div class="absolute -bottom-24 left-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
+          <div class="space-y-4 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary font-bold text-xs uppercase tracking-widest">
+              <span class="material-symbols-outlined !text-sm">reviews</span>
+              Client Feedback
+            </div>
+            <h2 class="text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight">Stories by <span class="text-secondary italic">Planning Need</span></h2>
+            <p class="text-slate-500 font-medium text-lg leading-relaxed">Real-world moments where the right guidance makes protection simpler, clearer, and easier to act on.</p>
+          </div>
+          <button onclick="openContactModal('consult')" class="inline-flex items-center gap-2 text-secondary font-extrabold hover:gap-3 transition-all">
+            Talk to an Advisor
+            <span class="material-symbols-outlined !text-lg">arrow_forward</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-secondary/5 flex flex-col gap-6">
+            <div class="flex items-center justify-between gap-4">
+              <div class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">
+                <span class="material-symbols-outlined !text-3xl">shield_with_heart</span>
+              </div>
+              <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-secondary">Family Cover</span>
+            </div>
+            <p class="text-slate-600 font-medium leading-relaxed">"The advice made term insurance easy to understand. We chose the right cover without feeling pressured."</p>
+            <div class="mt-auto pt-6 border-t border-slate-100">
+              <p class="font-extrabold text-slate-900">Family Client</p>
+              <p class="text-sm text-slate-400 font-bold">Term Life Planning</p>
+            </div>
+          </article>
+
+          <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-primary/5 flex flex-col gap-6">
+            <div class="flex items-center justify-between gap-4">
+              <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined !text-3xl">local_hospital</span>
+              </div>
+              <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-primary">Health</span>
+            </div>
+            <p class="text-slate-600 font-medium leading-relaxed">"They compared options patiently and helped us pick health coverage that suited our parents and children."</p>
+            <div class="mt-auto pt-6 border-t border-slate-100">
+              <p class="font-extrabold text-slate-900">Household Client</p>
+              <p class="text-sm text-slate-400 font-bold">Health Insurance</p>
+            </div>
+          </article>
+
+          <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-secondary/5 flex flex-col gap-6">
+            <div class="flex items-center justify-between gap-4">
+              <div class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">
+                <span class="material-symbols-outlined !text-3xl">school</span>
+              </div>
+              <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-secondary">Children</span>
+            </div>
+            <p class="text-slate-600 font-medium leading-relaxed">"The children's plan was explained around school and college goals, not just policy terms."</p>
+            <div class="mt-auto pt-6 border-t border-slate-100">
+              <p class="font-extrabold text-slate-900">Parent Client</p>
+              <p class="text-sm text-slate-400 font-bold">Education Planning</p>
+            </div>
+          </article>
+
+          <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-slate-900/5 flex flex-col gap-6">
+            <div class="flex items-center justify-between gap-4">
+              <div class="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center">
+                <span class="material-symbols-outlined !text-3xl">support_agent</span>
+              </div>
+              <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-slate-700">Claims</span>
+            </div>
+            <p class="text-slate-600 font-medium leading-relaxed">"During claim paperwork, the team guided us step by step and reduced a lot of stress for the family."</p>
+            <div class="mt-auto pt-6 border-t border-slate-100">
+              <p class="font-extrabold text-slate-900">Policyholder Family</p>
+              <p class="text-sm text-slate-400 font-bold">Claim Assistance</p>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -748,104 +1014,181 @@
 
         <div class="max-w-3xl mx-auto space-y-16">
           <div class="text-center space-y-4">
-            <h2 class="text-4xl font-extrabold tracking-tight text-slate-900">Clarity &amp; Confidence</h2>
+            <h2 class="text-4xl font-extrabold tracking-tight text-slate-900">Clarity & Confidence</h2>
             <p class="text-slate-500 text-lg">Your most pressing questions, answered with empathy and expertise.</p>
           </div>
 
           <div class="space-y-12">
-
-            <!-- General Category -->
             <div>
-              <h3 class="text-xs uppercase tracking-[0.3em] font-bold text-secondary mb-6 pl-4">General Inquiry</h3>
-              <div class="space-y-4">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                  <button class="w-full flex items-center justify-between text-left group">
-                    <span class="font-bold text-lg text-slate-900">How does Serene Sentinel integrate mental wellness with insurance?</span>
-                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0 ml-4">expand_more</span>
+              <h3 class="text-xs uppercase tracking-[0.3em] font-bold text-secondary mb-6 pl-4">Insurance & Planning</h3>
+              <div class="space-y-4 faq-container">
+                <!-- FAQ 1 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm faq-item transition-all duration-300">
+                  <button class="w-full flex items-center justify-between text-left group faq-toggle">
+                    <span class="font-bold text-lg text-slate-900">How does Vima Sneha integrate mental wellness with insurance?</span>
+                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-transform duration-300 flex-shrink-0 ml-4 icon">add</span>
                   </button>
-                  <div class="mt-4 text-slate-500 leading-relaxed text-sm pr-12">
-                    We treat mental health as a core component of your physical and financial health. Our policies include direct access to top-tier counseling services and proactive wellness coaching at no additional premium cost.
+                  <div class="faq-content grid grid-rows-[0fr] transition-all duration-300">
+                    <div class="overflow-hidden">
+                      <div class="pt-4 text-slate-500 leading-relaxed text-sm pr-12">
+                        We treat mental health as a core component of your physical and financial health. Our policies include direct access to top-tier counseling services and proactive wellness coaching, ensuring that your peace of mind is protected alongside your assets.
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="bg-white/50 rounded-2xl p-6">
-                  <button class="w-full flex items-center justify-between text-left group">
-                    <span class="font-bold text-lg text-slate-500">What makes the Member Portal different?</span>
-                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0 ml-4">add</span>
+
+                <!-- FAQ 2 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm faq-item transition-all duration-300">
+                  <button class="w-full flex items-center justify-between text-left group faq-toggle">
+                    <span class="font-bold text-lg text-slate-900">What types of insurance plans do you offer?</span>
+                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-transform duration-300 flex-shrink-0 ml-4 icon">add</span>
                   </button>
+                  <div class="faq-content grid grid-rows-[0fr] transition-all duration-300">
+                    <div class="overflow-hidden">
+                      <div class="pt-4 text-slate-500 leading-relaxed text-sm pr-12">
+                        We provide a wide range of solutions including Term Life, Comprehensive Health, Endowment Plans, Retirement/Pension schemes, and specialized Children's education and marriage funds.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm faq-item transition-all duration-300">
+                  <button class="w-full flex items-center justify-between text-left group faq-toggle">
+                    <span class="font-bold text-lg text-slate-900">How do you help with the claim settlement process?</span>
+                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-transform duration-300 flex-shrink-0 ml-4 icon">add</span>
+                  </button>
+                  <div class="faq-content grid grid-rows-[0fr] transition-all duration-300">
+                    <div class="overflow-hidden">
+                      <div class="pt-4 text-slate-500 leading-relaxed text-sm pr-12">
+                        Our relationship doesn't end with a policy. In the event of a claim, our dedicated team provides end-to-end assistance, handling documentation and coordination with insurers to ensure a smooth and timely settlement for your family.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm faq-item transition-all duration-300">
+                  <button class="w-full flex items-center justify-between text-left group faq-toggle">
+                    <span class="font-bold text-lg text-slate-900">Can I customize my financial plan?</span>
+                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-transform duration-300 flex-shrink-0 ml-4 icon">add</span>
+                  </button>
+                  <div class="faq-content grid grid-rows-[0fr] transition-all duration-300">
+                    <div class="overflow-hidden">
+                      <div class="pt-4 text-slate-500 leading-relaxed text-sm pr-12">
+                        Absolutely. We believe in tailored advisory. Our experts analyze your current financial standing, future goals, and risk appetite to create a bespoke plan that evolves as your life stages change.
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <!-- Claims Category -->
-            <div>
-              <h3 class="text-xs uppercase tracking-[0.3em] font-bold text-secondary mb-6 pl-4">Claims &amp; Support</h3>
-              <div class="space-y-4">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                  <button class="w-full flex items-center justify-between text-left group">
-                    <span class="font-bold text-lg text-slate-900">How fast is the claims process for counseling?</span>
-                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0 ml-4">expand_more</span>
-                  </button>
-                  <div class="mt-4 text-slate-500 leading-relaxed text-sm pr-12">
-                    Most mental health claims are processed in real-time through our partner network. For out-of-network services, we guarantee a 48-hour response time once the digital documentation is uploaded via our app.
-                  </div>
-                </div>
-                <div class="bg-white/50 rounded-2xl p-6">
-                  <button class="w-full flex items-center justify-between text-left group">
-                    <span class="font-bold text-lg text-slate-500">Can I track my claim status in real-time?</span>
-                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0 ml-4">add</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Policies Category -->
-            <div>
-              <h3 class="text-xs uppercase tracking-[0.3em] font-bold text-secondary mb-6 pl-4">Policies &amp; Coverage</h3>
-              <div class="space-y-4">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                  <button class="w-full flex items-center justify-between text-left group">
-                    <span class="font-bold text-lg text-slate-900">Can I adjust my coverage levels annually?</span>
-                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0 ml-4">expand_more</span>
-                  </button>
-                  <div class="mt-4 text-slate-500 leading-relaxed text-sm pr-12">
-                    Yes, we offer an annual &ldquo;Wellness Audit&rdquo; where a specialist reviews your current life stage and suggests adjustments to your policy to ensure you are never over or under-insured.
-                  </div>
-                </div>
-                <div class="bg-white/50 rounded-2xl p-6">
-                  <button class="w-full flex items-center justify-between text-left group">
-                    <span class="font-bold text-lg text-slate-500">Are there international coverage options?</span>
-                    <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0 ml-4">add</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
       </div>
+      
+      <script>
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+          button.addEventListener('click', () => {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Collapse all other FAQ items
+            document.querySelectorAll('.faq-item').forEach(oi => {
+              oi.classList.remove('active');
+              oi.querySelector('.faq-content').style.gridTemplateRows = '0fr';
+              oi.querySelector('.icon').textContent = 'add';
+            });
+            
+            // Toggle current item
+            if (!isActive) {
+              item.classList.add('active');
+              item.querySelector('.faq-content').style.gridTemplateRows = '1fr';
+              item.querySelector('.icon').textContent = 'remove';
+            }
+          });
+        });
+      </script>
     </section>
 
     <!-- Final CTA -->
     <section class="section-padding flex items-center justify-center text-center">
       <div class="max-w-4xl space-y-10">
-        <h2 class="text-5xl lg:text-8xl font-extrabold text-slate-900 leading-tight">Secure your <span
-            class="text-secondary">tomorrow</span>, today.</h2>
+        <h2 class="text-5xl lg:text-8xl font-extrabold text-slate-900 leading-tight">Secure your <span class="text-secondary">tomorrow</span>, today.</h2>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <a href="contact.html" class="btn-gold w-full sm:w-auto !px-12 !py-6 !text-xl shadow-2xl">Talk to an
-            Advisor</a>
-          <a href="tel:+919945933822"
-            class="text-lg font-extrabold text-slate-400 hover:text-secondary transition-all">or call +91 99459
-            33822</a>
+          <button onclick="openContactModal('consult')" class="btn-gold w-full sm:w-auto !px-12 !py-6 !text-xl shadow-2xl">Talk to an Advisor</button>
+          <a href="tel:+919945933822" class="text-lg font-extrabold text-slate-400 hover:text-secondary transition-all">or call +91 99459 33822</a>
         </div>
       </div>
     </section>
 
   </main>
 
+  <!-- Contact Modal -->
+  <div id="contactModal" class="fixed inset-0 z-[2000] hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-md transition-opacity" onclick="closeContactModal()"></div>
+      <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
+          <div class="relative w-full max-w-2xl transform overflow-hidden rounded-[3rem] glass p-8 lg:p-12 shadow-2xl transition-all animate-modal-in">
+              <button onclick="closeContactModal()" class="absolute top-6 right-6 w-12 h-12 rounded-2xl bg-white/50 flex items-center justify-center text-slate-400 hover:text-primary hover:bg-white transition-all shadow-sm">
+                  <span class="material-symbols-outlined">close</span>
+              </button>
+              <div class="space-y-8">
+                  <div class="space-y-2">
+                      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 text-secondary font-bold text-[10px] uppercase tracking-widest">
+                          <span id="modal-badge-icon" class="material-symbols-outlined !text-xs">shield</span>
+                          <span id="modal-badge-text">Free Consultation</span>
+                      </div>
+                      <h2 id="modal-title" class="text-3xl font-extrabold text-slate-900">Book Your Consultation</h2>
+                      <p id="modal-desc" class="text-slate-500 font-medium">Leave your details and our senior advisor will contact you shortly.</p>
+                  </div>
+                  <form id="modal-form" onsubmit="handleModalSubmit(event)" class="space-y-6">
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div class="space-y-2">
+                              <label class="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Full Name</label>
+                              <input type="text" id="modal-name" required placeholder="Your Name" class="w-full bg-white/50 border-none rounded-2xl px-6 py-4 focus:bg-white focus:ring-4 focus:ring-secondary/10 transition-all font-bold text-slate-900 shadow-inner outline-none"/>
+                          </div>
+                          <div class="space-y-2">
+                              <label class="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">WhatsApp Number</label>
+                              <input type="tel" id="modal-phone" required placeholder="+91 ..." class="w-full bg-white/50 border-none rounded-2xl px-6 py-4 focus:bg-white focus:ring-4 focus:ring-secondary/10 transition-all font-bold text-slate-900 shadow-inner outline-none"/>
+                          </div>
+                      </div>
+                      <button type="submit" class="w-full btn-gold h-16 !text-lg shadow-xl mt-4">
+                          <span id="modal-submit-text">Request Callback</span>
+                          <span class="material-symbols-outlined">send</span>
+                      </button>
+                  </form>
+                  <div id="modal-success" class="hidden text-center space-y-4 py-8">
+                      <div class="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto shadow-xl animate-bounce">
+                          <span class="material-symbols-outlined !text-4xl">check</span>
+                      </div>
+                      <h3 class="text-2xl font-extrabold text-slate-900">Inquiry Sent!</h3>
+                      <p class="text-slate-500 font-medium">Redirecting to WhatsApp for instant connection...</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
   <!-- Footer -->
   <div id="site-footer-root"></div>
-    <script src="assets/js/footer.js?v=20260420-5"></script>
+  <script src="assets/js/footer.js?v=20260420-5"></script>
 
+  <!-- Admin Data Sync Script -->
+  <script>
+  (function(){
+    try {
+      const data = localStorage.getItem('vima_insurance_data');
+      if(!data) return;
+      const INSURANCE_DATA = JSON.parse(data);
+      const updateText = (selector, text) => {
+        const el = document.querySelector(selector);
+        if(el && text) el.innerText = text;
+      };
+      const h = INSURANCE_DATA.hero || {};
+      updateText('p.text-lg.lg\\:text-xl', h.desc);
+    } catch(e) { console.error("Error syncing insurance data:", e); }
+  })();
+  </script>
 </body>
-
 </html>
+

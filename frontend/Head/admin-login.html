@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vima Sneha · Admin Login</title>
+<link rel="icon" type="image/png" href="../assets/images/logo.png" />
+<link rel="shortcut icon" type="image/png" href="../assets/images/logo.png" />
+<link rel="apple-touch-icon" href="../assets/images/logo.png" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pm: #B47FA6;
+  --dm: #7A4F72;
+  --dkm: #4E2E4A;
+  --gold: #D4A853;
+  --gd: #A07830;
+  --lt: #7a6878;
+  --bg: #FBF4ED;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#login-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FAF5F9 0%, #F2E8EF 50%, #FBF4ED 100%);
+  position: relative;
+}
+
+.login-orbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.login-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: orbPulse 8s ease-in-out infinite alternate;
+}
+
+.login-orb:nth-child(1) {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(180, 127, 166, .3), transparent 70%);
+  top: -150px;
+  left: -100px;
+}
+
+.login-orb:nth-child(2) {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(212, 168, 83, .25), transparent 70%);
+  bottom: -100px;
+  right: -80px;
+  animation-delay: -3s;
+}
+
+@keyframes orbPulse {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.2) translate(20px, -30px); }
+}
+
+/* ── ADMIN SELECTOR NAVBAR ── */
+.admin-selector {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(15px);
+  padding: 6px;
+  border-radius: 20px;
+  border: 1px solid rgba(180, 127, 166, 0.2);
+  gap: 8px;
+  z-index: 100;
+  box-shadow: 0 15px 35px rgba(122, 79, 114, 0.08);
+  animation: navSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@keyframes navSlideDown {
+  from { opacity: 0; transform: translate(-50%, -20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.selector-item {
+  padding: 10px 22px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dm);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selector-item:hover {
+  background: rgba(180, 127, 166, 0.08);
+}
+
+.selector-item.active {
+  background: linear-gradient(135deg, var(--pm), var(--dm));
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(122, 79, 114, 0.25);
+}
+
+.selector-item span {
+  font-size: 16px;
+}
+
+.login-card {
+  position: relative;
+  z-index: 10;
+  width: 440px;
+  max-width: 95vw;
+  background: rgba(255, 255, 255, .85);
+  backdrop-filter: blur(20px);
+  border-radius: 28px;
+  padding: 3rem 2.5rem;
+  border: 1px solid rgba(180, 127, 166, .2);
+  box-shadow: 0 30px 80px rgba(122, 79, 114, .18);
+  animation: loginFadeIn .8s cubic-bezier(.23, 1, .32, 1) both;
+}
+
+@keyframes loginFadeIn {
+  from { opacity: 0; transform: translateY(40px) scale(.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.login-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(180, 127, 166, .15), rgba(212, 168, 83, .1));
+  border: 1px solid rgba(180, 127, 166, .3);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--dm);
+  margin-bottom: 1.5rem;
+}
+
+.login-card h1 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: .4rem;
+  background: linear-gradient(135deg, var(--dkm), var(--pm), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-card .sub {
+  font-size: 13px;
+  color: var(--lt);
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dm);
+  margin-bottom: .5rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(180, 127, 166, .3);
+  background: rgba(255, 255, 255, .7);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+}
+
+.form-group input:focus {
+  border-color: var(--pm);
+}
+
+.btn-login {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--dkm), var(--pm) 60%, var(--gold));
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 25px rgba(122, 79, 114, .35);
+  transition: all .3s ease;
+  margin-top: 1rem;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(122, 79, 114, .45);
+}
+
+.error-msg {
+  color: #c62828;
+  font-size: 12px;
+  margin-top: 0.5rem;
+  text-align: center;
+  display: none;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 12px;
+  color: var(--lt);
+}
+
+.login-footer span {
+  color: var(--pm);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .admin-selector {
+    top: 1rem;
+    width: 90vw;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="login-page">
+  <div class="login-orbs">
+    <div class="login-orb"></div>
+    <div class="login-orb"></div>
+  </div>
+
+  <nav class="admin-selector">
+    <div class="selector-item active" data-target="admin.html"><span>🏠</span> Main Dashboard</div>
+    <div class="selector-item" data-target="admin-counselling.html"><span>🧠</span> Counselling</div>
+    <div class="selector-item" data-target="admin-insurance.html"><span>🛡️</span> Insurance</div>
+  </nav>
+
+  <div class="login-card">
+    <div class="login-badge" id="panel-badge">🛡️ Admin Control</div>
+    <h1 id="login-title">Welcome Back</h1>
+    <p class="sub" id="login-sub">Access the Vima Sneha management dashboard.</p>
+    
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="user" placeholder="Enter username" autocomplete="username">
+    </div>
+    
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="pass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    
+    <div id="error-msg" class="error-msg">Invalid credentials. Please try again.</div>
+    
+    <button class="btn-login" id="login-btn" onclick="login()">Sign In to Dashboard →</button>
+    
+    <p class="login-footer">Default credentials (if not changed): <span>admin</span> / <span>vimasneha2025</span></p>
+    
+    <div style="text-align: center; margin-top: 1rem; opacity: 0.5;">
+      <a href="#" onclick="resetAdminData(event)" style="color: var(--lt); font-size: 11px; text-decoration: none;">Forgot password? Reset to Defaults</a>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Redirection & UI Logic
+  const tabs = document.querySelectorAll('.selector-item');
+  const urlParams = new URLSearchParams(window.location.search);
+  const allowedRedirects = new Set(['admin.html', 'admin-counselling.html', 'admin-insurance.html']);
+  const sessionMs = 8 * 60 * 60 * 1000;
+
+  function getSafeRedirect(value) {
+    return allowedRedirects.has(value) ? value : 'admin.html';
+  }
+
+  function hasValidSession() {
+    try {
+      const raw = localStorage.getItem('vima_auth_token');
+      if (!raw) return false;
+      const session = JSON.parse(raw);
+      if (!session || !session.expiresAt || Date.now() > session.expiresAt) {
+        localStorage.removeItem('vima_auth_token');
+        return false;
+      }
+      return true;
+    } catch (e) {
+      localStorage.removeItem('vima_auth_token');
+      return false;
+    }
+  }
+
+  window.resetAdminData = function(event) {
+    if (event) event.preventDefault();
+    if (!confirm('Reset all admin settings and password to factory defaults?')) return;
+    [
+      'vs_admin_data',
+      'vima_counselling_data',
+      'vima_insurance_data',
+      'vima_sessions',
+      'vima_auth_token'
+    ].forEach(key => localStorage.removeItem(key));
+    location.reload();
+  };
+
+  const currentRedirect = getSafeRedirect(urlParams.get('redirect'));
+
+  tabs.forEach(tab => {
+    const target = tab.getAttribute('data-target');
+    
+    if (target === currentRedirect) {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      // Update UI text based on target
+      const title = document.getElementById('login-title');
+      const sub = document.getElementById('login-sub');
+      const badge = document.getElementById('panel-badge');
+      
+      if (target === 'admin-counselling.html') {
+        title.textContent = 'Counselling Portal';
+        sub.textContent = 'Manage expert profiles and live sessions.';
+        badge.textContent = '🧠 Counselling Admin';
+      } else if (target === 'admin-insurance.html') {
+        title.textContent = 'Insurance Portal';
+        sub.textContent = 'Update insurance products and trust metrics.';
+        badge.textContent = '🛡️ Insurance Admin';
+      } else {
+        title.textContent = 'Main Dashboard';
+        sub.textContent = 'Access central site management and settings.';
+        badge.textContent = '⚙️ Master Admin';
+      }
+    }
+
+    tab.addEventListener('click', () => {
+      window.location.href = `admin-login.html?redirect=${encodeURIComponent(getSafeRedirect(target))}`;
+    });
+  });
+
+  // Load credentials from storage if they exist
+  let adminCreds = { user: 'admin', pass: 'vimasneha2025' };
+  try {
+    const savedData = localStorage.getItem('vs_admin_data');
+    if (savedData) {
+      const parsed = JSON.parse(savedData);
+      if (parsed && parsed.creds) {
+        adminCreds = parsed.creds;
+      }
+    }
+  } catch (e) {
+    console.error('Error loading admin credentials:', e);
+  }
+
+  // Define login globally for the onclick handler
+  window.login = function() {
+    const userField = document.getElementById('user');
+    const passField = document.getElementById('pass');
+    const u = userField.value.trim();
+    const p = passField.value;
+    const btn = document.getElementById('login-btn');
+    const err = document.getElementById('error-msg');
+
+    console.log('Login attempt for user:', u);
+
+    if (u === adminCreds.user && p === adminCreds.pass) {
+      console.log('Login successful. Setting token and redirecting...');
+      const now = Date.now();
+      localStorage.setItem('vima_auth_token', JSON.stringify({
+        user: u,
+        issuedAt: now,
+        expiresAt: now + sessionMs
+      }));
+      
+      const finalRedirect = getSafeRedirect(new URLSearchParams(window.location.search).get('redirect'));
+      
+      btn.textContent = 'Redirecting...';
+      btn.style.opacity = '0.7';
+      btn.disabled = true;
+      
+      setTimeout(() => {
+        window.location.href = finalRedirect;
+      }, 400);
+    } else {
+      console.warn('Login failed: Invalid credentials.');
+      err.style.display = 'block';
+      setTimeout(() => {
+        err.style.display = 'none';
+      }, 3000);
+    }
+  };
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') window.login();
+  });
+
+  // If already logged in, redirect away
+  if (hasValidSession()) {
+    const finalRedirect = getSafeRedirect(new URLSearchParams(window.location.search).get('redirect'));
+    window.location.href = finalRedirect;
+  }
+});
+</script>
+</body>
+</html>

@@ -83,7 +83,7 @@
       <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl -z-10"></div>
     </div>
 
-    <div class="md:w-5/12 p-6 pb-24 md:p-10 md:pb-10 md:pl-16 flex flex-col bg-[#FAF5F9]">
+    <div class="md:w-5/12 p-6 pb-8 md:p-10 md:pb-8 md:pl-16 flex flex-col bg-[#FAF5F9]">
       <div class="hidden md:grid grid-cols-2 gap-x-6 gap-y-6 md:gap-x-8 md:gap-y-6">
         <div class="space-y-6">
           <h4 class="text-[11px] font-black tracking-[0.3em] uppercase text-purple-900/40">Quick Links</h4>
@@ -91,6 +91,7 @@
             <li><a class="text-[15px] md:text-base text-purple-900/70 hover:text-purple-900 font-bold transition-all footer-link-animated" href="index.html">Home</a></li>
             <li><a class="text-[15px] md:text-base text-purple-900/70 hover:text-purple-900 font-bold transition-all footer-link-animated" href="counselling.html">Counselling</a></li>
             <li><a class="text-[15px] md:text-base text-purple-900/70 hover:text-purple-900 font-bold transition-all footer-link-animated" href="insurance.html">Insurance</a></li>
+            <li><a class="text-[15px] md:text-base text-purple-900/70 hover:text-purple-900 font-bold transition-all footer-link-animated" href="news.html">News</a></li>
             <li><a class="text-[15px] md:text-base text-purple-900/70 hover:text-purple-900 font-bold transition-all footer-link-animated" href="gallery.html">Gallery</a></li>
           </ul>
         </div>

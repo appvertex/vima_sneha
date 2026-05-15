@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Micro Insurance Plans - Vima Sneha</title>
+  <meta name="description"
+    content="Affordable insurance for everyone. Explore LIC Micro Insurance plans with Vima Sneha. Low premiums, high security." />
+  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logo.png" />
+  <link rel="apple-touch-icon" href="../assets/images/logo.png" />
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,800&family=Manrope:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <link href="../assets/css/layout-shared.css?v=20260424-1" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#7b4c70', light: '#C9A0BB', dark: '#7A4F72', fixed: '#ffd7f1', container: '#97658a' },
+            secondary: { DEFAULT: '#7b5804', light: '#F0D08A', dark: '#A6823D', fixed: '#ffdea6', container: '#fdcd74' },
+            surface: { DEFAULT: '#fcf9f8', dark: '#141214', 'container-low': '#f6f3f2', 'container-lowest': '#ffffff', container: '#f0eded' },
+            outline: { variant: '#d2c2ca', DEFAULT: '#80747b' },
+            'primary-fixed-dim': '#efb5df',
+            'secondary-fixed-dim': '#eec068',
+            'on-surface': '#1b1c1c',
+            'on-surface-variant': '#4e444a',
+            'on-secondary': '#ffffff',
+            'on-secondary-fixed': '#271900',
+            'on-primary': '#ffffff',
+            'on-primary-container': '#fffbff',
+            'on-secondary-container': '#785601'
+          },
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'Manrope', 'sans-serif'] },
+          borderRadius: { '2xl': '1.5rem', '3xl': '2rem', '4xl': '3rem' }
+        }
+      }
+    };
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+        body { @apply bg-surface text-slate-800 font-sans selection:bg-secondary/30 selection:text-secondary-dark overflow-x-hidden; }
+      }
+      @layer components {
+        .glass { @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-xl; }
+        .btn-premium { @apply relative overflow-hidden px-10 py-5 rounded-2xl font-extrabold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl active:scale-95 flex items-center justify-center gap-2 text-lg; }
+        .section-padding { @apply py-16 px-6 md:px-12 lg:px-24; }
+      }
+      .breadcrumb-item:not(:last-child)::after {
+        content: "chevron_right";
+        font-family: 'Material Symbols Outlined';
+        @apply mx-2 text-slate-400 text-sm;
+      }
+    </style>
+</head>
+
+<body class="safe-bottom">
+
+  <!-- Navbar -->
+  <div id="site-navbar-root"></div>
+  <script src="../assets/js/icons.js"></script>
+  <script src="../assets/js/navbar.js?v=20260424-1"></script>
+
+  <!-- Aurora Mesh -->
+  <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-[150px]"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[120px]"></div>
+  </div>
+
+  <main class="pt-20 lg:pt-32 pb-32 md:pb-24 scroll-smooth">
+
+    <!-- Breadcrumbs -->
+    <div class="px-6 md:px-12 lg:px-24 mb-8">
+      <nav class="flex items-center text-sm font-bold tracking-wide uppercase text-slate-400">
+        <a href="../index.html" class="hover:text-primary transition-colors breadcrumb-item">Home</a>
+        <a href="../insurance.html" class="hover:text-primary transition-colors breadcrumb-item">Insurance</a>
+        <span class="text-secondary">Micro Insurance</span>
+      </nav>
+    </div>
+
+        <!-- Hero Section -->
+    <section class="section-padding !pt-0 mb-16 relative">
+      <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 max-w-7xl mx-auto">
+        
+        <!-- Text Content -->
+        <div class="w-full lg:w-1/2 space-y-8 relative z-10">
+          <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-secondary/10 border border-secondary/20 shadow-sm backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+            <span class="text-secondary font-bold text-xs uppercase tracking-[0.2em]">Inclusion for All</span>
+          </div>
+          
+          <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-tight drop-shadow-sm">
+            Small Premiums. <br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-secondary-dark italic">Big Security.</span>
+          </h1>
+          
+          <p class="text-xl text-slate-600 font-medium leading-relaxed max-w-xl">
+            Micro insurance plans are specifically designed to provide affordable life cover to low-income groups. They offer essential protection at very nominal costs.
+          </p>
+
+          <div class="flex flex-wrap gap-4 pt-4">
+             <button onclick="window.location.href='../contact.html'" class="btn-gold">
+               Consult an Expert
+               <span class="material-symbols-outlined text-xl">arrow_forward</span>
+             </button>
+          </div>
+        </div>
+
+        <!-- Image Gallery/Showcase -->
+        <div class="w-full lg:w-1/2 relative group">
+          <!-- Background Glow -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-secondary/30 to-primary/30 rounded-[3rem] blur-3xl group-hover:blur-2xl transition-all duration-700 opacity-50"></div>
+          
+          <!-- Main Image Container -->
+          <div class="relative glass p-2 rounded-[3rem] transform transition-transform duration-700 hover:scale-[1.02]">
+            <div class="relative rounded-[2.5rem] overflow-hidden bg-white">
+              <img src="../assets/images/hero-insurance.png" alt="Insurance Professional" class="w-full h-[500px] object-cover object-center" />
+              
+              <!-- Gradient Overlay for premium feel -->
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent"></div>
+              
+              <!-- Floating Badge -->
+              <div class="absolute bottom-6 left-6 right-6 glass-dark border border-white/20 rounded-2xl p-4 flex items-center gap-4">
+                 <div class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-white">security</span>
+                 </div>
+                 <div>
+                    <p class="text-white font-bold text-sm">100% Secure</p>
+                    <p class="text-white/80 text-xs font-medium">IRDAI Approved Plans</p>
+                 </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Decorative Floating Element -->
+          <div class="absolute -top-6 -right-6 glass rounded-2xl p-4 shadow-2xl animate-bounce" style="animation-duration: 3s;">
+             <span class="material-symbols-outlined text-secondary text-4xl">verified</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product Listing Grid -->
+    <section
+      class="section-padding bg-white/40 rounded-[3rem] mx-4 lg:mx-8 relative overflow-hidden border border-white/20">
+      <div class="grid grid-cols-1 lg:grid-cols-1 gap-8 max-w-5xl mx-auto">
+
+        <!-- Product: Micro Bachat (751) -->
+        <div
+          class="glass p-8 md:p-12 rounded-4xl flex flex-col md:flex-row gap-10 items-center group hover:bg-white/80 transition-all duration-500">
+          <div class="w-full md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left gap-4">
+            <div
+              class="w-20 h-20 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all duration-500">
+              <span class="material-symbols-outlined !text-4xl">savings</span>
+            </div>
+            <div>
+              <h2 class="text-3xl font-extrabold text-slate-900 mb-1">Micro Bachat</h2>
+              <span class="text-sm font-bold text-slate-400 tracking-widest uppercase">Plan No: 751</span>
+            </div>
+          </div>
+          <div class="w-full md:w-2/3 space-y-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="flex items-start gap-3"><span
+                  class="material-symbols-outlined text-slate-900 mt-1">check_circle</span>
+                <p class="font-medium text-slate-600">Life micro insurance plan with savings</p>
+              </div>
+              <div class="flex items-start gap-3"><span
+                  class="material-symbols-outlined text-slate-900 mt-1">check_circle</span>
+                <p class="font-medium text-slate-600">Auto cover after 3 years premium payment</p>
+              </div>
+              <div class="flex items-start gap-3"><span
+                  class="material-symbols-outlined text-slate-900 mt-1">check_circle</span>
+                <p class="font-medium text-slate-600">Loyalty additions after 5 years</p>
+              </div>
+            </div>
+            <button onclick="window.open('../assets/docs/micro-bachat-751.pdf', '_blank')"
+              class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-primary transition-all active:scale-95">Explore</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer-root"></div>
+  <script src="../assets/js/footer.js?v=20260420-5"></script>
+
+  <script>
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('revealed'); });
+    }, observerOptions);
+    document.querySelectorAll('.glass').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+
+</html>

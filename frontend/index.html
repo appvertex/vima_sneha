@@ -7,9 +7,9 @@
     <title>Vima Sneha</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="logo.png" />
-    <link rel="shortcut icon" type="image/png" href="logo.png" />
-    <link rel="apple-touch-icon" href="logo.png" />
+    <link rel="icon" type="image/png" href="assets/images/logo.png" />
+    <link rel="shortcut icon" type="image/png" href="assets/images/logo.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo.png" />
 
     <!-- Fonts -->
     <link
@@ -17,7 +17,7 @@
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
-    <link href="assets/css/layout-shared.css?v=20260420-2" rel="stylesheet" />
+    <link href="assets/css/layout-shared.css?v=20260424-1" rel="stylesheet" />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -27,9 +27,33 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: { DEFAULT: '#B47FA6', light: '#C9A0BB', dark: '#7A4F72' },
-                        secondary: { DEFAULT: '#D4A853', light: '#F0D08A', dark: '#A6823D' },
-                        surface: { DEFAULT: '#FAF5F9', dark: '#141214' }
+                        primary: {
+                            DEFAULT: '#B47FA6',
+                            light: '#C9A0BB',
+                            dark: '#7A4F72',
+                            fixed: '#EFE3EA',
+                            container: '#DCC5D5'
+                        },
+                        secondary: {
+                            DEFAULT: '#D4A853',
+                            light: '#F0D08A',
+                            dark: '#A6823D',
+                            fixed: '#ffdea6',
+                            container: '#fdcd74'
+                        },
+                        surface: {
+                            DEFAULT: '#FAF5F9',
+                            dark: '#141214',
+                            'container-low': '#f6f3f2',
+                            'container-lowest': '#ffffff',
+                            container: '#f0eded'
+                        },
+                        'on-surface': '#1b1c1c',
+                        'on-surface-variant': '#4e444a',
+                        'on-secondary': '#ffffff',
+                        'on-secondary-fixed': '#271900',
+                        'on-primary': '#ffffff',
+                        'on-primary-container': '#fffbff',
                     },
                     fontFamily: { sans: ['"Plus Jakarta Sans"', 'Manrope', 'sans-serif'] },
                     borderRadius: { '2xl': '1.5rem', '3xl': '2rem', '4xl': '3rem' },
@@ -678,7 +702,7 @@
         .services-section {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 6rem 1.5rem;
+            padding: 3rem 1.5rem;
             position: relative;
         }
 
@@ -863,6 +887,7 @@
             position: relative;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            overflow-anchor: none;
             mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
             -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
         }
@@ -902,31 +927,57 @@
             }
         }
 
-        /* Mobile View (Vertical) */
+        /* Mobile View (Horizontal - Updated) */
         @media (max-width: 480px) {
             .services-loop-viewport {
-                height: 480px !important;
-                overflow-y: auto !important;
-                overflow-x: hidden !important;
-                margin: 1.5rem 0 !important;
-                mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent) !important;
-                -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent) !important;
-                overscroll-behavior-y: none;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                margin: 1.5rem -1.5rem !important;
+                padding: 1.5rem 0 !important;
+                mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent) !important;
+                -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent) !important;
+                overscroll-behavior-x: none;
+                height: auto !important;
+                /* Remove fixed height */
             }
 
             .services-loop-track {
                 display: flex !important;
-                flex-direction: column !important;
-                gap: 1.5rem !important;
+                flex-direction: row !important;
+                width: max-content !important;
+                gap: 1.25rem !important;
+                padding: 0 1.5rem;
             }
 
             .services-loop-track .service-card {
-                min-height: 200px !important;
+                width: 280px !important;
+                height: 260px !important;
                 flex-shrink: 0 !important;
                 opacity: 1 !important;
                 transform: none !important;
+                position: relative;
+                overflow: hidden;
+            }
+
+            /* Add Shimmer to Service Cards on Mobile */
+            .services-loop-track .service-card::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg,
+                        transparent,
+                        rgba(255, 255, 255, 0.05),
+                        rgba(255, 255, 255, 0.15),
+                        rgba(255, 255, 255, 0.05),
+                        transparent);
+                animation: glass-shimmer 5s infinite linear;
+                pointer-events: none;
             }
         }
+
 
         .gradient-mesh {
             position: absolute;
@@ -1184,14 +1235,27 @@
 
         /* Ambient Floating Animation */
         @keyframes stack-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
         }
 
         /* Glass Shimmer Animation */
         @keyframes glass-shimmer {
-            0% { transform: translateX(-100%) skewX(-15deg); }
-            50%, 100% { transform: translateX(200%) skewX(-15deg); }
+            0% {
+                transform: translateX(-100%) skewX(-15deg);
+            }
+
+            50%,
+            100% {
+                transform: translateX(200%) skewX(-15deg);
+            }
         }
 
         .testimonial-stack-card .glass {
@@ -1209,14 +1273,12 @@
             left: 0;
             width: 50%;
             height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.05),
-                rgba(255, 255, 255, 0.15),
-                rgba(255, 255, 255, 0.05),
-                transparent
-            );
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.05),
+                    rgba(255, 255, 255, 0.15),
+                    rgba(255, 255, 255, 0.05),
+                    transparent);
             animation: glass-shimmer 8s infinite linear;
             pointer-events: none;
         }
@@ -1258,25 +1320,41 @@
         }
 
         /* Staggered Content Reveals for Active Card */
-        .testimonial-stack-card .glass > * {
+        .testimonial-stack-card .glass>* {
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        .testimonial-stack-card.active .glass > * {
+        .testimonial-stack-card.active .glass>* {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .testimonial-stack-card.active .glass > *:nth-child(1) { transition-delay: 0.1s; }
-        .testimonial-stack-card.active .glass > *:nth-child(2) { transition-delay: 0.2s; }
-        .testimonial-stack-card.active .glass > *:nth-child(3) { transition-delay: 0.3s; }
+        .testimonial-stack-card.active .glass>*:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .testimonial-stack-card.active .glass>*:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .testimonial-stack-card.active .glass>*:nth-child(3) {
+            transition-delay: 0.3s;
+        }
 
         @media (max-width: 768px) {
-            .testimonials-stack-wrapper { height: 400px; }
-            .testimonial-stack-card.next { transform: translate3d(40px, 20px, -150px) rotateY(-10deg) scale(0.85); }
-            .testimonial-stack-card.prev { transform: translate3d(-40px, 20px, -150px) rotateY(10deg) scale(0.85); }
+            .testimonials-stack-wrapper {
+                height: 400px;
+            }
+
+            .testimonial-stack-card.next {
+                transform: translate3d(40px, 20px, -150px) rotateY(-10deg) scale(0.85);
+            }
+
+            .testimonial-stack-card.prev {
+                transform: translate3d(-40px, 20px, -150px) rotateY(10deg) scale(0.85);
+            }
         }
 
 
@@ -1520,12 +1598,30 @@
     <!-- Shared Navbar (JS Mount) -->
     <div id="site-navbar-root"></div>
     <script src="assets/js/icons.js"></script>
-    <script src="assets/js/navbar.js?v=20260420-3"></script>
+    <script src="assets/js/navbar.js?v=20260424-1"></script>
 
     <!-- ── MAIN CONTENT ── -->
     <main class="pt-20 pb-32 md:pb-24 scroll-smooth" style="background-color: #EFE3EA;">
         <!-- Hero Section -->
-        <section class="relative max-w-7xl mx-auto px-8 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <section
+            class="relative overflow-hidden max-w-7xl mx-auto px-8 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+                <div class="particle particle-drift-l particle-twinkle bg-primary/20 w-4 h-4 top-[12%] left-[8%]"></div>
+                <div class="particle particle-drift-r particle-glow bg-secondary/20 w-6 h-6 top-[18%] right-[12%]"
+                    style="animation-delay: 0.8s"></div>
+                <div class="particle particle-float particle-twinkle bg-primary/25 w-3 h-3 bottom-[18%] left-[14%]"
+                    style="animation-delay: 1.6s"></div>
+                <div class="particle particle-drift-l bg-secondary/20 w-5 h-5 top-[42%] left-[46%]"
+                    style="animation-delay: 2.1s"></div>
+                <div class="particle particle-float particle-glow bg-primary/15 w-8 h-8 bottom-[12%] right-[18%]"
+                    style="animation-delay: 3.2s"></div>
+                <div class="particle particle-drift-r particle-twinkle bg-secondary/20 w-3 h-3 top-[68%] right-[8%]"
+                    style="animation-delay: 2.7s"></div>
+                <div class="particle particle-drift-l particle-glow bg-primary/10 w-10 h-10 top-[30%] right-[34%]"
+                    style="animation-delay: 4.1s"></div>
+                <div class="particle particle-float particle-twinkle bg-secondary/25 w-2 h-2 top-[58%] left-[28%]"
+                    style="animation-delay: 1.2s"></div>
+            </div>
             <div class="lg:col-span-6 z-10">
                 <div
                     class="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-xs font-bold tracking-widest uppercase mb-6">
@@ -1549,12 +1645,41 @@
                     </button>
                 </div>
             </div>
-            <div class="lg:col-span-6 relative h-[600px] flex items-center justify-center">
-                <!-- Geometric Shape Puzzle -->
-                <div class="absolute w-full h-full">
-                    <!-- Layer 1: The Large Mauve Base -->
+            <div class="lg:col-span-6 relative h-[320px] lg:h-[600px] flex items-center justify-center mt-8 lg:mt-0">
+                <!-- Mobile Visual Layout (lg:hidden) -->
+                <div class="lg:hidden relative w-full h-full max-w-[340px] mx-auto">
+                    <!-- Layer 1: Wellness (Left) -->
+                    <div class="absolute top-12 left-0 w-[48%] aspect-[3/4] rounded-3xl overflow-hidden shadow-lg -rotate-12 z-10 border-2 border-white/50">
+                        <img src="assets/images/hero-wellness.png" alt="Wellness" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-4 text-[10px] font-bold text-white/90 uppercase tracking-tighter drop-shadow-md">Wellness</div>
+                    </div>
+                    
+                    <!-- Layer 2: Family (Right) -->
+                    <div class="absolute top-12 right-0 w-[48%] aspect-[3/4] rounded-3xl overflow-hidden shadow-lg rotate-12 z-10 border-2 border-white/50">
+                        <img src="assets/images/hero-family.png" alt="Family" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-4 text-[10px] font-bold text-white/90 uppercase tracking-tighter drop-shadow-md">Family</div>
+                    </div>
+
+                    <!-- Layer 3: Counselling (Center Main) -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-2xl z-20 rotate-2 border-4 border-white">
+                        <img src="assets/images/hero-counselling.png" alt="Counselling" class="w-full h-full object-cover">
+                        <div class="absolute top-4 left-6 text-xs font-bold text-white/90 uppercase tracking-tighter drop-shadow-md">Counselling</div>
+                    </div>
+
+
+                    
+                    <!-- Decorative Circle Behind -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+                </div>
+
+                <!-- Desktop Visual Layout (hidden lg:block) -->
+                <div class="hidden lg:block absolute w-full h-full">
+                    <!-- Layer 1: Serene Wellness Background Card -->
                     <div
-                        class="absolute top-10 left-10 w-64 h-80 rounded-[3rem] bg-primary/20 rotate-12 backdrop-blur-sm">
+                        class="absolute top-10 left-10 w-64 h-80 rounded-[3rem] overflow-hidden shadow-xl rotate-12 z-0 border border-white/20">
+                        <img class="w-full h-full object-cover opacity-60"
+                            alt="serene wellness zen background"
+                            src="assets/images/hero-wellness.png" />
                     </div>
                     <!-- Layer 2: The Main Image Frame -->
                     <div
@@ -1565,12 +1690,12 @@
                     </div>
                     <!-- Layer 3: Overlapping Gold Element -->
                     <div
-                        class="absolute bottom-10 left-0 w-72 h-48 rounded-[2.5rem] bg-secondary-fixed/60 mix-multiply backdrop-blur-md z-30 flex items-center justify-center p-8">
+                        class="absolute bottom-10 left-0 w-72 h-48 rounded-[2.5rem] bg-secondary-fixed shadow-2xl z-30 flex items-center justify-center p-8 transition-all hover:scale-105">
                         <div class="text-on-secondary-fixed text-center">
                             <span class="material-symbols-outlined text-4xl mb-2 block"
                                 style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
-                            <div class="font-bold tracking-tight">100% Assurance</div>
-                            <div class="text-xs opacity-80">Guaranteed Protection</div>
+                            <div class="font-bold tracking-tight text-xl">100% Assurance</div>
+                            <div class="text-xs font-bold opacity-90">Guaranteed Protection</div>
                         </div>
                     </div>
                     <!-- Layer 4: Floating Accent Circle -->
@@ -1584,8 +1709,12 @@
                             alt="warm handshake between advisor and client with insurance documents"
                             src="assets/images/hero-insurance.png" />
                     </div>
-                    <!-- Layer 6: Triangular Element -->
-                    <div class="absolute -bottom-5 right-20 w-48 h-48 bg-primary/10 rotate-45 rounded-[2rem] z-0"></div>
+                    <!-- Layer 6: Family Security Card -->
+                    <div class="absolute -bottom-5 right-20 w-48 h-48 rounded-[2rem] overflow-hidden shadow-lg rotate-12 z-0 border-4 border-white/50">
+                        <img class="w-full h-full object-cover opacity-80"
+                            alt="happy family representing financial security"
+                            src="assets/images/hero-family.png" />
+                    </div>
                 </div>
             </div>
         </section>
@@ -1711,7 +1840,8 @@
                     <div class="flip-card-wrapper" id="counsellorFlipCard">
                         <div class="card-hint-dot"></div>
                         <div class="flip-portrait-layer">
-                            <img src="assets/images/counsellor.jpg" alt="Maria Mildred D'Souza – Counsellor" class="card-photo">
+                            <img src="assets/images/counsellor.jpg" alt="Maria Mildred D'Souza – Counsellor"
+                                class="card-photo">
                         </div>
                         <div class="flip-info-overlay">
                             <div class="flip-info-panel">
@@ -2009,12 +2139,18 @@
             <div class="absolute inset-0 pointer-events-none opacity-40">
                 <div class="particle particle-drift-l particle-twinkle bg-primary/20 w-4 h-4 top-1/4 left-10"></div>
                 <div class="particle particle-drift-r particle-glow bg-secondary/20 w-6 h-6 top-1/3 right-20"></div>
-                <div class="particle particle-float particle-twinkle bg-primary/30 w-3 h-3 bottom-1/4 left-1/4" style="animation-delay: 2s"></div>
-                <div class="particle particle-drift-l bg-secondary/20 w-5 h-5 top-1/2 right-1/3" style="animation-delay: 1s"></div>
-                <div class="particle particle-float particle-glow bg-primary/20 w-8 h-8 bottom-10 right-10" style="animation-delay: 3.5s"></div>
-                <div class="particle particle-drift-r particle-twinkle bg-secondary/15 w-4 h-4 top-[10%] left-1/2" style="animation-delay: 4s"></div>
-                <div class="particle particle-drift-l particle-glow bg-primary/10 w-12 h-12 top-2/3 left-[15%]" style="animation-delay: 5s"></div>
-                <div class="particle particle-float particle-twinkle bg-secondary/25 w-2 h-2 top-1/2 left-[5%]" style="animation-delay: 1.5s"></div>
+                <div class="particle particle-float particle-twinkle bg-primary/30 w-3 h-3 bottom-1/4 left-1/4"
+                    style="animation-delay: 2s"></div>
+                <div class="particle particle-drift-l bg-secondary/20 w-5 h-5 top-1/2 right-1/3"
+                    style="animation-delay: 1s"></div>
+                <div class="particle particle-float particle-glow bg-primary/20 w-8 h-8 bottom-10 right-10"
+                    style="animation-delay: 3.5s"></div>
+                <div class="particle particle-drift-r particle-twinkle bg-secondary/15 w-4 h-4 top-[10%] left-1/2"
+                    style="animation-delay: 4s"></div>
+                <div class="particle particle-drift-l particle-glow bg-primary/10 w-12 h-12 top-2/3 left-[15%]"
+                    style="animation-delay: 5s"></div>
+                <div class="particle particle-float particle-twinkle bg-secondary/25 w-2 h-2 top-1/2 left-[5%]"
+                    style="animation-delay: 1.5s"></div>
             </div>
             <div class="text-center mb-12 lg:mb-16">
                 <span class="text-secondary font-bold text-xs uppercase tracking-[.3em]">Kind Words</span>
@@ -2026,7 +2162,8 @@
                 <div class="testimonials-stack-wrapper" id="testimonial-stack-container">
                     <!-- Testimonial Cards -->
                     <div class="testimonial-stack-card active">
-                        <div class="glass p-8 md:p-10 rounded-4xl flex flex-col gap-6 h-full shadow-2xl relative overflow-hidden">
+                        <div
+                            class="glass p-8 md:p-10 rounded-4xl flex flex-col gap-6 h-full shadow-2xl relative overflow-hidden">
                             <div class="flex gap-1 text-secondary">
                                 <span class="material-symbols-outlined !text-sm">star</span>
                                 <span class="material-symbols-outlined !text-sm">star</span>
@@ -2051,7 +2188,8 @@
                     </div>
 
                     <div class="testimonial-stack-card next">
-                        <div class="glass p-8 md:p-10 rounded-4xl flex flex-col gap-6 h-full shadow-2xl relative overflow-hidden">
+                        <div
+                            class="glass p-8 md:p-10 rounded-4xl flex flex-col gap-6 h-full shadow-2xl relative overflow-hidden">
                             <div class="flex gap-1 text-secondary">
                                 <span class="material-symbols-outlined !text-sm">star</span>
                                 <span class="material-symbols-outlined !text-sm">star</span>
@@ -2076,7 +2214,8 @@
                     </div>
 
                     <div class="testimonial-stack-card prev">
-                        <div class="glass p-8 md:p-10 rounded-4xl flex flex-col gap-6 h-full shadow-2xl relative overflow-hidden">
+                        <div
+                            class="glass p-8 md:p-10 rounded-4xl flex flex-col gap-6 h-full shadow-2xl relative overflow-hidden">
                             <div class="flex gap-1 text-secondary">
                                 <span class="material-symbols-outlined !text-sm">star</span>
                                 <span class="material-symbols-outlined !text-sm">star</span>
@@ -2085,7 +2224,8 @@
                                 <span class="material-symbols-outlined !text-sm">star</span>
                             </div>
                             <p class="text-lg md:text-xl font-medium italic text-slate-600 leading-relaxed z-10">
-                                "A dedicated team that truly cares about mental health and community welfare. Highly recommend their services."
+                                "A dedicated team that truly cares about mental health and community welfare. Highly
+                                recommend their services."
                             </p>
                             <div class="flex items-center gap-4 pt-6 border-t border-slate-100 mt-auto z-10">
                                 <div
@@ -2409,7 +2549,7 @@
                     // Reset interaction transform on class change
                     const glass = card.querySelector('.glass');
                     if (glass) glass.style.transform = '';
-                    
+
                     if (index === 0) card.classList.add('active');
                     else if (index === 1) card.classList.add('next');
                     else if (index === stackCards.length - 1) card.classList.add('prev');
@@ -2460,13 +2600,13 @@
                     const rect = activeCard.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
-                    
+
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
-                    
+
                     const rotateX = (centerY - y) / 15;
                     const rotateY = (x - centerX) / 15;
-                    
+
                     glass.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
                 });
 
@@ -2536,6 +2676,7 @@
                     let autoScrollSpeed = -0.5; // Negative for left-to-right movement
                     let scrollPos = 0;
                     let interactTimeout;
+                    const shouldAutoScroll = window.innerWidth > 480;
 
                     const setInteracting = () => {
                         isInteracting = true;
@@ -2545,7 +2686,7 @@
                     const clearInteracting = () => {
                         interactTimeout = setTimeout(() => {
                             isInteracting = false;
-                            const isHorizontal = window.innerWidth > 480;
+                            const isHorizontal = shouldAutoScroll;
                             scrollPos = isHorizontal ? viewport.scrollLeft : viewport.scrollTop;
                         }, 1500);
                     };
@@ -2562,14 +2703,18 @@
 
                     viewport.addEventListener('scroll', () => {
                         if (isInteracting) {
-                            const isHorizontal = window.innerWidth > 480;
+                            const isHorizontal = shouldAutoScroll;
                             scrollPos = isHorizontal ? viewport.scrollLeft : viewport.scrollTop;
                         }
                     }, { passive: true });
 
                     function scrollLoop() {
-                        const isHorizontal = window.innerWidth > 480;
+                        const isHorizontal = true;
                         const singleSetSize = isHorizontal ? track.scrollWidth / 3 : track.scrollHeight / 3;
+
+                        if (!shouldAutoScroll) {
+                            return;
+                        }
 
                         if (!isInteracting) {
                             scrollPos += autoScrollSpeed;
@@ -2603,17 +2748,24 @@
 
                     // Initialization
                     setTimeout(() => {
-                        const isHorizontal = window.innerWidth > 480;
+                        const isHorizontal = true;
                         const singleSetSize = isHorizontal ? track.scrollWidth / 3 : track.scrollHeight / 3;
-                        if (isHorizontal) {
-                            viewport.scrollLeft = singleSetSize;
-                            scrollPos = singleSetSize;
+
+                        if (shouldAutoScroll) {
+                            if (isHorizontal) {
+                                viewport.scrollLeft = singleSetSize;
+                                scrollPos = singleSetSize;
+                            } else {
+                                viewport.scrollTop = singleSetSize;
+                                scrollPos = singleSetSize;
+                            }
+                            requestAnimationFrame(scrollLoop);
                         } else {
-                            viewport.scrollTop = singleSetSize;
-                            scrollPos = singleSetSize;
+                            viewport.scrollLeft = 0;
+                            scrollPos = 0;
                         }
-                        requestAnimationFrame(scrollLoop);
                     }, 100);
+
                 }
             });
             // ── MOBILE TAP LOGIC ──

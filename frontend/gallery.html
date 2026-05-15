@@ -1,38 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Gallery - Vima Sneha</title>
-    <meta name="description" content="Explore moments from Vima Sneha's counselling workshops, community events, and success stories in Bantwal & Mangaluru."/>
-    <link rel="icon" type="image/png" href="assets/images/logo.png"/>
+    <meta name="description"
+        content="Explore moments from Vima Sneha's counselling workshops, community events, and success stories in Bantwal & Mangaluru." />
+    <link rel="icon" type="image/png" href="assets/images/logo.png" />
+    <link rel="shortcut icon" type="image/png" href="assets/images/logo.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo.png" />
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link href="assets/css/layout-shared.css?v=20260420-2" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,800&family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link href="assets/css/layout-shared.css?v=20260424-1" rel="stylesheet" />
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: { DEFAULT: '#B47FA6', light: '#C9A0BB', dark: '#7A4F72' },
-              secondary: { DEFAULT: '#D4A853', light: '#F0D08A', dark: '#A6823D' },
-              surface: { DEFAULT: '#FAF5F9', dark: '#141214' }
-            },
-            fontFamily: { sans: ['"Plus Jakarta Sans"', 'Manrope', 'sans-serif'] },
-            borderRadius: { '2xl': '1.5rem', '3xl': '2rem', '4xl': '3rem' }
-          }
-        }
-      };
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#B47FA6', light: '#C9A0BB', dark: '#7A4F72' },
+                        secondary: { DEFAULT: '#D4A853', light: '#F0D08A', dark: '#A6823D' },
+                        surface: { DEFAULT: '#FAF5F9', dark: '#141214' }
+                    },
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'Manrope', 'sans-serif'] },
+                    borderRadius: { '2xl': '1.5rem', '3xl': '2rem', '4xl': '3rem' }
+                }
+            }
+        };
     </script>
 
     <style type="text/tailwindcss">
-      @layer base {
+        @layer base {
         body { @apply bg-surface text-slate-800 font-sans selection:bg-primary/30 selection:text-primary-dark overflow-x-hidden; }
       }
       @layer components {
@@ -42,12 +49,12 @@
     </style>
 </head>
 
-<body>
+<body class="safe-bottom">
 
     <!-- Navbar -->
     <div id="site-navbar-root"></div>
     <script src="assets/js/icons.js"></script>
-    <script src="assets/js/navbar.js?v=20260420-3"></script>
+    <script src="assets/js/navbar.js?v=20260424-1"></script>
 
     <!-- Aurora Mesh -->
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -55,11 +62,12 @@
         <div class="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[120px]"></div>
     </div>
 
-    <main class="pt-20 pb-32 md:pb-24 scroll-smooth">
+    <main class="pt-20 lg:pt-32 pb-32 md:pb-24 scroll-smooth">
 
         <!-- Hero -->
         <section class="section-padding text-center space-y-6">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-primary-dark font-bold text-sm uppercase tracking-widest">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-primary-dark font-bold text-sm uppercase tracking-widest">
                 <span class="material-symbols-outlined !text-sm">photo_library</span>
                 Our Journey
             </div>
@@ -67,56 +75,74 @@
                 Moments of <span class="text-primary italic underline decoration-primary/20 decoration-8">Impact</span>
             </h1>
             <p class="text-lg text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
-                A visual chronicle of workshops, community outreach, and lives transformed through our counselling and insurance services.
+                A visual chronicle of workshops, community outreach, and lives transformed through our counselling and
+                insurance services.
             </p>
         </section>
 
         <!-- Filter Tabs -->
         <section class="px-6 md:px-12 lg:px-24 mb-12">
             <div class="flex items-center justify-center gap-2 flex-wrap">
-                <button onclick="filterGallery('all', this)" class="gallery-filter-btn px-6 py-3 rounded-2xl font-extrabold text-sm transition-all bg-primary text-white shadow-lg shadow-primary/20">All</button>
-                <button onclick="filterGallery('workshops', this)" class="gallery-filter-btn px-6 py-3 rounded-2xl font-extrabold text-sm transition-all glass text-slate-500 hover:text-primary">Workshops</button>
-                <button onclick="filterGallery('events', this)" class="gallery-filter-btn px-6 py-3 rounded-2xl font-extrabold text-sm transition-all glass text-slate-500 hover:text-primary">Events</button>
-                <button onclick="filterGallery('community', this)" class="gallery-filter-btn px-6 py-3 rounded-2xl font-extrabold text-sm transition-all glass text-slate-500 hover:text-primary">Community</button>
-                <button onclick="filterGallery('awards', this)" class="gallery-filter-btn px-6 py-3 rounded-2xl font-extrabold text-sm transition-all glass text-slate-500 hover:text-primary">Awards</button>
+                <button onclick="filterGallery('all', this)"
+                    class="gallery-filter-btn px-6 py-3 rounded-2xl font-extrabold text-sm transition-all bg-primary text-white shadow-lg shadow-primary/20">All</button>
+                <button onclick="filterGallery('workshops', this)"
+                    class="gallery-filter-btn px-6 py-3 rounded-2xl font-extrabold text-sm transition-all glass text-slate-500 hover:text-primary">Workshops</button>
+                <button onclick="filterGallery('events', this)"
+                    class="gallery-filter-btn px-6 py-3 rounded-2xl font-extrabold text-sm transition-all glass text-slate-500 hover:text-primary">Events</button>
+                <button onclick="filterGallery('community', this)"
+                    class="gallery-filter-btn px-6 py-3 rounded-2xl font-extrabold text-sm transition-all glass text-slate-500 hover:text-primary">Community</button>
+                <button onclick="filterGallery('awards', this)"
+                    class="gallery-filter-btn px-6 py-3 rounded-2xl font-extrabold text-sm transition-all glass text-slate-500 hover:text-primary">Awards</button>
             </div>
         </section>
 
         <!-- Gallery Grid (Bento / Masonry) -->
         <section class="px-6 md:px-12 lg:px-24 pb-24" id="gallery-grid-section">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px] lg:auto-rows-[250px]" id="gallery-grid">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[200px] lg:auto-rows-[250px]"
+                id="gallery-grid">
 
                 <!-- Row 1 -->
-                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer row-span-2 col-span-2 md:col-span-1" data-category="workshops">
+                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer row-span-2 col-span-2 md:col-span-1"
+                    data-category="workshops">
                     <div class="absolute inset-0 bg-gradient-to-br from-primary/80 to-primary-dark/90"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center z-10">
-                        <span class="material-symbols-outlined !text-5xl mb-4 group-hover:scale-125 transition-transform">groups</span>
+                    <div
+                        class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center z-10">
+                        <span
+                            class="material-symbols-outlined !text-5xl mb-4 group-hover:scale-125 transition-transform">groups</span>
                         <h3 class="text-xl font-extrabold">Student Workshops</h3>
                         <p class="text-white/70 text-sm font-medium mt-2">Empowering young minds</p>
                     </div>
                 </div>
 
-                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer" data-category="events">
+                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer"
+                    data-category="events">
                     <div class="absolute inset-0 bg-gradient-to-br from-secondary/80 to-secondary-dark/90"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
-                        <span class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">celebration</span>
+                    <div
+                        class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
+                        <span
+                            class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">celebration</span>
                         <h3 class="text-lg font-extrabold">Annual Events</h3>
                     </div>
                 </div>
 
-                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer" data-category="community">
+                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer"
+                    data-category="community">
                     <div class="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
-                        <span class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">volunteer_activism</span>
+                    <div
+                        class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
+                        <span
+                            class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">volunteer_activism</span>
                         <h3 class="text-lg font-extrabold">Outreach</h3>
                     </div>
                 </div>
 
                 <!-- Row 2 -->
-                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer col-span-2" data-category="awards">
+                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer col-span-2"
+                    data-category="awards">
                     <div class="absolute inset-0 bg-gradient-to-r from-secondary to-primary"></div>
                     <div class="absolute inset-0 flex items-center justify-center gap-6 text-white p-6 z-10">
-                        <span class="material-symbols-outlined !text-5xl group-hover:rotate-12 transition-transform">emoji_events</span>
+                        <span
+                            class="material-symbols-outlined !text-5xl group-hover:rotate-12 transition-transform">emoji_events</span>
                         <div>
                             <h3 class="text-2xl font-extrabold">MDRT Recognition</h3>
                             <p class="text-white/70 font-medium text-sm">Excellence in service and dedication</p>
@@ -124,44 +150,59 @@
                     </div>
                 </div>
 
-                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer" data-category="workshops">
+                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer"
+                    data-category="workshops">
                     <div class="absolute inset-0 bg-gradient-to-br from-primary-light to-primary"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
-                        <span class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">psychology</span>
+                    <div
+                        class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
+                        <span
+                            class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">psychology</span>
                         <h3 class="text-lg font-extrabold">Therapy Sessions</h3>
                     </div>
                 </div>
 
                 <!-- Row 3 -->
-                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer" data-category="community">
+                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer"
+                    data-category="community">
                     <div class="absolute inset-0 bg-gradient-to-br from-primary-dark to-slate-900"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
-                        <span class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">diversity_3</span>
+                    <div
+                        class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
+                        <span
+                            class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">diversity_3</span>
                         <h3 class="text-lg font-extrabold">Community</h3>
                     </div>
                 </div>
 
-                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer row-span-2 col-span-2 md:col-span-1" data-category="events">
+                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer row-span-2 col-span-2 md:col-span-1"
+                    data-category="events">
                     <div class="absolute inset-0 bg-gradient-to-br from-secondary-dark to-secondary"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center z-10">
-                        <span class="material-symbols-outlined !text-5xl mb-4 group-hover:scale-125 transition-transform">workspace_premium</span>
+                    <div
+                        class="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center z-10">
+                        <span
+                            class="material-symbols-outlined !text-5xl mb-4 group-hover:scale-125 transition-transform">workspace_premium</span>
                         <h3 class="text-xl font-extrabold">Certifications</h3>
                         <p class="text-white/70 text-sm font-medium mt-2">Professional milestones</p>
                     </div>
                 </div>
 
-                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer" data-category="workshops">
+                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer"
+                    data-category="workshops">
                     <div class="absolute inset-0 bg-gradient-to-br from-primary to-secondary"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
-                        <span class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">school</span>
+                    <div
+                        class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
+                        <span
+                            class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">school</span>
                         <h3 class="text-lg font-extrabold">School Programs</h3>
                     </div>
                 </div>
 
-                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer" data-category="awards">
+                <div class="gallery-item rounded-3xl overflow-hidden relative group cursor-pointer"
+                    data-category="awards">
                     <div class="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-900"></div>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
-                        <span class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">military_tech</span>
+                    <div
+                        class="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-10">
+                        <span
+                            class="material-symbols-outlined !text-4xl mb-2 group-hover:scale-125 transition-transform">military_tech</span>
                         <h3 class="text-lg font-extrabold">Awards</h3>
                     </div>
                 </div>
@@ -171,9 +212,12 @@
         <!-- CTA -->
         <section class="section-padding flex items-center justify-center text-center">
             <div class="max-w-3xl space-y-10">
-                <h2 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-tight">Be part of our <span class="text-primary">story</span>.</h2>
-                <p class="text-slate-500 text-lg font-medium">Every session, every workshop, every life changed — your journey could be next.</p>
-                <a href="contact.html" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-12 py-5 rounded-2xl font-extrabold text-lg shadow-xl shadow-primary/20 transition-all active:scale-95">
+                <h2 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-tight">Be part of our <span
+                        class="text-primary">story</span>.</h2>
+                <p class="text-slate-500 text-lg font-medium">Every session, every workshop, every life changed — your
+                    journey could be next.</p>
+                <a href="contact.html"
+                    class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-12 py-5 rounded-2xl font-extrabold text-lg shadow-xl shadow-primary/20 transition-all active:scale-95">
                     Start Your Journey
                     <span class="material-symbols-outlined">arrow_forward</span>
                 </a>
@@ -212,4 +256,5 @@
     </script>
 
 </body>
+
 </html>

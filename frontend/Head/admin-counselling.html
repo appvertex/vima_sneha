@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vima Sneha · Counselling Admin Panel</title>
+<link rel="icon" type="image/png" href="../assets/images/logo.png" />
+<link rel="shortcut icon" type="image/png" href="../assets/images/logo.png" />
+<link rel="apple-touch-icon" href="../assets/images/logo.png" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --pm:#B47FA6;--sm:#C9A0BB;--dm:#7A4F72;--lm:#DCC5D5;--plm:#EFE3EA;--dkm:#4E2E4A;
+  --gold:#D4A853;--gl:#F0D08A;--gd:#A07830;
+  --white:#fff;--dt:#2d2430;--lt:#7a6878;--bg:#E8D8E3;
+  --sh1:0 2px 8px rgba(180,127,166,.13);--sh2:0 8px 24px rgba(180,127,166,.22);
+  --sidebar:240px;
+  --success:#4CAF50;--warning:#FF9800;--error:#F44336;--info:#2196F3;
+  --live:#FF4B4B;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-height:100vh;overflow-x:hidden;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--plm);}
+::-webkit-scrollbar-thumb{background:var(--pm);border-radius:3px;}
+
+
+
+/* DASHBOARD */
+#dashboard-page{display:none;min-height:100vh;}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);background:linear-gradient(180deg,var(--dkm) 0%,#3a2237 100%);z-index:200;display:flex;flex-direction:column;}
+.sidebar-header{padding:1.5rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.08);}
+.sidebar-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.sidebar-logo-icon{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--pm),var(--gold));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px;}
+.sidebar-logo-text .name{font-size:15px;font-weight:800;color:#fff;}
+.sidebar-logo-text .role{font-size:9px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;}
+.sidebar-nav{flex:1;padding:1rem 0;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:.8rem 1.4rem;color:rgba(255,255,255,.55);font-size:13px;font-weight:500;cursor:pointer;transition:all .25s ease;border-left:3px solid transparent;}
+.nav-item:hover,.nav-item.active{color:#fff;background:rgba(255,255,255,.08);}
+.nav-item.active{border-left-color:var(--gold);}
+.nav-item .nav-badge{margin-left:auto;background:var(--live);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;animation:pulse-badge 2s infinite;}
+@keyframes pulse-badge{0%,100%{opacity:1;}50%{opacity:.5;}}
+
+.topbar{position:fixed;top:0;right:0;left:var(--sidebar);height:64px;background:rgba(255,255,255,.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(180,127,166,.15);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;}
+.main-content{margin-left:var(--sidebar);padding-top:64px;min-height:100vh;}
+.content-area{padding:2rem;}
+
+.panel{display:none;animation:panelFade .4s ease both;}
+.panel.active{display:block;}
+@keyframes panelFade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+.section-head{margin-bottom:2rem;}
+.section-head h2{font-size:24px;font-weight:800;color:var(--dkm);}
+.section-head p{font-size:14px;color:var(--lt);}
+
+.edit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:1.5rem;}
+.edit-card{background:#fff;border-radius:20px;border:1px solid rgba(180,127,166,.12);box-shadow:var(--sh1);overflow:hidden;}
+.edit-card-header{padding:1rem 1.5rem;border-bottom:1px solid rgba(180,127,166,.1);background:rgba(239,227,234,.3);font-weight:700;font-size:14px;color:var(--dkm);}
+.edit-card-body{padding:1.5rem;}
+
+.field{margin-bottom:1.2rem;}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--dm);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:1px;}
+.field input,.field textarea,.field select{width:100%;padding:10px 14px;border-radius:12px;border:1.5px solid rgba(180,127,166,.2);outline:none;font-family:inherit;font-size:14px;transition:border-color .2s;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--pm);box-shadow:0 0 0 4px rgba(180,127,166,.1);}
+.field select{background:#fff;cursor:pointer;}
+
+.save-btn{background:linear-gradient(135deg,var(--dm),var(--pm));color:#fff;padding:10px 24px;border:none;border-radius:12px;font-weight:600;cursor:pointer;transition:all .3s ease;font-family:inherit;}
+.save-btn:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(122,79,114,.3);}
+
+.list-item{display:flex;align-items:center;gap:10px;margin-bottom:.8rem;}
+.list-item input{flex:1;}
+.del-btn{background:rgba(244,67,54,.1);color:var(--error);border:none;width:32px;height:32px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.del-btn:hover{background:rgba(244,67,54,.2);}
+.add-btn{background:none;border:2px dashed var(--pm);color:var(--pm);width:100%;padding:10px;border-radius:12px;font-weight:600;cursor:pointer;margin-top:.5rem;font-family:inherit;transition:all .2s;}
+.add-btn:hover{background:rgba(180,127,166,.05);}
+
+/* ── LIVE SESSION PANEL STYLES ── */
+.sessions-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+@media(max-width:900px){.sessions-layout{grid-template-columns:1fr;}}
+
+.new-session-form{background:#fff;border-radius:20px;border:1px solid rgba(180,127,166,.12);box-shadow:var(--sh1);overflow:hidden;}
+.new-session-form .form-header{padding:1.2rem 1.5rem;border-bottom:1px solid rgba(180,127,166,.1);background:rgba(239,227,234,.3);}
+.new-session-form .form-header h3{font-size:15px;font-weight:700;color:var(--dkm);}
+.new-session-form .form-header p{font-size:12px;color:var(--lt);margin-top:2px;}
+.new-session-form .form-body{padding:1.5rem;}
+
+.create-session-btn{
+  width:100%;padding:13px;border:none;border-radius:14px;
+  background:linear-gradient(135deg,var(--dkm),var(--pm) 60%,var(--gold));
+  color:#fff;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;box-shadow:0 6px 20px rgba(122,79,114,.3);transition:all .3s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.create-session-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(122,79,114,.4);}
+
+.sessions-list-panel{background:#fff;border-radius:20px;border:1px solid rgba(180,127,166,.12);box-shadow:var(--sh1);overflow:hidden;display:flex;flex-direction:column;}
+.sessions-list-header{padding:1.2rem 1.5rem;border-bottom:1px solid rgba(180,127,166,.1);background:rgba(239,227,234,.3);display:flex;align-items:center;justify-content:space-between;}
+.sessions-list-header h3{font-size:15px;font-weight:700;color:var(--dkm);}
+.sessions-count{font-size:11px;color:var(--lt);}
+.sessions-list-body{padding:1rem;flex:1;overflow-y:auto;max-height:500px;}
+
+.session-card{
+  border:1px solid rgba(180,127,166,.15);border-radius:14px;padding:1rem 1.2rem;
+  margin-bottom:.75rem;transition:all .25s;position:relative;overflow:hidden;
+}
+.session-card:last-child{margin-bottom:0;}
+.session-card:hover{border-color:rgba(180,127,166,.35);box-shadow:0 4px 16px rgba(180,127,166,.1);}
+.session-card.live{border-color:rgba(255,75,75,.3);background:rgba(255,75,75,.03);}
+.session-card.ended{opacity:.6;}
+
+.session-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.6rem;}
+.session-card-name{font-size:14px;font-weight:700;color:var(--dkm);}
+.session-status{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:3px 10px;border-radius:8px;}
+.session-status.upcoming{background:rgba(33,150,243,.1);color:#1565C0;}
+.session-status.live{background:rgba(255,75,75,.12);color:var(--live);}
+.session-status.ended{background:rgba(0,0,0,.06);color:var(--lt);}
+
+.session-card-meta{font-size:12px;color:var(--lt);display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:.8rem;}
+.meta-sep{opacity:.4;}
+
+.session-card-actions{display:flex;gap:.5rem;flex-wrap:wrap;}
+.action-btn{padding:6px 14px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.action-btn.join{background:linear-gradient(135deg,var(--dm),var(--pm));color:#fff;box-shadow:0 3px 10px rgba(122,79,114,.25);}
+.action-btn.join:hover{box-shadow:0 6px 18px rgba(122,79,114,.35);}
+.action-btn.copy{background:rgba(180,127,166,.1);color:var(--dm);border:1px solid rgba(180,127,166,.2);}
+.action-btn.copy:hover{background:rgba(180,127,166,.18);}
+.action-btn.whatsapp{background:rgba(37,211,102,.1);color:#128C7E;border:1px solid rgba(37,211,102,.2);}
+.action-btn.whatsapp:hover{background:rgba(37,211,102,.18);}
+.action-btn.delete{background:rgba(244,67,54,.08);color:var(--error);border:1px solid rgba(244,67,54,.15);}
+.action-btn.delete:hover{background:rgba(244,67,54,.15);}
+
+.live-pulse{
+  position:absolute;top:12px;left:-3px;width:6px;height:6px;
+  border-radius:50%;background:var(--live);
+  box-shadow:0 0 0 0 rgba(255,75,75,.4);
+  animation:live-ring 1.5s infinite;
+}
+@keyframes live-ring{0%{box-shadow:0 0 0 0 rgba(255,75,75,.4);}70%{box-shadow:0 0 0 8px rgba(255,75,75,0);}100%{box-shadow:0 0 0 0 rgba(255,75,75,0);}}
+
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--lt);}
+.empty-state .icon{font-size:40px;margin-bottom:.75rem;}
+.empty-state p{font-size:13px;}
+
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;}
+.stat-box{background:#fff;border-radius:14px;border:1px solid rgba(180,127,166,.12);padding:1rem;text-align:center;}
+.stat-box .stat-num{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--dkm),var(--pm));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-box .stat-label{font-size:11px;color:var(--lt);margin-top:2px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:#fff;padding:12px 24px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.1);border-left:4px solid var(--success);z-index:1000;display:none;animation:toastIn .3s ease;font-size:13px;font-weight:600;}
+.toast.error-toast{border-left-color:var(--error);}
+@keyframes toastIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .topbar{left:0;}
+  .main-content{margin-left:0;}
+  .edit-grid{grid-template-columns:1fr;}
+  .sessions-layout{grid-template-columns:1fr;}
+  .stat-row{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+<body>
+
+
+
+<!-- DASHBOARD -->
+<div id="dashboard-page">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">VS</div>
+        <div class="sidebar-logo-text"><div class="name">Vima Sneha</div><div class="role">Counselling Panel</div></div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item" onclick="showPanel('sessions',this)">
+        📹 Live Sessions
+        <span class="nav-badge" id="live-nav-badge" style="display:none">LIVE</span>
+      </div>
+      <div class="nav-item active" onclick="showPanel('hero',this)">Hero Section</div>
+      <div class="nav-item" onclick="showPanel('mediums',this)">Counselling Mediums</div>
+      <div class="nav-item" onclick="showPanel('expertise',this)">Areas of Expertise</div>
+      <div class="nav-item" onclick="showPanel('profile',this)">Counsellor Profile</div>
+      <div class="nav-item" onclick="showPanel('milestones',this)">Professional Journey</div>
+      <div class="nav-item" onclick="showPanel('faq',this)">FAQ Section</div>
+    </nav>
+    <div style="padding:1.5rem;"><button class="save-btn" style="width:100%;" onclick="logout()">Logout</button></div>
+  </aside>
+
+  <div class="topbar">
+    <div style="font-weight:700;color:var(--dm);">Counselling Admin Dashboard</div>
+    <div style="display:flex;gap:.75rem;align-items:center;">
+      <button class="action-btn join" onclick="showPanel('sessions',null)" style="font-family:'Poppins',sans-serif;">📹 Start Session</button>
+      <button class="save-btn" onclick="saveAll()">Save Changes</button>
+    </div>
+  </div>
+
+  <main class="main-content">
+    <div class="content-area">
+
+      <!-- ══════════════════════════════════════════
+           LIVE SESSIONS PANEL
+      ══════════════════════════════════════════ -->
+      <div class="panel" id="panel-sessions">
+        <div class="section-head">
+          <h2>📹 Live Video Sessions</h2>
+          <p>Create and manage video counselling sessions. Share links with clients via WhatsApp.</p>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-box"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Total Sessions</div></div>
+          <div class="stat-box"><div class="stat-num" id="stat-live" style="-webkit-text-fill-color:var(--live);">0</div><div class="stat-label">Live Now</div></div>
+          <div class="stat-box"><div class="stat-num" id="stat-upcoming">0</div><div class="stat-label">Upcoming</div></div>
+        </div>
+
+        <div class="sessions-layout">
+
+          <!-- CREATE FORM -->
+          <div class="new-session-form">
+            <div class="form-header">
+              <h3>Create New Session</h3>
+              <p>Fill in details to generate a private video room link</p>
+            </div>
+            <div class="form-body">
+              <div class="field">
+                <label>Client / Session Name</label>
+                <input type="text" id="s-client" placeholder="e.g. Priya Sharma – Initial Consult">
+              </div>
+              <div class="field">
+                <label>Session Type</label>
+                <select id="s-type">
+                  <option>Individual Counselling</option>
+                  <option>Family Counselling</option>
+                  <option>Hypnotherapy</option>
+                  <option>Student Counselling</option>
+                  <option>Group Session</option>
+                  <option>Follow-up</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Date</label>
+                <input type="date" id="s-date">
+              </div>
+              <div class="field">
+                <label>Time</label>
+                <input type="time" id="s-time">
+              </div>
+              <div class="field">
+                <label>Duration</label>
+                <select id="s-duration">
+                  <option value="30">30 minutes</option>
+                  <option value="45">45 minutes</option>
+                  <option value="60" selected>60 minutes</option>
+                  <option value="90">90 minutes</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Client Phone (for WhatsApp)</label>
+                <input type="tel" id="s-phone" placeholder="+91 98765 43210">
+              </div>
+              <button class="create-session-btn" onclick="createSession()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 10l4.553-2.276A1 1 0 0121 8.724v6.552a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
+                Generate Session Link
+              </button>
+            </div>
+          </div>
+
+          <!-- SESSIONS LIST -->
+          <div class="sessions-list-panel">
+            <div class="sessions-list-header">
+              <h3>All Sessions</h3>
+              <span class="sessions-count" id="sessions-count-label">0 sessions</span>
+            </div>
+            <div class="sessions-list-body" id="sessions-list">
+              <div class="empty-state">
+                <div class="icon">📅</div>
+                <p>No sessions yet.<br>Create your first one on the left.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- HERO PANEL -->
+      <div class="panel active" id="panel-hero">
+        <div class="section-head"><h2>Hero Section</h2><p>The first thing users see on the counselling page.</p></div>
+        <div class="edit-grid">
+          <div class="edit-card">
+            <div class="edit-card-header">Main Copy</div>
+            <div class="edit-card-body">
+              <div class="field"><label>Badge Text</label><input type="text" id="hero-badge" value="Psychology · Mental Wellness"></div>
+              <div class="field"><label>Main Title</label><input type="text" id="hero-title" value="Professional Counselling"></div>
+              <div class="field"><label>Underline Highlight</label><input type="text" id="hero-highlight" value="Counselling"></div>
+              <div class="field"><label>Description</label><textarea id="hero-desc" rows="3">Safe, confidential, and compassionate mental health support designed for students, families, and individuals navigating life's challenges.</textarea></div>
+            </div>
+          </div>
+          <div class="edit-card">
+            <div class="edit-card-header">Buttons & Visuals</div>
+            <div class="edit-card-body">
+              <div class="field"><label>Primary Button Text</label><input type="text" id="hero-btn1" value="Meet Our Experts"></div>
+              <div class="field"><label>Call Link Text</label><input type="text" id="hero-call-text" value="Call Now"></div>
+              <div class="field"><label>Call Number</label><input type="text" id="hero-call-num" value="+91 99728 75970"></div>
+              <div class="field"><label>Hero Image Path</label><input type="text" id="hero-img" value="../assets/images/hero-counselling-premium.png"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEDIUMS PANEL -->
+      <div class="panel" id="panel-mediums">
+        <div class="section-head"><h2>Counselling Mediums</h2><p>How you offer your services.</p></div>
+        <div id="mediums-container" class="edit-grid"></div>
+        <button class="add-btn" onclick="addItem('mediums')">+ Add New Medium Card</button>
+      </div>
+
+      <!-- EXPERTISE PANEL -->
+      <div class="panel" id="panel-expertise">
+        <div class="section-head"><h2>Areas of Expertise</h2><p>Specialized services you provide.</p></div>
+        <div id="expertise-container" class="edit-grid"></div>
+        <button class="add-btn" onclick="addItem('expertise')">+ Add New Expertise Area</button>
+      </div>
+
+      <!-- PROFILE PANEL -->
+      <!-- PROFILE PANEL -->
+      <div class="panel" id="panel-profile">
+        <div class="section-head"><h2>Counsellor Profile</h2><p>Details about the lead specialist.</p></div>
+        <div class="edit-grid">
+          <div class="edit-card">
+            <div class="edit-card-header">Basic Info</div>
+            <div class="edit-card-body">
+              <div class="field"><label>Full Name</label><input type="text" id="prof-name" value="Maria Mildred D'Souza"></div>
+              <div class="field"><label>Role / Title</label><input type="text" id="prof-role" value="Certified Student Counsellor & Hypnotherapy practitioner"></div>
+              <div class="field"><label>Short Bio Header</label><input type="text" id="prof-bio-head" value="Empowering you to heal and grow."></div>
+              <div class="field"><label>Biography</label><textarea id="prof-bio" rows="4">With years of specialized experience, Mildred offers a safe, non-judgmental space to explore and resolve personal challenges.</textarea></div>
+            </div>
+          </div>
+          <div class="edit-card">
+            <div class="edit-card-header">Features & Photo</div>
+            <div class="edit-card-body">
+              <div class="field"><label>Profile Image</label><input type="text" id="prof-img" value="../assets/images/counsellor.jpg"></div>
+              <div class="field"><label>Highlight Features</label>
+                <div id="prof-features-list"></div>
+                <button class="add-btn" onclick="addFeature()">+ Add Feature Point</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MILESTONES PANEL -->
+      <div class="panel" id="panel-milestones">
+        <div class="section-head"><h2>Professional Journey</h2><p>Timeline of the counsellor's career milestones.</p></div>
+        <div id="milestones-container" class="edit-grid"></div>
+        <button class="add-btn" onclick="addItem('milestones')">+ Add New Milestone</button>
+      </div>
+
+      <!-- FAQ PANEL -->
+      <div class="panel" id="panel-faq">
+        <div class="section-head"><h2>FAQ Section</h2><p>Common questions and answers for the Clarity & Confidence section.</p></div>
+        <div id="faq-container" class="edit-grid"></div>
+        <button class="add-btn" onclick="addItem('faq')">+ Add New FAQ Item</button>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════
+//  CONTENT DATA
+// ════════════════════════════════════════════════
+let COUNSELLING_DATA = {
+  hero:{badge:'Psychology · Mental Wellness',title:'Professional Counselling',highlight:'Counselling',desc:"Safe, confidential, and compassionate mental health support designed for students, families, and individuals navigating life's challenges.",btn1:'Meet Our Experts',callText:'Call Now',callNum:'+91 99728 75970',img:'../assets/images/hero-counselling-premium.png'},
+  mediums:[
+    {icon:'home_pin',title:'In-Person',desc:'Traditional face-to-face sessions in our boutique, sensory-designed clinics.',points:['Sensory-calm environments','Premium lounge access'],btn:'Find a Clinic'},
+    {icon:'videocam',title:'Online Video',desc:'Secure, HD video consultations from the privacy of your home.',points:['Military-grade encryption','Flexible scheduling 24/7'],btn:'Start Virtual Session'},
+    {icon:'chat_bubble',title:'Real-time Chat',desc:'Asynchronous or live text therapy for those who express themselves best through text.',points:['Unlimited messaging','Expert therapist response'],btn:'Open Chatroom'}
+  ],
+  expertise:[
+    {icon:'school',title:'Exam Stress & Peer Pressure',desc:'Navigate academic challenges and social environments with tailored resilience strategies.'},
+    {icon:'sentiment_dissatisfied',title:'Anxiety & Depression',desc:'Evidence-based therapeutic interventions to help manage and overcome emotional struggles.'},
+    {icon:'psychology_alt',title:'Hypnotherapy',desc:'Harness the power of the subconscious for breakthrough behavioral and emotional healing.'},
+    {icon:'family_restroom',title:'Family Dynamics',desc:'Repairing relationships and improving communication within families for a harmonious home.'}
+  ],
+  profile:{
+    name:"Maria Mildred D'Souza",
+    role:"Chief Mental Wellness Practitioner & Hypnotherapy Expert",
+    bioHead:"Empowering you to discover inner strength.",
+    bio:"With over a decade of specialized experience in therapeutic guidance, Mildred creates a sanctuary of empathy and understanding. She bridges the gap between emotional struggle and psychological resilience.",
+    img:"../assets/images/counsellor_premium.png",
+    features:["Student Specialist","Hypnotherapy Expert","Family Dynamics Advisory"]
+  },
+  milestones: [
+    {year:'2012', title:'Clinical Roots', desc:'Completed advanced certifications in student psychology, focusing on developmental challenges and peer dynamics.'},
+    {year:'2017', title:'Expansion', desc:'Integrated subconscious healing techniques into her practice, offering a unique dual approach to behavioral change.'},
+    {year:'PRESENT', title:'Vima Sneha', desc:'Leading the counselling wing at Vima Sneha, dedicated to providing accessible, high-impact emotional support.'}
+  ],
+  faq: [
+    {q:'Is what I share in sessions confidential?', a:'Absolutely. Confidentiality is the cornerstone of our practice. Everything shared within your sessions is protected by strict ethical guidelines and legal standards.'},
+    {q:'How many sessions will I need?', a:'The number varies depending on your individual goals and the complexity of the challenges. Some find relief in 4-6 sessions, while others prefer ongoing support.'},
+    {q:'What is Hypnotherapy exactly?', a:'Hypnotherapy is a guided state of focused relaxation that allows us to work directly with the subconscious mind to break habits and reduce anxiety.'},
+    {q:'Do you offer sessions for students?', a:'Yes, we specialize in student counselling, addressing issues like exam anxiety, peer pressure, and career confusion.'}
+  ]
+};
+
+// ════════════════════════════════════════════════
+//  SESSIONS DATA
+// ════════════════════════════════════════════════
+let SESSIONS = [];
+
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[ch]));
+}
+
+function loadData(){
+  try {
+    const s = localStorage.getItem('vima_counselling_data');
+    if(s) COUNSELLING_DATA = JSON.parse(s);
+  } catch(e) {
+    console.error('Could not load counselling data:', e);
+  }
+  try {
+    const ss = localStorage.getItem('vima_sessions');
+    if(ss) SESSIONS = JSON.parse(ss);
+  } catch(e) {
+    console.error('Could not load sessions:', e);
+    SESSIONS = [];
+  }
+}
+
+function saveSessions(){
+  localStorage.setItem('vima_sessions', JSON.stringify(SESSIONS));
+}
+
+// ── Helpers ──────────────────────────────────────
+function genId(){
+  return Math.random().toString(36).substr(2,9) + Date.now().toString(36);
+}
+
+function getBaseUrl(){
+  const l = window.location;
+  // Since we are in /Head/, the base URL for root files like session.html is the parent directory
+  return l.protocol + '//' + l.host + l.pathname.replace('/Head/admin-counselling.html','/');
+}
+
+function buildSessionUrl(session){
+  const base = getBaseUrl();
+  return base + 'session.html?room=' + session.id +
+    '&name=' + encodeURIComponent(session.clientName) +
+    '&time=' + encodeURIComponent(session.date + ' at ' + session.timeStr);
+}
+
+function getSessionStatus(session){
+  if(session.ended) return 'ended';
+  const now = new Date();
+  const start = new Date(session.date + 'T' + session.time);
+  const end = new Date(start.getTime() + session.duration * 60000);
+  if(now >= start && now <= end) return 'live';
+  if(now > end) return 'ended';
+  return 'upcoming';
+}
+
+function formatDateTime(dateStr, timeStr){
+  try {
+    const d = new Date(dateStr + 'T' + timeStr);
+    return d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'}) + ', ' +
+      d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});
+  } catch(e){ return dateStr + ' ' + timeStr; }
+}
+
+// ── Create Session ────────────────────────────────
+function createSession(){
+  const client = document.getElementById('s-client').value.trim();
+  const type = document.getElementById('s-type').value;
+  const date = document.getElementById('s-date').value;
+  const time = document.getElementById('s-time').value;
+  const duration = parseInt(document.getElementById('s-duration').value);
+  const phone = document.getElementById('s-phone').value.trim();
+
+  if(!client){ showToast('Please enter a client/session name','error'); return; }
+  if(!date){ showToast('Please select a date','error'); return; }
+  if(!time){ showToast('Please select a time','error'); return; }
+
+  const d = new Date(date + 'T' + time);
+  const timeStr = d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});
+
+  const session = {
+    id: genId(),
+    clientName: client,
+    type,
+    date,
+    time,
+    timeStr,
+    duration,
+    phone,
+    createdAt: new Date().toISOString(),
+    ended: false
+  };
+
+  SESSIONS.unshift(session);
+  saveSessions();
+  renderSessions();
+  updateStats();
+  updateLiveBadge();
+
+  // Clear form
+  document.getElementById('s-client').value = '';
+  document.getElementById('s-phone').value = '';
+
+  showToast('✅ Session created! Share the link with your client.');
+  
+  // Auto copy link
+  const url = buildSessionUrl(session);
+  navigator.clipboard.writeText(url).catch(()=>{});
+}
+
+// ── Render Sessions ──────────────────────────────
+function renderSessions(){
+  const list = document.getElementById('sessions-list');
+  if(SESSIONS.length === 0){
+    list.innerHTML = '<div class="empty-state"><div class="icon">📅</div><p>No sessions yet.<br>Create your first one on the left.</p></div>';
+    document.getElementById('sessions-count-label').textContent = '0 sessions';
+    return;
+  }
+
+  document.getElementById('sessions-count-label').textContent = SESSIONS.length + ' session' + (SESSIONS.length !== 1 ? 's' : '');
+
+  list.innerHTML = SESSIONS.map((s, i) => {
+    const status = getSessionStatus(s);
+    const url = buildSessionUrl(s);
+    const dtStr = formatDateTime(s.date, s.time);
+    const phone = s.phone ? s.phone.replace(/\D/g,'') : '';
+    const waLink = phone ? `https://wa.me/${phone}?text=${encodeURIComponent('Hello! Your Vima Sneha ' + s.type + ' session is scheduled for ' + dtStr + '.\n\nJoin here: ' + url)}` : '';
+
+    return `<div class="session-card ${status}" id="scard-${s.id}">
+      ${status==='live' ? '<div class="live-pulse"></div>' : ''}
+      <div class="session-card-top">
+        <div class="session-card-name">${escapeHtml(s.clientName)}</div>
+        <span class="session-status ${status}">${status === 'live' ? '🔴 LIVE' : status === 'upcoming' ? '⏳ Upcoming' : '✓ Ended'}</span>
+      </div>
+      <div class="session-card-meta">
+        <span>${escapeHtml(s.type)}</span>
+        <span class="meta-sep">·</span>
+        <span>${dtStr}</span>
+        <span class="meta-sep">·</span>
+        <span>${s.duration} min</span>
+        ${s.phone ? `<span class="meta-sep">·</span><span>📱 ${escapeHtml(s.phone)}</span>` : ''}
+      </div>
+      <div class="session-card-actions">
+        ${status !== 'ended' ? `<button class="action-btn join" onclick="joinSession('${s.id}')">📹 Join</button>` : ''}
+        <button class="action-btn copy" onclick="copyLink('${s.id}')">🔗 Copy Link</button>
+        ${waLink ? `<button class="action-btn whatsapp" onclick="window.open('${waLink}','_blank')">💬 WhatsApp</button>` : ''}
+        ${status !== 'live' ? `<button class="action-btn delete" onclick="deleteSession('${s.id}')">🗑</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateStats(){
+  const total = SESSIONS.length;
+  const live = SESSIONS.filter(s => getSessionStatus(s) === 'live').length;
+  const upcoming = SESSIONS.filter(s => getSessionStatus(s) === 'upcoming').length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-live').textContent = live;
+  document.getElementById('stat-upcoming').textContent = upcoming;
+}
+
+function updateLiveBadge(){
+  const liveCount = SESSIONS.filter(s => getSessionStatus(s) === 'live').length;
+  const badge = document.getElementById('live-nav-badge');
+  badge.style.display = liveCount > 0 ? 'inline-flex' : 'none';
+}
+
+function copyLink(id){
+  const session = SESSIONS.find(s => s.id === id);
+  if(!session) return;
+  const url = buildSessionUrl(session);
+  navigator.clipboard.writeText(url).then(() => showToast('🔗 Link copied to clipboard!'));
+}
+
+function joinSession(id){
+  const session = SESSIONS.find(s => s.id === id);
+  if(!session) return;
+  const url = buildSessionUrl(session);
+  window.open(url, '_blank');
+}
+
+function deleteSession(id){
+  if(!confirm('Delete this session?')) return;
+  SESSIONS = SESSIONS.filter(s => s.id !== id);
+  saveSessions();
+  renderSessions();
+  updateStats();
+  updateLiveBadge();
+  showToast('Session deleted.');
+}
+
+// ════════════════════════════════════════════════
+//  CONTENT PANEL RENDERING
+// ════════════════════════════════════════════════
+function renderMediums(){
+  const c = document.getElementById('mediums-container');
+  c.innerHTML = '';
+  COUNSELLING_DATA.mediums.forEach((m,i) => {
+    const card = document.createElement('div');
+    card.className = 'edit-card';
+    card.innerHTML = `
+      <div class="edit-card-header">Medium ${i+1} <button class="del-btn" style="float:right" onclick="removeItem('mediums',${i})">×</button></div>
+      <div class="edit-card-body">
+        <div class="field"><label>Icon Key</label><input type="text" value="${escapeHtml(m.icon)}" onchange="COUNSELLING_DATA.mediums[${i}].icon=this.value"></div>
+        <div class="field"><label>Title</label><input type="text" value="${escapeHtml(m.title)}" onchange="COUNSELLING_DATA.mediums[${i}].title=this.value"></div>
+        <div class="field"><label>Description</label><textarea onchange="COUNSELLING_DATA.mediums[${i}].desc=this.value">${escapeHtml(m.desc)}</textarea></div>
+        <div class="field"><label>Points (comma separated)</label><input type="text" value="${escapeHtml((m.points || []).join(', '))}" onchange="COUNSELLING_DATA.mediums[${i}].points=this.value.split(',').map(s=>s.trim())"></div>
+        <div class="field"><label>Button Text</label><input type="text" value="${escapeHtml(m.btn)}" onchange="COUNSELLING_DATA.mediums[${i}].btn=this.value"></div>
+      </div>`;
+    c.appendChild(card);
+  });
+}
+
+function renderExpertise(){
+  const c = document.getElementById('expertise-container');
+  c.innerHTML = '';
+  COUNSELLING_DATA.expertise.forEach((e,i) => {
+    const card = document.createElement('div');
+    card.className = 'edit-card';
+    card.innerHTML = `
+      <div class="edit-card-header">Area ${i+1} <button class="del-btn" style="float:right" onclick="removeItem('expertise',${i})">×</button></div>
+      <div class="edit-card-body">
+        <div class="field"><label>Icon Key</label><input type="text" value="${escapeHtml(e.icon)}" onchange="COUNSELLING_DATA.expertise[${i}].icon=this.value"></div>
+        <div class="field"><label>Title</label><input type="text" value="${escapeHtml(e.title)}" onchange="COUNSELLING_DATA.expertise[${i}].title=this.value"></div>
+        <div class="field"><label>Description</label><textarea onchange="COUNSELLING_DATA.expertise[${i}].desc=this.value">${escapeHtml(e.desc)}</textarea></div>
+      </div>`;
+    c.appendChild(card);
+  });
+}
+
+function renderFeatures(){
+  const c = document.getElementById('prof-features-list');
+  c.innerHTML = '';
+  COUNSELLING_DATA.profile.features.forEach((f,i) => {
+    const div = document.createElement('div');
+    div.className = 'list-item';
+    div.innerHTML = `<input type="text" value="${escapeHtml(f)}" onchange="COUNSELLING_DATA.profile.features[${i}]=this.value"> <button class="del-btn" onclick="COUNSELLING_DATA.profile.features.splice(${i},1);renderFeatures()">×</button>`;
+    c.appendChild(div);
+  });
+}
+
+function addFeature(){
+  COUNSELLING_DATA.profile.features.push('New Feature Point');
+  renderFeatures();
+}
+
+function addItem(type){
+  if(type === 'mediums'){
+    COUNSELLING_DATA.mediums.push({icon:'star',title:'New Medium',desc:'Description here...',points:['Point 1'],btn:'Action'});
+    renderMediums();
+  } else if(type === 'expertise'){
+    COUNSELLING_DATA.expertise.push({icon:'sparkles',title:'New Area',desc:'Description here...'});
+    renderExpertise();
+  } else if(type === 'milestones'){
+    COUNSELLING_DATA.milestones.push({year:'20XX',title:'New Milestone',desc:'Description...'});
+    renderMilestones();
+  } else if(type === 'faq'){
+    COUNSELLING_DATA.faq.push({q:'New Question?',a:'Answer here...'});
+    renderFAQ();
+  }
+}
+
+function removeItem(type,i){
+  if(confirm('Delete this item?')){
+    COUNSELLING_DATA[type].splice(i,1);
+    if(type === 'mediums') renderMediums();
+    else if(type === 'expertise') renderExpertise();
+    else if(type === 'milestones') renderMilestones();
+    else if(type === 'faq') renderFAQ();
+  }
+}
+
+function renderMilestones(){
+  const c = document.getElementById('milestones-container');
+  c.innerHTML = '';
+  COUNSELLING_DATA.milestones.forEach((m, i) => {
+    const card = document.createElement('div');
+    card.className = 'edit-card';
+    card.innerHTML = `
+      <div class="edit-card-header">Milestone ${i+1} <button class="del-btn" style="float:right" onclick="removeItem('milestones',${i})">×</button></div>
+      <div class="edit-card-body">
+        <div class="field"><label>Year</label><input type="text" value="${escapeHtml(m.year)}" onchange="COUNSELLING_DATA.milestones[${i}].year=this.value"></div>
+        <div class="field"><label>Title</label><input type="text" value="${escapeHtml(m.title)}" onchange="COUNSELLING_DATA.milestones[${i}].title=this.value"></div>
+        <div class="field"><label>Description</label><textarea rows="3" onchange="COUNSELLING_DATA.milestones[${i}].desc=this.value">${escapeHtml(m.desc)}</textarea></div>
+      </div>`;
+    c.appendChild(card);
+  });
+}
+
+function renderFAQ(){
+  const c = document.getElementById('faq-container');
+  c.innerHTML = '';
+  COUNSELLING_DATA.faq.forEach((f, i) => {
+    const card = document.createElement('div');
+    card.className = 'edit-card';
+    card.innerHTML = `
+      <div class="edit-card-header">FAQ Item ${i+1} <button class="del-btn" style="float:right" onclick="removeItem('faq',${i})">×</button></div>
+      <div class="edit-card-body">
+        <div class="field"><label>Question</label><input type="text" value="${escapeHtml(f.q)}" onchange="COUNSELLING_DATA.faq[${i}].q=this.value"></div>
+        <div class="field"><label>Answer</label><textarea rows="3" onchange="COUNSELLING_DATA.faq[${i}].a=this.value">${escapeHtml(f.a)}</textarea></div>
+      </div>`;
+    c.appendChild(card);
+  });
+}
+
+// ════════════════════════════════════════════════
+//  SAVE ALL CONTENT
+// ════════════════════════════════════════════════
+function saveAll(){
+  COUNSELLING_DATA.hero.badge = document.getElementById('hero-badge').value;
+  COUNSELLING_DATA.hero.title = document.getElementById('hero-title').value;
+  COUNSELLING_DATA.hero.highlight = document.getElementById('hero-highlight').value;
+  COUNSELLING_DATA.hero.desc = document.getElementById('hero-desc').value;
+  COUNSELLING_DATA.hero.btn1 = document.getElementById('hero-btn1').value;
+  COUNSELLING_DATA.hero.callText = document.getElementById('hero-call-text').value;
+  COUNSELLING_DATA.hero.callNum = document.getElementById('hero-call-num').value;
+  COUNSELLING_DATA.hero.img = document.getElementById('hero-img').value;
+  COUNSELLING_DATA.profile.name = document.getElementById('prof-name').value;
+  COUNSELLING_DATA.profile.role = document.getElementById('prof-role').value;
+  COUNSELLING_DATA.profile.bioHead = document.getElementById('prof-bio-head').value;
+  COUNSELLING_DATA.profile.bio = document.getElementById('prof-bio').value;
+  COUNSELLING_DATA.profile.img = document.getElementById('prof-img').value;
+  localStorage.setItem('vima_counselling_data', JSON.stringify(COUNSELLING_DATA));
+  showToast('✅ All changes saved!');
+}
+
+// ════════════════════════════════════════════════
+//  UI HELPERS
+// ════════════════════════════════════════════════
+function showPanel(id, el){
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if(el) el.classList.add('active');
+  if(id === 'sessions'){ renderSessions(); updateStats(); }
+}
+
+function isAdminAuthenticated(){
+  try {
+    const session = JSON.parse(localStorage.getItem('vima_auth_token') || 'null');
+    if (!session || !session.expiresAt || Date.now() > session.expiresAt) {
+      localStorage.removeItem('vima_auth_token');
+      return false;
+    }
+    return true;
+  } catch(e) {
+    localStorage.removeItem('vima_auth_token');
+    return false;
+  }
+}
+
+function checkAuth(){
+  if(!isAdminAuthenticated()){
+    window.location.href = 'admin-login.html?redirect=admin-counselling.html';
+  } else {
+    init();
+  }
+}
+checkAuth();
+
+function logout(){
+  if(confirm('Logout?')){
+    localStorage.removeItem('vima_auth_token');
+    window.location.href = 'admin-login.html?redirect=admin-counselling.html';
+  }
+}
+
+function showToast(msg, type){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type === 'error' ? ' error-toast' : '');
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3500);
+}
+
+// ════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════
+function init(){
+  if(!isAdminAuthenticated()) return;
+  document.getElementById('dashboard-page').style.display = 'block';
+  loadData();
+
+  // Set today's date as default
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('s-date').value = today;
+
+  // Content fields
+  const h = COUNSELLING_DATA.hero;
+  document.getElementById('hero-badge').value = h.badge;
+  document.getElementById('hero-title').value = h.title;
+  document.getElementById('hero-highlight').value = h.highlight;
+  document.getElementById('hero-desc').value = h.desc;
+  document.getElementById('hero-btn1').value = h.btn1;
+  document.getElementById('hero-call-text').value = h.callText;
+  document.getElementById('hero-call-num').value = h.callNum;
+  document.getElementById('hero-img').value = h.img;
+
+  const p = COUNSELLING_DATA.profile;
+  document.getElementById('prof-name').value = p.name;
+  document.getElementById('prof-role').value = p.role;
+  document.getElementById('prof-bio-head').value = p.bioHead;
+  document.getElementById('prof-bio').value = p.bio;
+  document.getElementById('prof-img').value = p.img;
+
+  renderMediums();
+  renderExpertise();
+  renderFeatures();
+  renderMilestones();
+  renderFAQ();
+  renderSessions();
+  updateStats();
+  updateLiveBadge();
+
+  // Refresh live status every 30 seconds
+  setInterval(() => {
+    renderSessions();
+    updateStats();
+    updateLiveBadge();
+  }, 30000);
+}
+</script>
+</body>
+</html>

@@ -15,6 +15,18 @@
   --bg-base: #FAF5F9;
   --shadow-md: 0 8px 24px rgba(180, 127, 166, 0.22);
   --glass-border: rgba(255, 255, 255, 0.2);
+  --vs-mobile-header-offset: 5rem;
+  --vs-mobile-bottom-nav-offset: calc(3.5rem + env(safe-area-inset-bottom));
+}
+
+body.safe-bottom {
+  padding-bottom: var(--vs-mobile-bottom-nav-offset);
+}
+
+@media (min-width: 1024px) {
+  body.safe-bottom {
+    padding-bottom: 0;
+  }
 }
 
 /* SVG icons bound via [data-vs-icon] (see icons.js + vsBindDataIcons in footer.js) */
@@ -334,22 +346,22 @@ nav { display: flex; align-items: center; gap: 0.3rem; position: relative; }
 
   /* SERVICES INFINITE LOOP — transform-based, no scrollTop conflicts */
   .services-loop-viewport {
-    height: 320px;
-    overflow: hidden;
+    height: auto !important;
+    overflow: visible !important;
     position: relative;
     margin: 1.5rem 0;
-    mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
-    -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
     border-radius: 16px;
-    background: rgba(0,0,0,0.02);
+    background: transparent;
   }
 
   .services-loop-track {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1.2rem !important;
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 0.75rem !important;
     padding: 10px 0;
-    will-change: transform;
+    will-change: auto;
   }
 
   .services-loop-track .service-card {
