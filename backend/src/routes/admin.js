@@ -79,6 +79,9 @@ export function createAdminRoutes() {
   });
 
   app.post('/upload', async (c) => {
+    if (!c.env.ASSETS?.put) {
+      return json({ ok: false, error: 'Image uploads are not enabled yet' }, { status: 503 });
+    }
     const form = await c.req.formData();
     const file = form.get('file');
     if (!(file instanceof File)) {

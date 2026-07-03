@@ -8,10 +8,6 @@ binding = "DB"
 database_name = "vima_sneha"
 database_id = "2532dab7-87ed-4e00-b95c-02ee68e6597e"
 
-[[r2_buckets]]
-binding = "ASSETS"
-bucket_name = "vima-sneha-assets"
-
 [vars]
 SESSION_COOKIE_NAME = "vs_session"
 SESSION_TTL_HOURS = "8"
