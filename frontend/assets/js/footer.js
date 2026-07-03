@@ -1,36 +1,26 @@
 (() => {
+  const ensureBackend = () => {
+    if (window.VSBackend) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      const basePath = window.location.pathname.includes('/insurance/') ? '../' : '';
+      script.src = `${basePath}assets/js/vs-backend.js`;
+      script.onload = () => resolve();
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  };
+
   const config = {
     counsellingPhone: "+919972875970",
     insurancePhone: "+919945933822",
     whatsappPhone: "919972875970",
   };
 
-  const storageKey = "vs_admin_data";
   const defaultBrandName = "Vima Sneha";
   const defaultTagline = "Guiding Minds, Assuring Lives";
 
-  const getBranding = () => {
-    try {
-      const storedData = JSON.parse(localStorage.getItem(storageKey) || "{}");
-      return {
-        name: typeof storedData.brandName === "string" && storedData.brandName.trim()
-          ? storedData.brandName.trim()
-          : defaultBrandName,
-        tagline: typeof storedData.brandTagline === "string" && storedData.brandTagline.trim()
-          ? storedData.brandTagline.trim()
-          : defaultTagline,
-      };
-    } catch (error) {
-      return {
-        name: defaultBrandName,
-        tagline: defaultTagline,
-      };
-    }
-  };
-
-  const branding = getBranding();
-
-  const footerMarkup = `
+  const footerMarkup = (branding) => `
 <footer class="mt-0 md:mt-10 relative overflow-hidden rounded-t-[2.5rem] md:rounded-t-[4rem] shadow-[0_-20px_50px_-20px_rgba(122,79,114,0.15)]" style="background-color: #FAF5F9;">
   <div class="flex flex-col md:flex-row min-h-0 md:min-h-[300px]">
     <div class="md:w-7/12 text-white p-7 md:p-10 relative z-10 organic-split shadow-2xl" style="background: linear-gradient(145deg, #7A4F72 0%, #4E2E4A 100%);">
@@ -128,17 +118,34 @@
   <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full blur-[100px] pointer-events-none opacity-10" style="background-color: #D4A853;"></div>
 </footer>`;
 
-  const mountPoint = document.getElementById("site-footer-root");
-  if (mountPoint) {
-    mountPoint.outerHTML = footerMarkup;
-  } else if (!document.querySelector("footer")) {
-    document.body.insertAdjacentHTML("beforeend", footerMarkup);
-  }
+  const getBranding = async () => {
+    try {
+      if (!window.VSBackend) return { name: defaultBrandName, tagline: defaultTagline };
+      const response = await VSBackend.getSiteContent('home');
+      const data = response?.content || {};
+      return {
+        name: typeof data.brandName === "string" && data.brandName.trim() ? data.brandName.trim() : defaultBrandName,
+        tagline: typeof data.brandTagline === "string" && data.brandTagline.trim() ? data.brandTagline.trim() : defaultTagline,
+      };
+    } catch {
+      return { name: defaultBrandName, tagline: defaultTagline };
+    }
+  };
 
-  const yearEl = document.getElementById("year");
-  if (yearEl) {
-    yearEl.textContent = String(new Date().getFullYear());
-  }
+  const mountPoint = document.getElementById("site-footer-root");
+  (async () => {
+    await ensureBackend();
+    const branding = await getBranding();
+    if (mountPoint) {
+      mountPoint.outerHTML = footerMarkup(branding);
+    } else if (!document.querySelector("footer")) {
+      document.body.insertAdjacentHTML("beforeend", footerMarkup(branding));
+    }
+
+    const yearEl = document.getElementById("year");
+    if (yearEl) {
+      yearEl.textContent = String(new Date().getFullYear());
+    }
 
   const backToTopBtn = document.createElement("button");
   backToTopBtn.className = "floating-back-to-top fixed w-14 h-14 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-2xl flex items-center justify-center text-purple-900 transition-all shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:bg-white hover:scale-110 active:scale-95 opacity-0 invisible translate-y-8 duration-500 overflow-hidden group";
@@ -147,7 +154,7 @@
     <span class="material-symbols-outlined relative z-10 !text-3xl transition-transform group-hover:-translate-y-1">arrow_upward</span>
   `;
   backToTopBtn.setAttribute("aria-label", "Back to top");
-  document.body.appendChild(backToTopBtn);
+    document.body.appendChild(backToTopBtn);
 
   const handleScroll = () => {
     if (window.scrollY > 300) {
@@ -161,11 +168,12 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
-  window.addEventListener("scroll", handleScroll);
-  handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
 
-  // Initialize SVG icons if icons.js is loaded
-  if (typeof vsBindDataIcons === "function") {
-    vsBindDataIcons();
-  }
+    // Initialize SVG icons if icons.js is loaded
+    if (typeof vsBindDataIcons === "function") {
+      vsBindDataIcons();
+    }
+  })();
 })();

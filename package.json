@@ -1,0 +1,16 @@
+{
+  "name": "vima-sneha-backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "node --check src/index.js"
+  },
+  "dependencies": {
+    "hono": "^4.5.8"
+  },
+  "devDependencies": {
+    "wrangler": "^3.114.17"
+  }
+}

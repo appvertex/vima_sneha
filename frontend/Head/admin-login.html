@@ -74,56 +74,7 @@ body {
   100% { transform: scale(1.2) translate(20px, -30px); }
 }
 
-/* ── ADMIN SELECTOR NAVBAR ── */
-.admin-selector {
-  position: absolute;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(15px);
-  padding: 6px;
-  border-radius: 20px;
-  border: 1px solid rgba(180, 127, 166, 0.2);
-  gap: 8px;
-  z-index: 100;
-  box-shadow: 0 15px 35px rgba(122, 79, 114, 0.08);
-  animation: navSlideDown 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
-}
 
-@keyframes navSlideDown {
-  from { opacity: 0; transform: translate(-50%, -20px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
-}
-
-.selector-item {
-  padding: 10px 22px;
-  border-radius: 14px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--dm);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.selector-item:hover {
-  background: rgba(180, 127, 166, 0.08);
-}
-
-.selector-item.active {
-  background: linear-gradient(135deg, var(--pm), var(--dm));
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(122, 79, 114, 0.25);
-}
-
-.selector-item span {
-  font-size: 16px;
-}
 
 .login-card {
   position: relative;
@@ -247,12 +198,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .admin-selector {
-    top: 1rem;
-    width: 90vw;
-    overflow-x: auto;
-    justify-content: flex-start;
-  }
+  /* removed admin-selector media query */
 }
 </style>
 </head>
@@ -264,11 +210,7 @@ body {
     <div class="login-orb"></div>
   </div>
 
-  <nav class="admin-selector">
-    <div class="selector-item active" data-target="admin.html"><span>🏠</span> Main Dashboard</div>
-    <div class="selector-item" data-target="admin-counselling.html"><span>🧠</span> Counselling</div>
-    <div class="selector-item" data-target="admin-insurance.html"><span>🛡️</span> Insurance</div>
-  </nav>
+
 
   <div class="login-card">
     <div class="login-badge" id="panel-badge">🛡️ Admin Control</div>
@@ -297,131 +239,66 @@ body {
   </div>
 </div>
 
+<script src="../assets/js/vs-backend.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   // Redirection & UI Logic
   const tabs = document.querySelectorAll('.selector-item');
   const urlParams = new URLSearchParams(window.location.search);
   const allowedRedirects = new Set(['admin.html', 'admin-counselling.html', 'admin-insurance.html']);
-  const sessionMs = 8 * 60 * 60 * 1000;
+  const redirectTarget = getSafeRedirect(urlParams.get('redirect'));
 
   function getSafeRedirect(value) {
     return allowedRedirects.has(value) ? value : 'admin.html';
   }
 
-  function hasValidSession() {
-    try {
-      const raw = localStorage.getItem('vima_auth_token');
-      if (!raw) return false;
-      const session = JSON.parse(raw);
-      if (!session || !session.expiresAt || Date.now() > session.expiresAt) {
-        localStorage.removeItem('vima_auth_token');
-        return false;
-      }
-      return true;
-    } catch (e) {
-      localStorage.removeItem('vima_auth_token');
-      return false;
-    }
-  }
-
-  window.resetAdminData = function(event) {
-    if (event) event.preventDefault();
-    if (!confirm('Reset all admin settings and password to factory defaults?')) return;
-    [
-      'vs_admin_data',
-      'vima_counselling_data',
-      'vima_insurance_data',
-      'vima_sessions',
-      'vima_auth_token'
-    ].forEach(key => localStorage.removeItem(key));
-    location.reload();
-  };
-
-  const currentRedirect = getSafeRedirect(urlParams.get('redirect'));
-
-  tabs.forEach(tab => {
-    const target = tab.getAttribute('data-target');
-    
-    if (target === currentRedirect) {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      
-      // Update UI text based on target
-      const title = document.getElementById('login-title');
-      const sub = document.getElementById('login-sub');
-      const badge = document.getElementById('panel-badge');
-      
-      if (target === 'admin-counselling.html') {
-        title.textContent = 'Counselling Portal';
-        sub.textContent = 'Manage expert profiles and live sessions.';
-        badge.textContent = '🧠 Counselling Admin';
-      } else if (target === 'admin-insurance.html') {
-        title.textContent = 'Insurance Portal';
-        sub.textContent = 'Update insurance products and trust metrics.';
-        badge.textContent = '🛡️ Insurance Admin';
-      } else {
-        title.textContent = 'Main Dashboard';
-        sub.textContent = 'Access central site management and settings.';
-        badge.textContent = '⚙️ Master Admin';
-      }
-    }
-
-    tab.addEventListener('click', () => {
-      window.location.href = `admin-login.html?redirect=${encodeURIComponent(getSafeRedirect(target))}`;
-    });
-  });
-
-  // Load credentials from storage if they exist
-  let adminCreds = { user: 'admin', pass: 'vimasneha2025' };
-  try {
-    const savedData = localStorage.getItem('vs_admin_data');
-    if (savedData) {
-      const parsed = JSON.parse(savedData);
-      if (parsed && parsed.creds) {
-        adminCreds = parsed.creds;
-      }
-    }
-  } catch (e) {
-    console.error('Error loading admin credentials:', e);
+  // Update UI text based on target
+  const title = document.getElementById('login-title');
+  const sub = document.getElementById('login-sub');
+  const badge = document.getElementById('panel-badge');
+  
+  if (currentRedirect === 'admin-counselling.html') {
+    title.textContent = 'Counselling Portal';
+    sub.textContent = 'Manage expert profiles and live sessions.';
+    badge.textContent = '🧠 Counselling Admin';
+  } else if (currentRedirect === 'admin-insurance.html') {
+    title.textContent = 'Insurance Portal';
+    sub.textContent = 'Update insurance products and trust metrics.';
+    badge.textContent = '🛡️ Insurance Admin';
+  } else {
+    title.textContent = 'Main Dashboard';
+    sub.textContent = 'Access central site management and settings.';
+    badge.textContent = '⚙️ Master Admin';
   }
 
   // Define login globally for the onclick handler
-  window.login = function() {
+  window.login = async function() {
     const userField = document.getElementById('user');
     const passField = document.getElementById('pass');
     const u = userField.value.trim();
     const p = passField.value;
     const btn = document.getElementById('login-btn');
     const err = document.getElementById('error-msg');
-
-    console.log('Login attempt for user:', u);
-
-    if (u === adminCreds.user && p === adminCreds.pass) {
-      console.log('Login successful. Setting token and redirecting...');
-      const now = Date.now();
-      localStorage.setItem('vima_auth_token', JSON.stringify({
-        user: u,
-        issuedAt: now,
-        expiresAt: now + sessionMs
-      }));
-      
-      const finalRedirect = getSafeRedirect(new URLSearchParams(window.location.search).get('redirect'));
-      
+    btn.textContent = 'Signing in...';
+    btn.disabled = true;
+    err.style.display = 'none';
+    try {
+      await VSBackend.login(u, p);
       btn.textContent = 'Redirecting...';
-      btn.style.opacity = '0.7';
-      btn.disabled = true;
-      
-      setTimeout(() => {
-        window.location.href = finalRedirect;
-      }, 400);
-    } else {
-      console.warn('Login failed: Invalid credentials.');
+      window.location.href = redirectTarget;
+    } catch (error) {
       err.style.display = 'block';
+      btn.textContent = 'Sign In to Dashboard →';
+      btn.disabled = false;
       setTimeout(() => {
         err.style.display = 'none';
       }, 3000);
     }
+  };
+
+  window.resetAdminData = function(event) {
+    if (event) event.preventDefault();
+    alert('Password reset is handled server-side now. Please contact the site owner to change the admin password.');
   };
 
   document.addEventListener('keydown', e => {
@@ -429,10 +306,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // If already logged in, redirect away
-  if (hasValidSession()) {
-    const finalRedirect = getSafeRedirect(new URLSearchParams(window.location.search).get('redirect'));
-    window.location.href = finalRedirect;
-  }
+  (async () => {
+    try {
+      await VSBackend.request('/api/admin/me');
+      window.location.href = redirectTarget;
+    } catch (error) {}
+  })();
 });
 </script>
 </body>

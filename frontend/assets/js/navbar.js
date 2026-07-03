@@ -1,6 +1,33 @@
 (() => {
+  const ensureBackend = () => {
+    if (window.VSBackend) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      const basePath = window.location.pathname.includes('/insurance/') ? '../' : '';
+      script.src = `${basePath}assets/js/vs-backend.js`;
+      script.onload = () => resolve();
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  };
+
+  if (!("IntersectionObserver" in window)) {
+    window.IntersectionObserver = class {
+      constructor(callback) {
+        this.callback = callback;
+      }
+
+      observe(target) {
+        this.callback([{ isIntersecting: true, target }], this);
+      }
+
+      unobserve() {}
+
+      disconnect() {}
+    };
+  }
+
   const basePath = window.location.pathname.includes('/insurance/') ? '../' : '';
-  const storageKey = "vs_admin_data";
   const defaultBrandName = "Vima Sneha";
   const defaultTagline = "Guiding Minds, Assuring Lives";
   const navItems = [
@@ -594,15 +621,18 @@
 }
 `;
 
-  const getBranding = () => {
+  const getBranding = async () => {
+    await ensureBackend();
     try {
-      const storedData = JSON.parse(localStorage.getItem(storageKey) || "{}");
+      if (!window.VSBackend) return { name: defaultBrandName, tagline: defaultTagline };
+      const response = await VSBackend.getSiteContent('home');
+      const data = response?.content || {};
       return {
-        name: typeof storedData.brandName === "string" && storedData.brandName.trim()
-          ? storedData.brandName.trim()
+        name: typeof data.brandName === "string" && data.brandName.trim()
+          ? data.brandName.trim()
           : defaultBrandName,
-        tagline: typeof storedData.brandTagline === "string" && storedData.brandTagline.trim()
-          ? storedData.brandTagline.trim()
+        tagline: typeof data.brandTagline === "string" && data.brandTagline.trim()
+          ? data.brandTagline.trim()
           : defaultTagline,
       };
     } catch (error) {
@@ -727,8 +757,8 @@
     }
   }
 
-  const applyNavbarBranding = () => {
-    const branding = getBranding();
+  const applyNavbarBranding = async () => {
+    const branding = await getBranding();
     document.querySelectorAll(".nav-brand-name").forEach((element) => {
       element.textContent = branding.name;
     });

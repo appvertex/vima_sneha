@@ -120,6 +120,7 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
       <div class="nav-item" onclick="showPanel('story', this)">Consultant Story</div>
       <div class="nav-item" onclick="showPanel('milestones', this)">Professional Journey</div>
       <div class="nav-item" onclick="showPanel('products', this)">Insurance Products</div>
+      <a class="nav-item" href="admin-pages.html" style="text-decoration:none;">Plan Page Content ↗</a>
     </nav>
     <div style="padding:1.5rem;"><button class="save-btn" style="width:100%;" onclick="logout()">Logout</button></div>
   </aside>
@@ -201,6 +202,7 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
 
 <div class="toast" id="toast">Changes saved successfully!</div>
 
+<script src="../assets/js/vs-backend.js"></script>
 <script>
 let INSURANCE_DATA = {
   hero: {
@@ -304,45 +306,45 @@ function normalizeInsuranceData(data){
   return data;
 }
 
-try {
-  const saved = localStorage.getItem('vima_insurance_data');
-  if(saved) INSURANCE_DATA = JSON.parse(saved);
-} catch(e) {
-  console.error('Could not load insurance data:', e);
-}
-INSURANCE_DATA = normalizeInsuranceData(INSURANCE_DATA);
+let REMOTE_INSURANCE_DATA = null;
 
-function isAdminAuthenticated(){
+async function loadRemoteInsuranceData(){
   try {
-    const session = JSON.parse(localStorage.getItem('vima_auth_token') || 'null');
-    if (!session || !session.expiresAt || Date.now() > session.expiresAt) {
-      localStorage.removeItem('vima_auth_token');
+    const response = await VSBackend.getAdminContent('insurance');
+    REMOTE_INSURANCE_DATA = response?.content || {};
+    if (REMOTE_INSURANCE_DATA && Object.keys(REMOTE_INSURANCE_DATA).length) {
+      INSURANCE_DATA = normalizeInsuranceData({ ...INSURANCE_DATA, ...REMOTE_INSURANCE_DATA });
+    } else {
+      INSURANCE_DATA = normalizeInsuranceData(INSURANCE_DATA);
+    }
+  } catch (error) {
+    if (error.status === 401) {
+      window.location.href = 'admin-login.html?redirect=admin-insurance.html';
       return false;
     }
-    return true;
-  } catch(e) {
-    localStorage.removeItem('vima_auth_token');
-    return false;
+    console.error('Could not load insurance data:', error);
+    INSURANCE_DATA = normalizeInsuranceData(INSURANCE_DATA);
   }
+  return true;
 }
 
-function checkAuth(){
-  if(!isAdminAuthenticated()){
+async function checkAuth(){
+  try {
+    await VSBackend.request('/api/admin/me');
+  } catch (error) {
     window.location.href = 'admin-login.html?redirect=admin-insurance.html';
   }
 }
 checkAuth();
 
 window.onload = function(){
-  if(isAdminAuthenticated()){
-    document.getElementById('dashboard-page').style.display='block';
-    init();
-  }
+  document.getElementById('dashboard-page').style.display='block';
+  init();
 };
 
 function logout(){
   if(confirm('Logout?')){
-    localStorage.removeItem('vima_auth_token');
+    VSBackend.logout();
     window.location.href = 'admin-login.html?redirect=admin-insurance.html';
   }
 }
@@ -355,6 +357,7 @@ function showPanel(id, el){
 }
 
 function init(){
+  loadRemoteInsuranceData().then(() => {
   const h = INSURANCE_DATA.hero;
   document.getElementById('hero-badge').value = h.badge;
   document.getElementById('hero-title').value = h.title;
@@ -376,6 +379,7 @@ function init(){
 
   renderMilestones();
   renderProducts();
+  });
 }
 
 function renderMilestones(){
@@ -432,7 +436,7 @@ function removeItem(type, i){
   }
 }
 
-function saveAll(){
+async function saveAll(){
   const h = INSURANCE_DATA.hero;
   h.badge = document.getElementById('hero-badge').value;
   h.title = document.getElementById('hero-title').value;
@@ -458,11 +462,13 @@ function saveAll(){
   s.p2 = document.getElementById('story-p2').value;
   s.img = document.getElementById('story-img').value.replace(/^\.\.\/assets\//, 'assets/');
 
-  localStorage.setItem('vima_insurance_data', JSON.stringify(INSURANCE_DATA));
+  await VSBackend.saveAdminContent('insurance', INSURANCE_DATA);
+  REMOTE_INSURANCE_DATA = JSON.parse(JSON.stringify(INSURANCE_DATA));
   const t = document.getElementById('toast');
   t.style.display = 'block';
   setTimeout(()=>t.style.display='none', 3000);
 }
 </script>
+<script src="navbar.js"></script>
 </body>
 </html>

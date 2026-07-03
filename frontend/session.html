@@ -233,11 +233,6 @@ let secondsElapsed = 0;
 
 function init(){
   if(!roomId){
-    const stored = localStorage.getItem('vima_sessions');
-    if(!stored){
-      showInvalid();
-      return;
-    }
     showInvalid();
     return;
   }
@@ -246,9 +241,6 @@ function init(){
   document.getElementById('session-label').textContent = sessionName;
   document.getElementById('session-time').textContent = sessionTime;
 
-  const saved = localStorage.getItem('participant_name');
-  if(saved) document.getElementById('participant-name').value = saved;
-
   document.getElementById('participant-name').addEventListener('keydown', e => {
     if(e.key === 'Enter') joinSession();
   });
@@ -256,7 +248,6 @@ function init(){
 
 function joinSession(){
   const name = document.getElementById('participant-name').value.trim() || 'Guest';
-  localStorage.setItem('participant_name', name);
 
   document.getElementById('lobby').style.display = 'none';
   document.getElementById('call-view').style.display = 'flex';

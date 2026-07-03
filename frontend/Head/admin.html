@@ -491,6 +491,16 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
       <div class="nav-item" onclick="gotoPanel('gallery')">
         <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><span class="nav-label">Gallery Cards</span>
       </div>
+      <div class="nav-item" onclick="gotoPanel('newsdb')">
+        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 7H20"/><path d="M20 2v20"/><path d="M8 7h7"/><path d="M8 11h7"/><path d="M8 15h4"/></svg></div><span class="nav-label">News Articles</span>
+      </div>
+      <div class="nav-item" onclick="gotoPanel('gallerydb')">
+        <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><span class="nav-label">Gallery Library</span>
+      </div>
+      <a href="admin-pages.html" class="nav-item" style="text-decoration:none;">
+        <div class="nav-icon">P</div>
+        <span class="nav-label">Page Content Admin ↗</span>
+      </a>
       <div class="nav-item" onclick="gotoPanel('testimonials')">
         <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="nav-label">Testimonials</span>
       </div>
@@ -691,6 +701,60 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
         </div>
       </div>
 
+      <!-- ── NEWS DB ── -->
+      <div class="panel" id="panel-newsdb">
+        <div class="section-head"><h2>News Articles</h2><p>Create, edit, and delete site news entries stored in D1.</p></div>
+        <div class="edit-grid">
+          <div class="edit-card">
+            <div class="edit-card-header">Article Editor</div>
+            <div class="edit-card-body">
+              <input type="hidden" id="news-id">
+              <div class="field"><label>Title</label><input type="text" id="news-title" placeholder="Article title"></div>
+              <div class="field"><label>Body</label><textarea id="news-body" rows="8" placeholder="Main article content"></textarea></div>
+              <div class="field"><label>Image URL</label><input type="text" id="news-image" placeholder="Upload an image or paste a URL"></div>
+              <div class="field"><label>Published At</label><input type="datetime-local" id="news-published-at"></div>
+              <div class="field"><label>Upload Image</label><input type="file" id="news-upload" accept="image/*"></div>
+              <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+                <button type="button" class="save-btn" onclick="saveNewsArticle()">Save Article</button>
+                <button type="button" class="add-btn" onclick="resetNewsForm()" style="width:auto;padding:10px 16px;border-style:solid;">New Article</button>
+              </div>
+            </div>
+          </div>
+          <div class="edit-card">
+            <div class="edit-card-header">Existing Articles</div>
+            <div class="edit-card-body">
+              <div id="news-list" class="cards-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── GALLERY DB ── -->
+      <div class="panel" id="panel-gallerydb">
+        <div class="section-head"><h2>Gallery Library</h2><p>Manage gallery items stored in D1 and backed by R2 images.</p></div>
+        <div class="edit-grid">
+          <div class="edit-card">
+            <div class="edit-card-header">Gallery Item Editor</div>
+            <div class="edit-card-body">
+              <input type="hidden" id="gallerydb-id">
+              <div class="field"><label>Title</label><input type="text" id="gallerydb-title" placeholder="Gallery item title"></div>
+              <div class="field"><label>Image URL</label><input type="text" id="gallerydb-image" placeholder="Upload an image or paste a URL"></div>
+              <div class="field"><label>Upload Image</label><input type="file" id="gallerydb-upload" accept="image/*"></div>
+              <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+                <button type="button" class="save-btn" onclick="saveGalleryItem()">Save Item</button>
+                <button type="button" class="add-btn" onclick="resetGalleryForm()" style="width:auto;padding:10px 16px;border-style:solid;">New Item</button>
+              </div>
+            </div>
+          </div>
+          <div class="edit-card">
+            <div class="edit-card-header">Existing Items</div>
+            <div class="edit-card-body">
+              <div id="gallerydb-list" class="cards-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ── TESTIMONIALS ── -->
       <div class="panel" id="panel-testimonials">
         <div class="section-head"><h2>Testimonials</h2><p>Add, edit, or remove testimonials shown in the horizontal carousel on the site.</p></div>
@@ -865,6 +929,7 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
 <!-- TOAST CONTAINER -->
 <div class="toast-wrap" id="toast-wrap"></div>
 
+<script src="../assets/js/vs-backend.js"></script>
 <script>
 function adminIcon(key){
   return (typeof vsIconHtml === 'function') ? vsIconHtml(key) : '';
@@ -944,11 +1009,20 @@ let DATA = {
   ]
 };
 
-/* load from localStorage if exists */
-try {
-  const saved = localStorage.getItem('vs_admin_data');
-  if(saved) DATA = JSON.parse(saved);
-} catch(e){}
+const ADMIN_PAGE_KEY = 'home';
+let REMOTE_HOME_DATA = null;
+
+function merge(base, override){
+  const out = Array.isArray(base) ? base.slice() : { ...base };
+  Object.keys(override || {}).forEach((key) => {
+    if (override[key] && typeof override[key] === 'object' && !Array.isArray(override[key]) && base[key]) {
+      out[key] = merge(base[key], override[key]);
+    } else {
+      out[key] = override[key];
+    }
+  });
+  return out;
+}
 
 if(!Array.isArray(DATA.insuranceServices)){
   DATA.insuranceServices = [
@@ -977,35 +1051,35 @@ if (DATA.testTag === undefined) DATA.testTag = '\u2726 Voices of Change';
 if (DATA.testTitle === undefined) DATA.testTitle = 'What Our Clients Say';
 if (DATA.testDesc === undefined) DATA.testDesc = 'Scroll horizontally to discover real testimonials from our clients';
 
-/* ═══════════════════════════════════════════════
-   AUTH (Centralized)
-═══════════════════════════════════════════════ */
-function isAdminAuthenticated(){
+async function loadRemoteAdminData(){
   try {
-    const session = JSON.parse(localStorage.getItem('vima_auth_token') || 'null');
-    if (!session || !session.expiresAt || Date.now() > session.expiresAt) {
-      localStorage.removeItem('vima_auth_token');
+    const response = await VSBackend.getAdminContent(ADMIN_PAGE_KEY);
+    REMOTE_HOME_DATA = response?.content || {};
+    DATA = merge(DATA, REMOTE_HOME_DATA);
+    return true;
+  } catch (error) {
+    if (error.status === 401) {
+      window.location.href = 'admin-login.html?redirect=admin.html';
       return false;
     }
+    console.warn('Failed to load admin content from API:', error);
     return true;
-  } catch(e) {
-    localStorage.removeItem('vima_auth_token');
-    return false;
   }
 }
 
-function checkAuth(){
-  if(!isAdminAuthenticated()){
+async function checkAuth(){
+  try {
+    await VSBackend.request('/api/admin/me');
+    await initDashboard();
+  } catch (error) {
     window.location.href = 'admin-login.html?redirect=admin.html';
-  } else {
-    initDashboard();
   }
 }
 checkAuth();
 
-function doLogout(){
+async function doLogout(){
   if(!confirm('Are you sure you want to log out?')) return;
-  localStorage.removeItem('vima_auth_token');
+  await VSBackend.logout();
   window.location.href = 'admin-login.html';
 }
 
@@ -1043,7 +1117,7 @@ function toggleSidebar(){
 const PANEL_LABELS = {
   overview:'Dashboard', navbar:'Navbar & Branding', hero:'Hero Section',
   services:'Services', counselling:'Counselling', insurance:'Insurance',
-  gallery:'Gallery Cards', testimonials:'Testimonials', contact:'Contact Info',
+  gallery:'Gallery Cards', newsdb:'News Articles', gallerydb:'Gallery Library', testimonials:'Testimonials', contact:'Contact Info',
   footer:'Footer', theme:'Theme & Colors', settings:'Settings'
 };
 
@@ -1064,7 +1138,9 @@ function gotoPanel(id){
 /* ═══════════════════════════════════════════════
    INIT DASHBOARD — populate all editors
 ═══════════════════════════════════════════════ */
-function initDashboard(){
+async function initDashboard(){
+  document.getElementById('dashboard-page').style.display = 'block';
+  await loadRemoteAdminData();
   restoreFields();
   renderNavLinks();
   renderHeroCards();
@@ -1075,12 +1151,14 @@ function initDashboard(){
   renderListEditor('coun-tags-editor', DATA.counTags, ()=>markUnsaved());
   renderListEditor('ins-tags-editor', DATA.insTags, ()=>markUnsaved());
   renderGalleryCards();
+  await Promise.all([loadNewsLibrary(), loadGalleryLibrary()]);
   renderTestimonials();
   initColorSync();
   restorePhotoPreview('coun-photo-preview', 'coun-photo-filename-row', 'coun-photo-filename', DATA.counPhoto, DATA.counPhotoFilename);
   restorePhotoPreview('ins-photo-preview', 'ins-photo-filename-row', 'ins-photo-filename', DATA.insPhoto, DATA.insPhotoFilename);
   updateStatsCount();
   if (typeof vsBindDataIcons === 'function') vsBindDataIcons();
+  gotoPanel('navbar');
 }
 
 /* ═══════════════════════════════════════════════
@@ -1339,6 +1417,210 @@ function addGalleryCard(){
   }, 50);
 }
 
+let NEWS_LIBRARY = [];
+let GALLERY_LIBRARY = [];
+let EDITING_NEWS_ID = null;
+let EDITING_GALLERY_ID = null;
+
+function formatDateTimeLocal(value){
+  if(!value) return '';
+  const date = new Date(Number(value) * 1000);
+  if(Number.isNaN(date.getTime())) return '';
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function formatDateLabel(value){
+  if(!value) return 'Unpublished';
+  const date = new Date(Number(value) * 1000);
+  if(Number.isNaN(date.getTime())) return 'Unpublished';
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+async function loadNewsLibrary(){
+  const response = await VSBackend.request('/api/admin/news');
+  NEWS_LIBRARY = Array.isArray(response?.articles) ? response.articles : [];
+  renderNewsLibrary();
+}
+
+async function loadGalleryLibrary(){
+  const response = await VSBackend.request('/api/admin/gallery');
+  GALLERY_LIBRARY = Array.isArray(response?.items) ? response.items : [];
+  renderGalleryLibrary();
+}
+
+function resetNewsForm(){
+  EDITING_NEWS_ID = null;
+  document.getElementById('news-id').value = '';
+  document.getElementById('news-title').value = '';
+  document.getElementById('news-body').value = '';
+  document.getElementById('news-image').value = '';
+  document.getElementById('news-published-at').value = '';
+  document.getElementById('news-upload').value = '';
+}
+
+function openNewsArticleById(id){
+  const article = NEWS_LIBRARY.find((item) => String(item.id) === String(id));
+  if (!article) return;
+  EDITING_NEWS_ID = article.id;
+  document.getElementById('news-id').value = article.id;
+  document.getElementById('news-title').value = article.title || '';
+  document.getElementById('news-body').value = article.body || '';
+  document.getElementById('news-image').value = article.image_url || '';
+  document.getElementById('news-published-at').value = formatDateTimeLocal(article.published_at);
+  document.getElementById('news-upload').value = '';
+  gotoPanel('newsdb');
+}
+
+function renderNewsLibrary(){
+  const list = document.getElementById('news-list');
+  if(!list) return;
+  if(!NEWS_LIBRARY.length){
+    list.innerHTML = '<p style="color:var(--lt);font-size:13px;">No articles yet.</p>';
+    return;
+  }
+  list.innerHTML = NEWS_LIBRARY.map((article) => `
+    <div class="item-card" style="margin-bottom:.8rem;">
+      <div class="item-card-head" onclick="openNewsArticleById(${article.id})">
+        <span class="ic-label">${escapeHtml(article.title || 'Untitled Article')}</span>
+        <span class="ic-toggle">&rsaquo;</span>
+      </div>
+      <div class="item-card-body" style="display:block;">
+        <div style="display:flex;gap:.8rem;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;">
+          <div style="flex:1;min-width:220px;">
+            <div style="font-size:12px;color:var(--lt);margin-bottom:.35rem;">${formatDateLabel(article.published_at)}</div>
+            <p style="font-size:13px;color:var(--dt);line-height:1.5;margin-bottom:.8rem;">${escapeHtml((article.body || '').slice(0, 120))}${(article.body || '').length > 120 ? '…' : ''}</p>
+            <button type="button" class="save-btn" style="padding:8px 14px;font-size:12px;" onclick="openNewsArticleById(${article.id})">Edit</button>
+            <button type="button" class="del-btn" style="margin-left:.5rem;" onclick="deleteNewsArticle(${article.id})">Delete</button>
+          </div>
+          ${article.image_url ? `<img src="${escapeHtml(article.image_url)}" style="width:96px;height:96px;object-fit:cover;border-radius:14px;border:1px solid rgba(180,127,166,.15);">` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function saveNewsArticle(){
+  try{
+    const id = document.getElementById('news-id').value;
+    const title = document.getElementById('news-title').value.trim();
+    const body = document.getElementById('news-body').value.trim();
+    let imageUrl = document.getElementById('news-image').value.trim();
+    const publishedAtValue = document.getElementById('news-published-at').value;
+    const upload = document.getElementById('news-upload').files[0];
+    if(upload){
+      const uploaded = await VSBackend.uploadImage(upload, 'news');
+      imageUrl = uploaded.url;
+      document.getElementById('news-image').value = imageUrl;
+    }
+    const payload = { title, body, image_url: imageUrl, published_at: publishedAtValue ? Math.floor(new Date(publishedAtValue).getTime() / 1000) : undefined };
+    if(id){
+      await VSBackend.request(`/api/admin/news/${id}`, { method:'PUT', body: JSON.stringify(payload) });
+    } else {
+      await VSBackend.request('/api/admin/news', { method:'POST', body: JSON.stringify(payload) });
+    }
+    resetNewsForm();
+    await loadNewsLibrary();
+    toast('News article saved.','success');
+  }catch(error){
+    toast(`Could not save article: ${error.message}`, 'error');
+  }
+}
+
+async function deleteNewsArticle(id){
+  try{
+    if(!confirm('Delete this article?')) return;
+    await VSBackend.request(`/api/admin/news/${id}`, { method:'DELETE' });
+    await loadNewsLibrary();
+    if(String(document.getElementById('news-id').value) === String(id)) resetNewsForm();
+    toast('News article deleted.','info');
+  }catch(error){
+    toast(`Could not delete article: ${error.message}`, 'error');
+  }
+}
+
+function resetGalleryForm(){
+  EDITING_GALLERY_ID = null;
+  document.getElementById('gallerydb-id').value = '';
+  document.getElementById('gallerydb-title').value = '';
+  document.getElementById('gallerydb-image').value = '';
+  document.getElementById('gallerydb-upload').value = '';
+}
+
+function openGalleryItemById(id){
+  const item = GALLERY_LIBRARY.find((entry) => String(entry.id) === String(id));
+  if (!item) return;
+  EDITING_GALLERY_ID = item.id;
+  document.getElementById('gallerydb-id').value = item.id;
+  document.getElementById('gallerydb-title').value = item.title || '';
+  document.getElementById('gallerydb-image').value = item.image_url || '';
+  document.getElementById('gallerydb-upload').value = '';
+  gotoPanel('gallerydb');
+}
+
+function renderGalleryLibrary(){
+  const list = document.getElementById('gallerydb-list');
+  if(!list) return;
+  if(!GALLERY_LIBRARY.length){
+    list.innerHTML = '<p style="color:var(--lt);font-size:13px;">No gallery items yet.</p>';
+    return;
+  }
+  list.innerHTML = GALLERY_LIBRARY.map((item) => `
+    <div class="item-card" style="margin-bottom:.8rem;">
+      <div class="item-card-head" onclick="openGalleryItemById(${item.id})">
+        <span class="ic-label">${escapeHtml(item.title || 'Untitled Item')}</span>
+        <span class="ic-toggle">&rsaquo;</span>
+      </div>
+      <div class="item-card-body" style="display:block;">
+        <div style="display:flex;gap:.8rem;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;">
+          <div style="flex:1;min-width:220px;">
+            <button type="button" class="save-btn" style="padding:8px 14px;font-size:12px;" onclick="openGalleryItemById(${item.id})">Edit</button>
+            <button type="button" class="del-btn" style="margin-left:.5rem;" onclick="deleteGalleryItem(${item.id})">Delete</button>
+          </div>
+          ${item.image_url ? `<img src="${escapeHtml(item.image_url)}" style="width:96px;height:96px;object-fit:cover;border-radius:14px;border:1px solid rgba(180,127,166,.15);">` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function saveGalleryItem(){
+  try{
+    const id = document.getElementById('gallerydb-id').value;
+    const title = document.getElementById('gallerydb-title').value.trim();
+    let imageUrl = document.getElementById('gallerydb-image').value.trim();
+    const upload = document.getElementById('gallerydb-upload').files[0];
+    if(upload){
+      const uploaded = await VSBackend.uploadImage(upload, 'gallery');
+      imageUrl = uploaded.url;
+      document.getElementById('gallerydb-image').value = imageUrl;
+    }
+    const payload = { title, image_url: imageUrl };
+    if(id){
+      await VSBackend.request(`/api/admin/gallery/${id}`, { method:'PUT', body: JSON.stringify(payload) });
+    } else {
+      await VSBackend.request('/api/admin/gallery', { method:'POST', body: JSON.stringify(payload) });
+    }
+    resetGalleryForm();
+    await loadGalleryLibrary();
+    toast('Gallery item saved.','success');
+  }catch(error){
+    toast(`Could not save gallery item: ${error.message}`, 'error');
+  }
+}
+
+async function deleteGalleryItem(id){
+  try{
+    if(!confirm('Delete this gallery item?')) return;
+    await VSBackend.request(`/api/admin/gallery/${id}`, { method:'DELETE' });
+    await loadGalleryLibrary();
+    if(String(document.getElementById('gallerydb-id').value) === String(id)) resetGalleryForm();
+    toast('Gallery item deleted.','info');
+  }catch(error){
+    toast(`Could not delete gallery item: ${error.message}`, 'error');
+  }
+}
+
 function moveGalleryCard(i, dir){
   const j = i + dir;
   if(j < 0 || j >= DATA.galleryCards.length) return;
@@ -1354,14 +1636,14 @@ function handleImgUpload(event, i){
     toast('Image is too large. Please use an image under 5MB.','error');
     return;
   }
-  const reader = new FileReader();
-  reader.onload = e => {
-    DATA.galleryCards[i].img = e.target.result;
-    renderGalleryCards();
-    markUnsaved();
-    toast('Image uploaded successfully.','success');
-  };
-  reader.readAsDataURL(file);
+  VSBackend.uploadImage(file, 'gallery')
+    .then(({ url }) => {
+      DATA.galleryCards[i].img = url;
+      renderGalleryCards();
+      markUnsaved();
+      toast('Image uploaded successfully.','success');
+    })
+    .catch((error) => toast(`Image upload failed: ${error.message}`, 'error'));
 }
 
 function handleImgDrop(event, i){
@@ -1377,14 +1659,14 @@ function handleImgDrop(event, i){
     toast('Image is too large. Please use an image under 5MB.','error');
     return;
   }
-  const reader = new FileReader();
-  reader.onload = e => {
-    DATA.galleryCards[i].img = e.target.result;
-    renderGalleryCards();
-    markUnsaved();
-    toast('Image added from drop.','success');
-  };
-  reader.readAsDataURL(file);
+  VSBackend.uploadImage(file, 'gallery')
+    .then(({ url }) => {
+      DATA.galleryCards[i].img = url;
+      renderGalleryCards();
+      markUnsaved();
+      toast('Image added from drop.','success');
+    })
+    .catch((error) => toast(`Image upload failed: ${error.message}`, 'error'));
 }
 
 /* ═══════════════════════════════════════════════
@@ -1484,13 +1766,13 @@ function markUnsaved(){
   chip.style.color = '#e65100';
 }
 
-function saveAll(){
+async function saveAll(){
   // collect simple fields
   collectSimpleFields();
-  // save to localStorage
   try{
-    localStorage.setItem('vs_admin_data', JSON.stringify(DATA));
-  }catch(e){ toast('Storage error: '+e.message,'error'); return; }
+    await VSBackend.saveAdminContent(ADMIN_PAGE_KEY, DATA);
+    REMOTE_HOME_DATA = JSON.parse(JSON.stringify(DATA));
+  }catch(e){ toast('Save failed: '+e.message,'error'); return; }
   hasUnsaved = false;
   const chip = document.getElementById('save-status');
   chip.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;flex-shrink:0;color:#2e7d32" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>All saved</span>';
@@ -1717,8 +1999,7 @@ function exportData(){
 
 function resetData(){
   if(!confirm('Reset ALL content to factory defaults? This cannot be undone!')) return;
-  localStorage.removeItem('vs_admin_data');
-  location.reload();
+  toast('Reset is not enabled in the new backend flow yet. Please use Save Changes to overwrite content.', 'error');
 }
 
 /* ═══════════════════════════════════════════════
@@ -1793,5 +2074,6 @@ function clearPhoto(previewId, fnRowId, inputId, dataKey) {
 }
 
 </script>
+<script src="navbar.js"></script>
 </body>
 </html>

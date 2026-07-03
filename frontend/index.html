@@ -22,6 +22,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
+        window.tailwind = window.tailwind || {};
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -779,6 +780,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 1.5rem;
+            perspective: 1000px;
         }
 
         @media (min-width: 768px) {
@@ -811,10 +813,11 @@
             transition: all 500ms ease;
             cursor: pointer;
             height: 280px;
+            transform-style: preserve-3d;
         }
 
         .service-card:hover {
-            transform: translateY(-8px);
+            transform: rotateX(5deg) rotateY(-5deg) translateY(-8px);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         }
 
@@ -871,15 +874,24 @@
         }
 
         /* ── GENERAL SCROLL REVEAL ── */
+        @keyframes scrollRevealIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .scroll-reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
+            animation: scrollRevealIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
         }
 
         /* Infinite Scroll Loop (Global & Mobile) */
@@ -2441,9 +2453,9 @@
     <div id="site-footer-root"></div>
     <script src="assets/js/footer.js?v=20260420-5"></script>
 
+    <script src="assets/js/vs-backend.js"></script>
     <script>
-        const VS_STORAGE_KEY = 'vs_admin_data';
-        const VS_ADMIN_DATA = JSON.parse(localStorage.getItem(VS_STORAGE_KEY)) || {};
+        let VS_ADMIN_DATA = {};
 
         function applyAdminContent(data) {
             if (!data) return;
@@ -2453,34 +2465,73 @@
             document.querySelectorAll('.mobile-menu-brand-name').forEach(el => el.textContent = data.brandName || "Vima Sneha");
             document.querySelectorAll('.mobile-branding p, .mobile-menu-brand-tagline').forEach(el => el.textContent = data.brandTagline || "Assuring Lives, Guiding Minds");
             document.querySelectorAll('.logo-tagline').forEach(el => el.textContent = data.brandTagline || "Assuring Lives, Guiding Minds");
-            if (data.heroDesc) document.querySelector('.hero-content p').textContent = data.heroDesc;
+            const heroDesc = document.querySelector('main > section:first-of-type p');
+            if (data.heroDesc && heroDesc) heroDesc.textContent = data.heroDesc;
 
-            // Dynamic rendering disabled to preserve user's creative static grids
-            // renderServiceGrid('#counselling-services-grid', data.services || [], 'primary');
-            // renderServiceGrid('#insurance-services-grid', data.insuranceServices || data.services || [], 'secondary');
+            const counsellingCards = normalizeHomepageServices(data.services);
+            if (!isLegacyMixedServices(data.services) && counsellingCards.length >= 3) {
+                renderHomepageServiceCards('counselling-track', counsellingCards);
+            }
+
+            const insuranceCards = normalizeHomepageServices(data.insuranceServices);
+            if (insuranceCards.length >= 3) {
+                renderHomepageServiceCards('insurance-track', insuranceCards);
+            }
         }
 
-        function renderServiceGrid(selector, items, theme) {
-            const grid = document.querySelector(selector);
-            if (!grid) return;
-            grid.innerHTML = '';
-            items.forEach(item => {
+        function escapeContent(value) {
+            const div = document.createElement('div');
+            div.textContent = value || '';
+            return div.innerHTML;
+        }
+
+        function serviceIconHtml(icon) {
+            if (window.vsIconHtml) return window.vsIconHtml(icon || 'circle');
+            return `<span class="material-symbols-outlined">${escapeContent(icon || 'circle')}</span>`;
+        }
+
+        function isLegacyMixedServices(items) {
+            if (!Array.isArray(items)) return false;
+            const titles = items.map(item => item && item.title);
+            return titles.includes('Life & Health Insurance') && titles.includes('Virtual Property Creation');
+        }
+
+        function normalizeHomepageServices(items) {
+            if (!Array.isArray(items)) return [];
+            return items
+                .filter(item => item && typeof item === 'object')
+                .map(item => ({
+                    icon: String(item.icon || 'circle').trim() || 'circle',
+                    title: String(item.title || '').trim(),
+                    desc: String(item.desc || '').trim()
+                }))
+                .filter(item => item.title && item.desc);
+        }
+
+        function renderHomepageServiceCards(trackId, items) {
+            const track = document.getElementById(trackId);
+            if (!track || !Array.isArray(items) || items.length === 0) return;
+            track.innerHTML = '';
+            track.dataset.cloned = '';
+            items.forEach((item, index) => {
                 const card = document.createElement('div');
-                card.className = `glass rounded-4xl p-10 hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden flex flex-col items-start gap-4 border-none`;
+                card.className = 'service-card scroll-reveal';
+                card.style.animationDelay = `${0.1 + index * 0.05}s`;
                 card.innerHTML = `
-                    <div class="w-16 h-16 rounded-3xl bg-${theme}/10 text-${theme} flex items-center justify-center group-hover:bg-${theme} group-hover:text-white transition-all duration-500">
-                        <span class="material-symbols-outlined !text-3xl">${item.icon || 'circle'}</span>
+                    <div class="service-icon">
+                        ${serviceIconHtml(item.icon)}
                     </div>
-                    <h3 class="text-2xl font-extrabold text-slate-800 tracking-tight">${item.title}</h3>
-                    <p class="text-slate-500 font-medium leading-relaxed">${item.desc}</p>
+                    <h3>${escapeContent(item.title)}</h3>
+                    <p>${escapeContent(item.desc)}</p>
                 `;
-                grid.appendChild(card);
+                track.appendChild(card);
             });
         }
 
         // Contact Helpers
         function cfcSelectService(btn) {
             const wrapper = btn.closest('.cfc-parent-wrapper');
+            if (!wrapper) return;
             wrapper.querySelectorAll('.cfc-svc-btn').forEach(b => {
                 b.classList.remove('active', 'bg-white', 'text-primary', 'shadow-sm');
                 b.classList.add('text-slate-400');
@@ -2501,7 +2552,7 @@
             const nameField = form.querySelector('.cfc-name-input');
             const name = nameField ? nameField.value : 'Customer';
             const wrapper = form.closest('.cfc-parent-wrapper');
-            const svcInput = wrapper.querySelector('.cfc-svc-input');
+            const svcInput = wrapper ? wrapper.querySelector('.cfc-svc-input') : null;
             const svc = svcInput ? svcInput.value : 'counselling';
 
             const waNum = svc === 'insurance' ? '919945933822' : '919972875970';
@@ -2511,15 +2562,27 @@
 
         function cfcReset(btn) {
             const success = btn.closest('.cfc-success');
+            if (!success) return;
             const form = success.previousElementSibling;
+            if (!form) return;
 
             form.reset();
             form.classList.remove('hidden');
             success.classList.add('hidden');
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        async function loadHomeContent() {
+            try {
+                const response = await VSBackend.getSiteContent('home');
+                VS_ADMIN_DATA = response?.content || {};
+            } catch (error) {
+                console.warn('Could not load homepage admin data:', error);
+            }
             applyAdminContent(VS_ADMIN_DATA);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHomeContent();
 
             // ── HERO PARALLAX LOGIC ──
             document.addEventListener('mousemove', (e) => {
@@ -2658,7 +2721,31 @@
                 });
             }, { threshold: 0.1 });
 
+            // Initial observation for existing elements
             document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
+
+            // Use MutationObserver to catch dynamically added scroll-reveal elements
+            const mutationObserver = new MutationObserver((mutations) => {
+                mutations.forEach(mutation => {
+                    if (mutation.type === 'childList') {
+                        mutation.addedNodes.forEach(node => {
+                            if (node.nodeType === 1) { // Element node
+                                if (node.classList && node.classList.contains('scroll-reveal')) {
+                                    revealObserver.observe(node);
+                                }
+                                node.querySelectorAll?.('.scroll-reveal').forEach(el => revealObserver.observe(el));
+                            }
+                        });
+                    }
+                });
+            });
+
+            ['counselling-track', 'insurance-track'].forEach(trackId => {
+                const track = document.getElementById(trackId);
+                if (track) {
+                    mutationObserver.observe(track, { childList: true, subtree: false });
+                }
+            });
 
             // ── RESPONSIVE INFINITE LOOP LOGIC ──
             ['counselling-track', 'insurance-track'].forEach(trackId => {
@@ -2666,6 +2753,7 @@
                 if (track && !track.dataset.cloned) {
                     const viewport = track.parentElement;
                     const originalChildren = Array.from(track.children);
+                    if (!viewport || originalChildren.length === 0) return;
 
                     // Clone sets for seamless scrolling
                     originalChildren.forEach(child => track.appendChild(child.cloneNode(true)));
@@ -2712,7 +2800,7 @@
                         const isHorizontal = true;
                         const singleSetSize = isHorizontal ? track.scrollWidth / 3 : track.scrollHeight / 3;
 
-                        if (!shouldAutoScroll) {
+                        if (!shouldAutoScroll || singleSetSize <= 0) {
                             return;
                         }
 
@@ -2751,7 +2839,7 @@
                         const isHorizontal = true;
                         const singleSetSize = isHorizontal ? track.scrollWidth / 3 : track.scrollHeight / 3;
 
-                        if (shouldAutoScroll) {
+                        if (shouldAutoScroll && singleSetSize > 0) {
                             if (isHorizontal) {
                                 viewport.scrollLeft = singleSetSize;
                                 scrollPos = singleSetSize;

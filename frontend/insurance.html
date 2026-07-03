@@ -22,6 +22,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script>
+    window.tailwind = window.tailwind || {};
     tailwind.config = {
       darkMode: "class",
       theme: {
@@ -1171,15 +1172,16 @@
 
   <!-- Footer -->
   <div id="site-footer-root"></div>
+  <script src="assets/js/vs-backend.js"></script>
   <script src="assets/js/footer.js?v=20260420-5"></script>
 
   <!-- Admin Data Sync Script -->
   <script>
-  (function(){
+  (async function(){
     try {
-      const data = localStorage.getItem('vima_insurance_data');
-      if(!data) return;
-      const INSURANCE_DATA = JSON.parse(data);
+      const response = window.VSBackend ? await VSBackend.getSiteContent('insurance') : null;
+      const INSURANCE_DATA = response?.content;
+      if(!INSURANCE_DATA) return;
       const updateText = (selector, text) => {
         const el = document.querySelector(selector);
         if(el && text) el.innerText = text;
@@ -1191,4 +1193,3 @@
   </script>
 </body>
 </html>
-

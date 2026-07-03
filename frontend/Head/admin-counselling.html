@@ -371,6 +371,7 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
 
 <div class="toast" id="toast"></div>
 
+<script src="../assets/js/vs-backend.js"></script>
 <script>
 // ════════════════════════════════════════════════
 //  CONTENT DATA
@@ -424,24 +425,28 @@ function escapeHtml(value){
   }[ch]));
 }
 
-function loadData(){
+let REMOTE_COUNSELLING_DATA = null;
+
+async function loadData(){
   try {
-    const s = localStorage.getItem('vima_counselling_data');
-    if(s) COUNSELLING_DATA = JSON.parse(s);
-  } catch(e) {
-    console.error('Could not load counselling data:', e);
-  }
-  try {
-    const ss = localStorage.getItem('vima_sessions');
-    if(ss) SESSIONS = JSON.parse(ss);
-  } catch(e) {
-    console.error('Could not load sessions:', e);
-    SESSIONS = [];
+    const response = await VSBackend.getAdminContent('counselling');
+    REMOTE_COUNSELLING_DATA = response?.content || {};
+    if (REMOTE_COUNSELLING_DATA && Object.keys(REMOTE_COUNSELLING_DATA).length) {
+      COUNSELLING_DATA = { ...COUNSELLING_DATA, ...REMOTE_COUNSELLING_DATA };
+    }
+    SESSIONS = Array.isArray(COUNSELLING_DATA.sessions) ? COUNSELLING_DATA.sessions : [];
+  } catch (error) {
+    if (error.status === 401) {
+      window.location.href = 'admin-login.html?redirect=admin-counselling.html';
+      return;
+    }
+    console.error('Could not load counselling data:', error);
+    SESSIONS = Array.isArray(SESSIONS) ? SESSIONS : [];
   }
 }
 
 function saveSessions(){
-  localStorage.setItem('vima_sessions', JSON.stringify(SESSIONS));
+  COUNSELLING_DATA.sessions = SESSIONS;
 }
 
 // ── Helpers ──────────────────────────────────────
@@ -724,7 +729,7 @@ function renderFAQ(){
 // ════════════════════════════════════════════════
 //  SAVE ALL CONTENT
 // ════════════════════════════════════════════════
-function saveAll(){
+async function saveAll(){
   COUNSELLING_DATA.hero.badge = document.getElementById('hero-badge').value;
   COUNSELLING_DATA.hero.title = document.getElementById('hero-title').value;
   COUNSELLING_DATA.hero.highlight = document.getElementById('hero-highlight').value;
@@ -738,7 +743,9 @@ function saveAll(){
   COUNSELLING_DATA.profile.bioHead = document.getElementById('prof-bio-head').value;
   COUNSELLING_DATA.profile.bio = document.getElementById('prof-bio').value;
   COUNSELLING_DATA.profile.img = document.getElementById('prof-img').value;
-  localStorage.setItem('vima_counselling_data', JSON.stringify(COUNSELLING_DATA));
+  COUNSELLING_DATA.sessions = SESSIONS;
+  await VSBackend.saveAdminContent('counselling', COUNSELLING_DATA);
+  REMOTE_COUNSELLING_DATA = JSON.parse(JSON.stringify(COUNSELLING_DATA));
   showToast('✅ All changes saved!');
 }
 
@@ -753,32 +760,19 @@ function showPanel(id, el){
   if(id === 'sessions'){ renderSessions(); updateStats(); }
 }
 
-function isAdminAuthenticated(){
+async function checkAuth(){
   try {
-    const session = JSON.parse(localStorage.getItem('vima_auth_token') || 'null');
-    if (!session || !session.expiresAt || Date.now() > session.expiresAt) {
-      localStorage.removeItem('vima_auth_token');
-      return false;
-    }
-    return true;
-  } catch(e) {
-    localStorage.removeItem('vima_auth_token');
-    return false;
-  }
-}
-
-function checkAuth(){
-  if(!isAdminAuthenticated()){
-    window.location.href = 'admin-login.html?redirect=admin-counselling.html';
-  } else {
+    await VSBackend.request('/api/admin/me');
     init();
+  } catch (error) {
+    window.location.href = 'admin-login.html?redirect=admin-counselling.html';
   }
 }
 checkAuth();
 
 function logout(){
   if(confirm('Logout?')){
-    localStorage.removeItem('vima_auth_token');
+    VSBackend.logout();
     window.location.href = 'admin-login.html?redirect=admin-counselling.html';
   }
 }
@@ -794,10 +788,9 @@ function showToast(msg, type){
 // ════════════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════════════
-function init(){
-  if(!isAdminAuthenticated()) return;
+async function init(){
   document.getElementById('dashboard-page').style.display = 'block';
-  loadData();
+  await loadData();
 
   // Set today's date as default
   const today = new Date().toISOString().split('T')[0];
@@ -838,5 +831,6 @@ function init(){
   }, 30000);
 }
 </script>
+<script src="navbar.js"></script>
 </body>
 </html>

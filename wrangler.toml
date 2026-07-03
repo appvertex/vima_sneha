@@ -1,0 +1,18 @@
+name = "vima-sneha-api"
+main = "src/index.js"
+compatibility_date = "2026-07-03"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "vima_sneha"
+database_id = "2532dab7-87ed-4e00-b95c-02ee68e6597e"
+
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "vima-sneha-assets"
+
+[vars]
+SESSION_COOKIE_NAME = "vs_session"
+SESSION_TTL_HOURS = "8"
+DEFAULT_ADMIN_USERNAME = "admin"

@@ -20,6 +20,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
+        window.tailwind = window.tailwind || {};
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -205,6 +206,7 @@
             const badgeIcon = document.getElementById('modal-badge-icon');
             const form = document.getElementById('modal-form');
             const success = document.getElementById('modal-success');
+            if (!modal || !title || !desc || !btnText || !badge || !badgeIcon || !form || !success) return;
 
             modal.dataset.svc = svc;
             form.classList.remove('hidden');
@@ -242,6 +244,7 @@
 
         function closeContactModal() {
             const modal = document.getElementById('contactModal');
+            if (!modal) return;
             modal.classList.add('hidden');
             document.body.classList.remove('overflow-hidden');
         }
@@ -251,10 +254,14 @@
             const modal = document.getElementById('contactModal');
             const form = document.getElementById('modal-form');
             const success = document.getElementById('modal-success');
+            const nameField = document.getElementById('modal-name');
+            const phoneField = document.getElementById('modal-phone');
+            const messageField = document.getElementById('modal-message');
+            if (!modal || !form || !success || !nameField || !phoneField || !messageField) return;
             
-            const name = document.getElementById('modal-name').value;
-            const phone = document.getElementById('modal-phone').value;
-            const msg = document.getElementById('modal-message').value;
+            const name = nameField.value.trim() || 'Guest';
+            const phone = phoneField.value.trim();
+            const msg = messageField.value.trim();
             const svc = modal.dataset.svc || 'general';
             
             form.classList.add('hidden');
@@ -276,14 +283,14 @@
 
         /* ── Floating Chat Logic ── */
         function toggleChat() {
-            const window = document.getElementById('chat-window');
-            const bubble = document.getElementById('chat-bubble');
-            window.classList.toggle('hidden');
-            window.classList.toggle('chat-open');
-            if (!window.classList.contains('hidden')) {
+            const chatWindow = document.getElementById('chat-window');
+            if (!chatWindow) return;
+            chatWindow.classList.toggle('hidden');
+            chatWindow.classList.toggle('chat-open');
+            if (!chatWindow.classList.contains('hidden')) {
                 // Initial message trigger if empty
                 const container = document.getElementById('chat-messages');
-                if (container.children.length === 0) {
+                if (container && container.children.length === 0) {
                     setTimeout(() => addChatMessage('bot', "Hi there! I'm Mildred. How are you feeling today? I'm here to listen."), 600);
                 }
             }
@@ -291,6 +298,7 @@
 
         function addChatMessage(type, text) {
             const container = document.getElementById('chat-messages');
+            if (!container) return;
             const msg = document.createElement('div');
             msg.className = `flex ${type === 'user' ? 'justify-end' : 'justify-start'} animate-modal-in`;
             
@@ -323,17 +331,20 @@
         }
 
         function showTypingIndicator() {
-            document.getElementById('chat-typing').classList.remove('hidden');
+            const typing = document.getElementById('chat-typing');
             const container = document.getElementById('chat-messages');
-            container.scrollTop = container.scrollHeight;
+            if (typing) typing.classList.remove('hidden');
+            if (container) container.scrollTop = container.scrollHeight;
         }
 
         function hideTypingIndicator() {
-            document.getElementById('chat-typing').classList.add('hidden');
+            const typing = document.getElementById('chat-typing');
+            if (typing) typing.classList.add('hidden');
         }
 
         function sendChat() {
             const input = document.getElementById('chat-input');
+            if (!input) return;
             const text = input.value.trim();
             if (!text) return;
             addChatMessage('user', text);
@@ -350,12 +361,49 @@
         /* Floating Chat Styles */
         #chat-bubble {
             position: fixed;
-            bottom: 2rem;
+            bottom: 3.5rem;
             right: 2rem;
             z-index: 2500;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         #chat-bubble:hover { transform: scale(1.1) rotate(5deg); }
+
+        /* Desktop View (1024px+) */
+        @media (min-width: 1024px) {
+            #chat-bubble {
+                bottom: 3.5rem;
+                right: 2rem;
+            }
+
+            #chat-window {
+                bottom: 9.5rem;
+                right: 2rem;
+                width: 380px;
+                height: 520px;
+                left: auto;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            #chat-bubble {
+                bottom: calc(var(--vs-mobile-bottom-nav-offset, 5rem) + 2.5rem);
+                right: 1rem;
+            }
+
+            #chat-bubble button {
+                width: 3.75rem;
+                height: 3.75rem;
+            }
+
+            #chat-window {
+                left: 1rem;
+                right: 1rem;
+                bottom: calc(var(--vs-mobile-bottom-nav-offset, 5rem) + 7.5rem);
+                width: auto;
+                height: min(31rem, calc(100vh - 9.5rem));
+                border-radius: 2rem;
+            }
+        }
         
         .chat-open { animation: chat-window-in 0.5s cubic-bezier(0.23, 1, 0.32, 1) both; }
         @keyframes chat-window-in {
@@ -1149,7 +1197,7 @@
     </div>
 
     <!-- Floating Chat Widget -->
-    <div id="chat-bubble" class="hidden lg:block">
+    <div id="chat-bubble">
         <button onclick="toggleChat()" class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark text-white shadow-2xl flex items-center justify-center group relative overflow-hidden">
             <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
             <span class="material-symbols-outlined !text-3xl relative z-10">chat</span>
@@ -1159,7 +1207,7 @@
     </div>
 
     <!-- Chat Window -->
-    <div id="chat-window" class="fixed bottom-32 right-8 w-[380px] h-[520px] glass rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(122,79,114,0.3)] z-[2500] hidden flex flex-col overflow-hidden border border-white/40">
+    <div id="chat-window" class="fixed bottom-38 right-8 w-[380px] h-[520px] glass rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(122,79,114,0.3)] z-[2500] hidden flex flex-col overflow-hidden border border-white/40">
         <!-- Header -->
         <div class="p-6 bg-gradient-to-r from-primary/10 to-secondary/5 border-bottom border-white/20 flex items-center gap-4">
             <div class="relative">
@@ -1203,20 +1251,22 @@
         </div>
     </div>
 
-    <!-- Footer Root (JS Mount) -->
-    <div id="site-footer-root"></div>
-    <script src="assets/js/footer.js?v=20260420-5"></script>
+  <!-- Footer Root (JS Mount) -->
+  <div id="site-footer-root"></div>
+    <script src="assets/js/vs-backend.js"></script>
+  <script src="assets/js/footer.js?v=20260420-5"></script>
 
-    <!-- Admin Data Sync Script -->
-    <script>
-    (function(){
+  <!-- Admin Data Sync Script -->
+  <script>
+    (async function(){
       try {
-        const data = localStorage.getItem('vima_counselling_data');
-        if(!data) return;
-        const d = JSON.parse(data);
+        const response = window.VSBackend ? await VSBackend.getSiteContent('counselling') : null;
+        const d = response?.content;
+        if(!d || typeof d !== 'object') return;
 
         // Helper to update text/HTML
         const set = (sel, txt, isHtml=false) => {
+          if(txt === undefined || txt === null) return;
           const el = document.querySelector(sel);
           if(!el) return;
           if(isHtml) el.innerHTML = txt; else el.innerText = txt;
@@ -1230,8 +1280,15 @@
         }[ch]));
         const safeUrl = (value) => {
           const url = String(value || '').trim();
-          if(!url || /^javascript:/i.test(url)) return '';
+          if(!url || /^(javascript|data):/i.test(url)) return '';
           return url;
+        };
+        const mediumAction = (medium) => {
+          const key = String(medium?.type || medium?.svc || medium?.title || '').toLowerCase();
+          if(key.includes('chat')) return "toggleChat()";
+          if(key.includes('virtual') || key.includes('video') || key.includes('online')) return "openContactModal('virtual')";
+          if(key.includes('clinic') || key.includes('person')) return "openContactModal('clinic')";
+          return "openContactModal('general')";
         };
 
         // Hero
@@ -1249,7 +1306,7 @@
           
           const callLink = document.querySelector('a[href^="tel:"]');
           if(callLink && h.callNum) {
-            callLink.href = `tel:${h.callNum.replace(/\s/g,'')}`;
+            callLink.href = `tel:${String(h.callNum).replace(/\s/g,'')}`;
             const textNode = Array.from(callLink.childNodes).find(n => n.nodeType === 3 && n.textContent.trim().length > 0);
             if(textNode) textNode.textContent = h.callText;
           }
@@ -1259,8 +1316,10 @@
 
         // Mediums
         const mGrid = document.querySelector('section#mediums div.grid');
-        if(mGrid && d.mediums) {
-          mGrid.innerHTML = d.mediums.map((m, idx) => `
+        if(mGrid && Array.isArray(d.mediums)) {
+          mGrid.innerHTML = d.mediums.map((m, idx) => {
+            m = m && typeof m === 'object' ? m : {};
+            return `
             <div class="group relative p-8 rounded-3xl glass hover:bg-white/80 transition-all duration-500 flex flex-col h-full reveal-on-scroll reveal-delay-${(idx + 1) * 100}">
                 <div class="mb-12">
                     <div class="w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500 mb-6">
@@ -1270,25 +1329,27 @@
                     <p class="text-slate-500 font-medium leading-relaxed">${escapeHtml(m.desc)}</p>
                 </div>
                 <ul class="space-y-4 mb-10 flex-grow">
-                    ${(m.points || []).map(p => `
+                    ${(Array.isArray(m.points) ? m.points : []).map(p => `
                         <li class="flex items-center gap-3 text-sm font-bold text-slate-700">
                             <span class="w-1.5 h-1.5 rounded-full bg-primary/40"></span> ${escapeHtml(p)}
                         </li>
                     `).join('')}
                 </ul>
-                <button class="w-full py-4 rounded-xl border-2 border-primary/20 text-primary font-extrabold hover:bg-primary hover:text-white hover:border-primary transition-all">
-                    ${escapeHtml(m.btn)}
+                <button onclick="${mediumAction(m)}" class="w-full py-4 rounded-xl border-2 border-primary/20 text-primary font-extrabold hover:bg-primary hover:text-white hover:border-primary transition-all">
+                    ${escapeHtml(m.btn || 'Book Session')}
                 </button>
             </div>
-          `).join('');
+          `}).join('');
           // Observe new elements
           mGrid.querySelectorAll('.reveal-on-scroll').forEach(el => window.scrollObserver?.observe(el));
         }
 
         // Expertise
         const eGrid = document.querySelector('#expertiseTrack');
-        if(eGrid && d.expertise) {
-          eGrid.innerHTML = d.expertise.map((e, idx) => `
+        if(eGrid && Array.isArray(d.expertise)) {
+          eGrid.innerHTML = d.expertise.map((e, idx) => {
+            e = e && typeof e === 'object' ? e : {};
+            return `
             <div class="expertise-carousel-slide">
               <div class="expertise-card glass p-8 rounded-4xl flex flex-col gap-5 h-full">
                 <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center shadow-lg shadow-primary/10">
@@ -1300,7 +1361,7 @@
                 </div>
               </div>
             </div>
-          `).join('');
+          `}).join('');
           // Observe new elements
           eGrid.querySelectorAll('.reveal-on-scroll').forEach(el => window.scrollObserver?.observe(el));
         }
@@ -1312,8 +1373,8 @@
           if(pImg && safeUrl(p.img)) pImg.src = safeUrl(p.img);
           
           const pNameEl = document.querySelector('section#counsellors h2.text-5xl');
-          if(pNameEl && p.name){
-            const nameParts = p.name.split(' ');
+          if(pNameEl && typeof p.name === 'string'){
+            const nameParts = p.name.trim().split(/\s+/);
             const last = nameParts.pop();
             pNameEl.innerHTML = `${escapeHtml(nameParts.join(' '))} <br /> <span class="text-primary">${escapeHtml(last)}</span>`;
           }
@@ -1329,7 +1390,7 @@
           set('section#counsellors p.text-xl.text-slate-500', p.bio);
           
           const fList = document.querySelector('section#counsellors div.pt-4.flex.flex-wrap.gap-4');
-          if(fList && p.features) {
+          if(fList && Array.isArray(p.features)) {
             fList.innerHTML = p.features.map((f, i) => `
                 <div class="${i === 0 ? 'bg-primary text-white' : 'glass text-secondary border border-secondary/10'} px-8 py-4 rounded-2xl font-extrabold shadow-xl transition-all cursor-default">
                     ${escapeHtml(f)}
@@ -1340,10 +1401,12 @@
 
         // Milestones
         const mileContainer = document.querySelector('div#journey .space-y-0.relative');
-        if(mileContainer && d.milestones) {
+        if(mileContainer && Array.isArray(d.milestones)) {
           mileContainer.innerHTML = `
             <div class="absolute left-0 top-0 w-px h-full bg-slate-200 ml-[11px]"></div>
-            ${d.milestones.map((m, i) => `
+            ${d.milestones.map((m, i) => {
+              m = m && typeof m === 'object' ? m : {};
+              return `
                 <div class="relative pl-12 ${i < d.milestones.length-1 ? 'pb-12' : ''}">
                     <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full ${i === d.milestones.length-1 ? 'bg-primary' : 'bg-secondary/20'} border-4 border-surface shadow-sm z-10"></div>
                     <div class="glass p-8 rounded-3xl border border-white/40 group hover:bg-white transition-all duration-500">
@@ -1352,13 +1415,15 @@
                         <p class="text-slate-500 font-medium leading-relaxed">${escapeHtml(m.desc)}</p>
                     </div>
                 </div>
-            `).join('')}`;
+            `}).join('')}`;
         }
 
         // FAQ
         const faqContainer = document.querySelector('section .faq-container');
-        if(faqContainer && d.faq) {
-          faqContainer.innerHTML = d.faq.map(f => `
+        if(faqContainer && Array.isArray(d.faq)) {
+          faqContainer.innerHTML = d.faq.map(f => {
+            f = f && typeof f === 'object' ? f : {};
+            return `
             <div class="bg-white rounded-2xl p-6 shadow-sm faq-item transition-all duration-300">
                 <button class="w-full flex items-center justify-between text-left group faq-toggle">
                     <span class="font-bold text-lg text-slate-900">${escapeHtml(f.q)}</span>
@@ -1370,7 +1435,7 @@
                     </div>
                 </div>
             </div>
-          `).join('');
+          `}).join('');
           
           // Re-attach listeners
           faqContainer.querySelectorAll('.faq-toggle').forEach(button => {
@@ -1383,7 +1448,7 @@
           });
         }
 
-      } catch(e) { console.error("Sync error:", e); }
+      } catch(e) { console.warn("Counselling sync skipped:", e); }
     })();
     </script>
 </body>
