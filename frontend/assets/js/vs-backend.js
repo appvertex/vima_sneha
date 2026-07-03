@@ -1,5 +1,5 @@
 (() => {
-  const API_BASE = window.VS_API_BASE || '';
+  const API_BASE = window.VS_API_BASE || 'https://vima-sneha-api.vimasneha.workers.dev';
 
   async function request(path, options = {}) {
     const headers = new Headers(options.headers || {});

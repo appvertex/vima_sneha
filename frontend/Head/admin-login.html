@@ -231,7 +231,7 @@ body {
     
     <button class="btn-login" id="login-btn" onclick="login()">Sign In to Dashboard →</button>
     
-    <p class="login-footer">Default credentials (if not changed): <span>admin</span> / <span>vimasneha2025</span></p>
+    <p class="login-footer">Admin username is <span>admin</span>. Use the password you set in Cloudflare.</p>
     
     <div style="text-align: center; margin-top: 1rem; opacity: 0.5;">
       <a href="#" onclick="resetAdminData(event)" style="color: var(--lt); font-size: 11px; text-decoration: none;">Forgot password? Reset to Defaults</a>
@@ -257,11 +257,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const sub = document.getElementById('login-sub');
   const badge = document.getElementById('panel-badge');
   
-  if (currentRedirect === 'admin-counselling.html') {
+  if (redirectTarget === 'admin-counselling.html') {
     title.textContent = 'Counselling Portal';
     sub.textContent = 'Manage expert profiles and live sessions.';
     badge.textContent = '🧠 Counselling Admin';
-  } else if (currentRedirect === 'admin-insurance.html') {
+  } else if (redirectTarget === 'admin-insurance.html') {
     title.textContent = 'Insurance Portal';
     sub.textContent = 'Update insurance products and trust metrics.';
     badge.textContent = '🛡️ Insurance Admin';

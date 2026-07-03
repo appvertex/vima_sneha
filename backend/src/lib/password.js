@@ -20,7 +20,7 @@ export function randomToken(size = 32) {
   return base64UrlEncode(bytes);
 }
 
-export async function hashPassword(password, salt = randomToken(16), iterations = 120000) {
+export async function hashPassword(password, salt = randomToken(16), iterations = 100000) {
   const keyMaterial = await crypto.subtle.importKey(
     'raw',
     encoder.encode(password),
@@ -56,4 +56,3 @@ function timingSafeEqual(a, b) {
   for (let i = 0; i < left.length; i += 1) diff |= left[i] ^ right[i];
   return diff === 0;
 }
-
