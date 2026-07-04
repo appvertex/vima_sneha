@@ -1,19 +1,19 @@
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 import { createAdminRoutes } from './routes/admin.js';
 import { createSiteRoutes } from './routes/site.js';
-import { corsHeaders, empty, withCors } from './lib/http.js';
 
 const app = new Hono();
 
-app.use('*', async (c, next) => {
-  const origin = c.req.header('origin');
-  c.set('origin', origin || '');
-  if (c.req.method === 'OPTIONS') {
-    return empty({ status: 204, headers: corsHeaders(origin || '') });
-  }
-  await next();
-  return withCors(c.res, origin || '');
-});
+app.use(
+  '*',
+  cors({
+    origin: (origin) => origin || '',
+    credentials: true,
+    allowHeaders: ['content-type', 'authorization', 'x-requested-with'],
+    allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+  })
+);
 
 app.get('/health', (c) => c.json({ ok: true }));
 
