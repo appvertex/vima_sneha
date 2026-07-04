@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import { createAdminUiRoutes } from './routes/admin-ui.js';
 import { createAdminRoutes } from './routes/admin.js';
 import { createSiteRoutes } from './routes/site.js';
 
@@ -15,6 +16,7 @@ app.use(
   })
 );
 
+app.get('/', (c) => c.redirect('/Head/admin-login'));
 app.get('/health', (c) => c.json({ ok: true }));
 
 app.get('/uploads/*', async (c) => {
@@ -28,6 +30,7 @@ app.get('/uploads/*', async (c) => {
   return new Response(object.body, { headers });
 });
 
+app.route('/', createAdminUiRoutes());
 app.route('/api/admin', createAdminRoutes());
 app.route('/api/site', createSiteRoutes());
 

@@ -203,6 +203,11 @@ body {
 </style>
 </head>
 <body>
+<script>
+if (location.hostname.endsWith('pages.dev')) {
+  location.replace('https://vima-sneha-api.vimasneha.workers.dev' + location.pathname + location.search);
+}
+</script>
 
 <div id="login-page">
   <div class="login-orbs">

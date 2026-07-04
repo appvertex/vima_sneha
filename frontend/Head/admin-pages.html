@@ -361,6 +361,11 @@ a{text-decoration:none;color:inherit}
 </style>
 </head>
 <body>
+<script>
+if (location.hostname.endsWith('pages.dev')) {
+  location.replace('https://vima-sneha-api.vimasneha.workers.dev' + location.pathname + location.search);
+}
+</script>
 <div class="app-shell" id="app" hidden>
   <header class="topbar">
     <div class="brand-block">

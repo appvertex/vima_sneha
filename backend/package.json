@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
+    "build:admin-ui": "node scripts/generate-admin-ui.js",
+    "deploy": "npm run build:admin-ui && wrangler deploy",
     "check": "node --check src/index.js"
   },
   "dependencies": {

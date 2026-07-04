@@ -163,6 +163,11 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
 </style>
 </head>
 <body>
+<script>
+if (location.hostname.endsWith('pages.dev')) {
+  location.replace('https://vima-sneha-api.vimasneha.workers.dev' + location.pathname + location.search);
+}
+</script>
 
 
 

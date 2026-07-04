@@ -21,6 +21,10 @@ jobs:
         working-directory: backend
         run: npm ci
 
+      - name: Build worker admin UI
+        working-directory: backend
+        run: npm run build:admin-ui
+
       - name: Deploy backend Worker
         uses: cloudflare/wrangler-action@v3
         with:
