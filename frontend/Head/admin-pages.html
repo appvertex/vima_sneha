@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+if (location.hostname.endsWith('pages.dev')) {
+  const currentPage = location.pathname.split('/').pop() || 'admin-pages.html';
+  location.replace(`https://vima-sneha-api.vimasneha.workers.dev/Head/admin-login?redirect=${encodeURIComponent(currentPage)}`);
+}
+</script>
 <title>Vima Sneha · Page Studio</title>
 <link rel="icon" type="image/png" href="../assets/images/logo.png" />
 <link rel="shortcut icon" type="image/png" href="../assets/images/logo.png" />
@@ -361,12 +367,6 @@ a{text-decoration:none;color:inherit}
 </style>
 </head>
 <body>
-<script>
-if (location.hostname.endsWith('pages.dev')) {
-  const currentPage = location.pathname.split('/').pop() || 'admin-pages.html';
-  location.replace(`https://vima-sneha-api.vimasneha.workers.dev/Head/admin-login?redirect=${encodeURIComponent(currentPage)}`);
-}
-</script>
 <div class="app-shell" id="app" hidden>
   <header class="topbar">
     <div class="brand-block">

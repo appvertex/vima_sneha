@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+if (location.hostname.endsWith('pages.dev')) {
+  location.replace('https://vima-sneha-api.vimasneha.workers.dev' + location.pathname + location.search);
+}
+</script>
 <title>Vima Sneha · Admin Login</title>
 <link rel="icon" type="image/png" href="../assets/images/logo.png" />
 <link rel="shortcut icon" type="image/png" href="../assets/images/logo.png" />
@@ -203,12 +208,6 @@ body {
 </style>
 </head>
 <body>
-<script>
-if (location.hostname.endsWith('pages.dev')) {
-  location.replace('https://vima-sneha-api.vimasneha.workers.dev' + location.pathname + location.search);
-}
-</script>
-
 <div id="login-page">
   <div class="login-orbs">
     <div class="login-orb"></div>
