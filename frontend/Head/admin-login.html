@@ -239,10 +239,9 @@ body {
   </div>
 </div>
 
-<script>window.VS_API_BASE = 'https://vima-sneha-api.vimasneha.workers.dev';</script>
-<script src="../assets/js/vs-backend.js?v=20260704"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+  const API_BASE = 'https://vima-sneha-api.vimasneha.workers.dev';
   // Redirection & UI Logic
   const tabs = document.querySelectorAll('.selector-item');
   const urlParams = new URLSearchParams(window.location.search);
@@ -284,15 +283,30 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.disabled = true;
     err.style.display = 'none';
     try {
-      await VSBackend.login(u, p);
+      const response = await fetch(`${API_BASE}/api/admin/login`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+      });
+      if (!response.ok) {
+        let message = `Login failed (${response.status})`;
+        try {
+          const details = await response.json();
+          message = details?.error || message;
+        } catch {}
+        throw new Error(message);
+      }
       btn.textContent = 'Redirecting...';
       window.location.href = redirectTarget;
     } catch (error) {
       err.style.display = 'block';
+      err.textContent = error?.message || 'Invalid credentials. Please try again.';
       btn.textContent = 'Sign In to Dashboard →';
       btn.disabled = false;
       setTimeout(() => {
         err.style.display = 'none';
+        err.textContent = 'Invalid credentials. Please try again.';
       }, 3000);
     }
   };
@@ -309,7 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // If already logged in, redirect away
   (async () => {
     try {
-      await VSBackend.request('/api/admin/me');
+      const response = await fetch(`${API_BASE}/api/admin/me`, { credentials: 'include' });
+      if (!response.ok) return;
       window.location.href = redirectTarget;
     } catch (error) {}
   })();
