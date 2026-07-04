@@ -1,5 +1,7 @@
 import { Hono } from 'hono';
+import { getCookie } from 'hono/cookie';
 import { ADMIN_UI } from '../admin-ui.generated.js';
+import { requireAdminSession } from '../lib/auth.js';
 
 export function createAdminUiRoutes() {
   const app = new Hono();
@@ -18,10 +20,40 @@ export function createAdminUiRoutes() {
   ];
 
   for (const [path, html] of pages) {
-    app.get(path, () => htmlResponse(html));
+    app.get(path, async (c) => {
+      const target = adminTargetFromPath(path);
+      const session = await getAdminSession(c);
+
+      if (isLoginPath(path)) {
+        if (session) return c.redirect(`/Head/${target}`);
+        return htmlResponse(html);
+      }
+
+      if (!session) {
+        return c.redirect(`/Head/admin-login?redirect=${encodeURIComponent(target)}`);
+      }
+
+      return htmlResponse(html);
+    });
   }
 
   return app;
+}
+
+function isLoginPath(path) {
+  return path.includes('admin-login');
+}
+
+function adminTargetFromPath(path) {
+  const file = path.split('/').pop() || 'admin.html';
+  if (file === 'admin-login' || file === 'admin-login.html') return 'admin.html';
+  return file.endsWith('.html') ? file : `${file}.html`;
+}
+
+async function getAdminSession(c) {
+  const cookieName = c.env.SESSION_COOKIE_NAME || 'vs_session';
+  const token = getCookie(c, cookieName);
+  return requireAdminSession(c.env, token);
 }
 
 function htmlResponse(html) {
