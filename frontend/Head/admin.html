@@ -1304,6 +1304,7 @@ function renderInsFeatures(){
 
 function renderListEditor(containerId, arr, onChange){
   const c = document.getElementById(containerId);
+  if (!c) return;
   c.innerHTML='';
   const le = document.createElement('div');
   le.className='list-editor';
