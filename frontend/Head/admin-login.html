@@ -5,21 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 if (location.hostname.endsWith('pages.dev')) {
-  const API_BASE = 'https://vima-sneha-api.vimasneha.workers.dev';
-  const redirectTarget = new URLSearchParams(location.search).get('redirect') || 'admin.html';
-  const request = new XMLHttpRequest();
-  try {
-    request.open('GET', `${API_BASE}/api/admin/me`, false);
-    request.withCredentials = true;
-    request.send(null);
-    if (request.status >= 200 && request.status < 300) {
-      location.replace(`${API_BASE}/Head/${redirectTarget}`);
-    } else {
-      location.replace(`${API_BASE}/Head/admin-login${location.search}`);
-    }
-  } catch (error) {
-    location.replace(`${API_BASE}/Head/admin-login${location.search}`);
-  }
+  location.replace('https://vima-sneha-api.vimasneha.workers.dev' + location.pathname + location.search);
 }
 </script>
 <title>Vima Sneha · Admin Login</title>
