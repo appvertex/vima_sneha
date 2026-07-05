@@ -1681,6 +1681,7 @@ function handleImgDrop(event, i){
 ═══════════════════════════════════════════════ */
 function renderTestimonials(){
   const c = document.getElementById('testimonials-list');
+  if (!c) return;
   c.innerHTML='';
   DATA.testimonials.forEach((t,i)=>{
     const div = document.createElement('div');
@@ -1968,8 +1969,10 @@ function restorePhotoPreview(previewId, fnRowId, filenameId, dataUrl, filename){
    STATS
 ═══════════════════════════════════════════════ */
 function updateStatsCount(){
-  document.getElementById('stats-testimonials').textContent = DATA.testimonials.length;
-  document.getElementById('stats-services').textContent = DATA.services.length;
+  const testimonials = document.getElementById('stats-testimonials');
+  const services = document.getElementById('stats-services');
+  if (testimonials) testimonials.textContent = DATA.testimonials.length;
+  if (services) services.textContent = DATA.services.length;
 }
 
 /* ═══════════════════════════════════════════════
