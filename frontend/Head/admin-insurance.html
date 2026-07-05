@@ -5,8 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 if (location.hostname.endsWith('pages.dev')) {
+  const API_BASE = 'https://vima-sneha-api.vimasneha.workers.dev';
   const currentPage = location.pathname.split('/').pop() || 'admin-insurance.html';
-  location.replace(`https://vima-sneha-api.vimasneha.workers.dev/Head/admin-login?redirect=${encodeURIComponent(currentPage)}`);
+  const request = new XMLHttpRequest();
+  try {
+    request.open('GET', `${API_BASE}/api/admin/me`, false);
+    request.withCredentials = true;
+    request.send(null);
+    const target = request.status >= 200 && request.status < 300
+      ? `${API_BASE}/Head/${currentPage}`
+      : `${API_BASE}/Head/admin-login?redirect=${encodeURIComponent(currentPage)}`;
+    location.replace(target);
+  } catch (error) {
+    location.replace(`${API_BASE}/Head/admin-login?redirect=${encodeURIComponent(currentPage)}`);
+  }
 }
 </script>
 <title>Vima Sneha · Insurance Admin Panel</title>
