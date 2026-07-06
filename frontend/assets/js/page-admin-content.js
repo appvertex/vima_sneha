@@ -199,6 +199,20 @@
     setText('#newsletter-subscribe', data.newsletterButtonText);
   }
 
+  function normalizeNewsArticle(article, index) {
+    return {
+      featured: Boolean(article?.featured),
+      category: article?.category || 'announcement',
+      image: article?.image || article?.image_url || '',
+      title: article?.title || '',
+      excerpt: article?.excerpt || article?.body || '',
+      date: article?.date || formatDate(article?.published_at) || '',
+      readTime: article?.readTime || '3 min read',
+      author: article?.author || 'Vima Sneha',
+      avatar: article?.avatar || 'VS'
+    };
+  }
+
   function articleCard(article) {
     const category = article.category || 'counselling';
     return `<article class="news-card scroll-reveal" data-category="${esc(category)}">
@@ -324,22 +338,22 @@
     if (!pageKey || !window.VSBackend) return read();
     try {
       if (pageKey === 'news') {
-        const response = await VSBackend.request('/api/site/news');
-        const articles = Array.isArray(response?.articles) ? response.articles : [];
+        const [siteResponse, newsResponse] = await Promise.all([
+          VSBackend.getSiteContent('news'),
+          VSBackend.request('/api/site/news')
+        ]);
+        const siteContent = siteResponse?.content || {};
+        const siteNews = siteContent.news || {};
+        const siteArticles = Array.isArray(siteNews.articles) ? siteNews.articles : [];
+        const dbArticles = Array.isArray(newsResponse?.articles) ? newsResponse.articles : [];
+        const articles = siteArticles.length ? siteArticles : dbArticles;
+
         return merge(read(), {
+          ...siteContent,
           news: {
             ...defaults.news,
-            articles: articles.map((article) => ({
-              featured: false,
-              category: 'announcement',
-              image: article.image_url || '',
-              title: article.title || '',
-              excerpt: article.body || '',
-              date: formatDate(article.published_at),
-              readTime: '3 min read',
-              author: 'Vima Sneha',
-              avatar: 'VS'
-            }))
+            ...siteNews,
+            articles: articles.map((article, index) => normalizeNewsArticle(article, index))
           }
         });
       }
