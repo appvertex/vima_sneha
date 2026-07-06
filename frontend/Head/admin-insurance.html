@@ -121,6 +121,7 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
     <nav class="sidebar-nav">
       <div class="nav-item active" onclick="showPanel('hero', this)">Hero & Stats</div>
       <div class="nav-item" onclick="showPanel('story', this)">Consultant Story</div>
+      <div class="nav-item" onclick="showPanel('stories', this)">Stories by Planning Need</div>
       <div class="nav-item" onclick="showPanel('milestones', this)">Professional Journey</div>
       <div class="nav-item" onclick="showPanel('products', this)">Insurance Products</div>
       <a class="nav-item" href="admin-pages.html" style="text-decoration:none;">Plan Page Content ↗</a>
@@ -185,6 +186,13 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
         </div>
       </div>
 
+      <!-- STORIES PANEL -->
+      <div class="panel" id="panel-stories">
+        <div class="section-head"><h2>Stories by Planning Need</h2><p>Edit the cards that explain how different insurance needs feel in real life.</p></div>
+        <div id="stories-container" class="edit-grid"></div>
+        <button class="add-btn" onclick="addItem('stories')">+ Add New Story Card</button>
+      </div>
+
       <!-- MILESTONES PANEL -->
       <div class="panel" id="panel-milestones">
         <div class="section-head"><h2>Professional Journey</h2><p>Key milestones in your career.</p></div>
@@ -232,6 +240,12 @@ let INSURANCE_DATA = {
     p2: "His approach is rooted in empathy, treating every client's legacy as if it were his own family's.",
     img: "assets/images/insurance_consultant.png"
   },
+  stories: [
+    {icon:'shield_with_heart', title:'Family Cover', desc:'The advice made term insurance easy to understand. We chose the right cover without feeling pressured.', label:'Term Life Planning', badge:'Family Cover'},
+    {icon:'local_hospital', title:'Health', desc:'They compared options patiently and helped us pick health coverage that suited our parents and children.', label:'Health Insurance', badge:'Health'},
+    {icon:'school', title:'Children', desc:'The children\'s plan was explained around school and college goals, not just policy terms.', label:'Education Planning', badge:'Children'},
+    {icon:'support_agent', title:'Claims', desc:'During claim paperwork, the team guided us step by step and reduced a lot of stress for the family.', label:'Claim Assistance', badge:'Claims'}
+  ],
   milestones: [
     {year:'2010', title:'Foundations', desc:'Early career in risk management. Recognized as the Rising Star of the Year.'},
     {year:'2018', title:'Expertise', desc:'MDRT Lifetime Achievement. Joined the Million Dollar Round Table.'},
@@ -278,6 +292,12 @@ function normalizeInsuranceData(data){
     if(url.startsWith('../assets/')) return url.replace(/^\.\.\//, '');
     return url || 'assets/images/insurance_consultant.png';
   };
+  const defaultStories = [
+    {icon:'shield_with_heart', title:'Family Cover', desc:'The advice made term insurance easy to understand. We chose the right cover without feeling pressured.', label:'Term Life Planning', badge:'Family Cover'},
+    {icon:'local_hospital', title:'Health', desc:'They compared options patiently and helped us pick health coverage that suited our parents and children.', label:'Health Insurance', badge:'Health'},
+    {icon:'school', title:'Children', desc:'The children\'s plan was explained around school and college goals, not just policy terms.', label:'Education Planning', badge:'Children'},
+    {icon:'support_agent', title:'Claims', desc:'During claim paperwork, the team guided us step by step and reduced a lot of stress for the family.', label:'Claim Assistance', badge:'Claims'}
+  ];
   data.hero = data.hero || {};
   data.hero.highlight = data.hero.highlight || 'Matters Most';
   data.hero.btn1 = data.hero.btn1 || data.hero.cta || 'Get Free Consultation';
@@ -301,6 +321,7 @@ function normalizeInsuranceData(data){
   data.stats.s3 = data.stats.s3 || {num:'15+', label:'Years Exp'};
   data.story = data.story || {};
   data.story.img = normalizeImagePath(data.story.img);
+  data.stories = Array.isArray(data.stories) && data.stories.length ? data.stories : defaultStories;
   const savedProducts = (data.products || []).map(product => ({link: '', ...product}));
   const byLink = new Map(savedProducts.map(product => [product.link, product]));
   data.products = defaultProducts.map(product => ({
@@ -382,7 +403,28 @@ function init(){
   document.getElementById('story-img').value = s.img;
 
   renderMilestones();
+  renderStories();
   renderProducts();
+  });
+}
+
+function renderStories(){
+  const container = document.getElementById('stories-container');
+  container.innerHTML = '';
+  INSURANCE_DATA.stories.forEach((story, i) => {
+    const card = document.createElement('div');
+    card.className = 'edit-card';
+    card.innerHTML = `
+      <div class="edit-card-header">Story ${i+1} <button class="del-btn" style="float:right" onclick="removeItem('stories',${i})">×</button></div>
+      <div class="edit-card-body">
+        <div class="field"><label>Icon Key</label><input type="text" value="${escapeHtml(story.icon)}" onchange="INSURANCE_DATA.stories[${i}].icon=this.value"></div>
+        <div class="field"><label>Badge</label><input type="text" value="${escapeHtml(story.badge || story.title)}" onchange="INSURANCE_DATA.stories[${i}].badge=this.value"></div>
+        <div class="field"><label>Headline</label><input type="text" value="${escapeHtml(story.title)}" onchange="INSURANCE_DATA.stories[${i}].title=this.value"></div>
+        <div class="field"><label>Description</label><textarea onchange="INSURANCE_DATA.stories[${i}].desc=this.value" rows="4">${escapeHtml(story.desc)}</textarea></div>
+        <div class="field"><label>Footer Label</label><input type="text" value="${escapeHtml(story.label || '')}" onchange="INSURANCE_DATA.stories[${i}].label=this.value"></div>
+      </div>
+    `;
+    container.appendChild(card);
   });
 }
 
@@ -427,6 +469,9 @@ function addItem(type){
   if(type === 'milestones'){
     INSURANCE_DATA.milestones.push({year:'202X', title:'New Milestone', desc:'Achievement description...'});
     renderMilestones();
+  } else if(type === 'stories'){
+    INSURANCE_DATA.stories.push({icon:'shield', badge:'New Story', title:'New Story Card', desc:'Story details...', label:'Planning Need'});
+    renderStories();
   } else {
     INSURANCE_DATA.products.push({icon:'shield', title:'New Product', desc:'Plan details...', link:''});
     renderProducts();
@@ -436,7 +481,9 @@ function addItem(type){
 function removeItem(type, i){
   if(confirm('Delete?')){
     INSURANCE_DATA[type].splice(i, 1);
-    type === 'milestones' ? renderMilestones() : renderProducts();
+    if (type === 'milestones') renderMilestones();
+    else if (type === 'stories') renderStories();
+    else renderProducts();
   }
 }
 

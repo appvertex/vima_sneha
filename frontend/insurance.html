@@ -688,8 +688,8 @@
               <span class="material-symbols-outlined !text-sm">reviews</span>
               Client Feedback
             </div>
-            <h2 class="text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight">Stories by <span class="text-secondary italic">Planning Need</span></h2>
-            <p class="text-slate-500 font-medium text-lg leading-relaxed">Real-world moments where the right guidance makes protection simpler, clearer, and easier to act on.</p>
+            <h2 id="stories-title" class="text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight">Stories by <span class="text-secondary italic">Planning Need</span></h2>
+            <p id="stories-desc" class="text-slate-500 font-medium text-lg leading-relaxed">Real-world moments where the right guidance makes protection simpler, clearer, and easier to act on.</p>
           </div>
           <button onclick="openContactModal('consult')" class="inline-flex items-center gap-2 text-secondary font-extrabold hover:gap-3 transition-all">
             Talk to an Advisor
@@ -697,62 +697,7 @@
           </button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-          <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-secondary/5 flex flex-col gap-6">
-            <div class="flex items-center justify-between gap-4">
-              <div class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">
-                <span class="material-symbols-outlined !text-3xl">shield_with_heart</span>
-              </div>
-              <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-secondary">Family Cover</span>
-            </div>
-            <p class="text-slate-600 font-medium leading-relaxed">"The advice made term insurance easy to understand. We chose the right cover without feeling pressured."</p>
-            <div class="mt-auto pt-6 border-t border-slate-100">
-              <p class="font-extrabold text-slate-900">Family Client</p>
-              <p class="text-sm text-slate-400 font-bold">Term Life Planning</p>
-            </div>
-          </article>
-
-          <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-primary/5 flex flex-col gap-6">
-            <div class="flex items-center justify-between gap-4">
-              <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-                <span class="material-symbols-outlined !text-3xl">local_hospital</span>
-              </div>
-              <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-primary">Health</span>
-            </div>
-            <p class="text-slate-600 font-medium leading-relaxed">"They compared options patiently and helped us pick health coverage that suited our parents and children."</p>
-            <div class="mt-auto pt-6 border-t border-slate-100">
-              <p class="font-extrabold text-slate-900">Household Client</p>
-              <p class="text-sm text-slate-400 font-bold">Health Insurance</p>
-            </div>
-          </article>
-
-          <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-secondary/5 flex flex-col gap-6">
-            <div class="flex items-center justify-between gap-4">
-              <div class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">
-                <span class="material-symbols-outlined !text-3xl">school</span>
-              </div>
-              <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-secondary">Children</span>
-            </div>
-            <p class="text-slate-600 font-medium leading-relaxed">"The children's plan was explained around school and college goals, not just policy terms."</p>
-            <div class="mt-auto pt-6 border-t border-slate-100">
-              <p class="font-extrabold text-slate-900">Parent Client</p>
-              <p class="text-sm text-slate-400 font-bold">Education Planning</p>
-            </div>
-          </article>
-
-          <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-slate-900/5 flex flex-col gap-6">
-            <div class="flex items-center justify-between gap-4">
-              <div class="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center">
-                <span class="material-symbols-outlined !text-3xl">support_agent</span>
-              </div>
-              <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-slate-700">Claims</span>
-            </div>
-            <p class="text-slate-600 font-medium leading-relaxed">"During claim paperwork, the team guided us step by step and reduced a lot of stress for the family."</p>
-            <div class="mt-auto pt-6 border-t border-slate-100">
-              <p class="font-extrabold text-slate-900">Policyholder Family</p>
-              <p class="text-sm text-slate-400 font-bold">Claim Assistance</p>
-            </div>
-          </article>
+        <div id="planning-stories-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         </div>
       </div>
     </section>
@@ -950,6 +895,12 @@
       p2: "His approach is rooted in empathy, treating every client's legacy as if it were his own family's.",
       img: 'assets/images/insurance_consultant.png'
     },
+    stories: [
+      { icon: 'shield_with_heart', title: 'Family Cover', desc: 'The advice made term insurance easy to understand. We chose the right cover without feeling pressured.', label: 'Term Life Planning', badge: 'Family Cover' },
+      { icon: 'local_hospital', title: 'Health', desc: 'They compared options patiently and helped us pick health coverage that suited our parents and children.', label: 'Health Insurance', badge: 'Health' },
+      { icon: 'school', title: 'Children', desc: "The children's plan was explained around school and college goals, not just policy terms.", label: 'Education Planning', badge: 'Children' },
+      { icon: 'support_agent', title: 'Claims', desc: 'During claim paperwork, the team guided us step by step and reduced a lot of stress for the family.', label: 'Claim Assistance', badge: 'Claims' }
+    ],
     milestones: [
       { year: '2010', title: 'Foundations', desc: 'Early career in risk management. Recognized as the Rising Star of the Year.' },
       { year: '2018', title: 'Expertise', desc: 'MDRT Lifetime Achievement. Joined the Million Dollar Round Table.' },
@@ -970,6 +921,7 @@
 
   function normalizeInsuranceData(data) {
     const fallbackProducts = DEFAULT_INSURANCE_DATA.products;
+    const fallbackStories = DEFAULT_INSURANCE_DATA.stories;
     const current = data || {};
     const hero = { ...DEFAULT_INSURANCE_DATA.hero, ...(current.hero || {}) };
     hero.btn1 = hero.btn1 || hero.cta || DEFAULT_INSURANCE_DATA.hero.btn1;
@@ -985,10 +937,11 @@
     };
 
     const story = { ...DEFAULT_INSURANCE_DATA.story, ...(current.story || {}) };
+    const stories = Array.isArray(current.stories) && current.stories.length ? current.stories : fallbackStories;
     const milestones = Array.isArray(current.milestones) && current.milestones.length ? current.milestones : DEFAULT_INSURANCE_DATA.milestones;
     const products = Array.isArray(current.products) && current.products.length ? current.products : fallbackProducts;
 
-    return { hero, stats: normalizedStats, story, milestones, products };
+    return { hero, stats: normalizedStats, story, stories, milestones, products };
   }
 
   (async function(){
@@ -1011,6 +964,7 @@
       const h = INSURANCE_DATA.hero || {};
       const s = INSURANCE_DATA.stats || {};
       const story = INSURANCE_DATA.story || {};
+      const stories = Array.isArray(INSURANCE_DATA.stories) ? INSURANCE_DATA.stories : [];
       const milestones = Array.isArray(INSURANCE_DATA.milestones) ? INSURANCE_DATA.milestones : [];
       const products = Array.isArray(INSURANCE_DATA.products) ? INSURANCE_DATA.products : [];
 
@@ -1114,6 +1068,25 @@
       updateText('#story-side-p1', story.p1);
       updateText('#story-side-p2', story.p2);
       updateText('#story-side-role', 'Principal Consultant');
+
+      const storyGrid = document.getElementById('planning-stories-grid');
+      if (storyGrid) {
+        storyGrid.innerHTML = stories.map((item) => `
+          <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-secondary/5 flex flex-col gap-6">
+            <div class="flex items-center justify-between gap-4">
+              <div class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">
+                <span class="material-symbols-outlined !text-3xl">${String(item.icon || 'shield_with_heart')}</span>
+              </div>
+              <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-secondary">${String(item.badge || item.title || '')}</span>
+            </div>
+            <p class="text-slate-600 font-medium leading-relaxed">"${String(item.desc || '')}"</p>
+            <div class="mt-auto pt-6 border-t border-slate-100">
+              <p class="font-extrabold text-slate-900">${String(item.title || '')}</p>
+              <p class="text-sm text-slate-400 font-bold">${String(item.label || '')}</p>
+            </div>
+          </article>
+        `).join('');
+      }
 
       const finalCta = document.querySelector('section.section-padding:last-of-type h2');
       if (finalCta && h.highlight) {
