@@ -926,11 +926,75 @@
 
   <!-- Admin Data Sync Script -->
   <script>
+  const DEFAULT_INSURANCE_DATA = {
+    hero: {
+      badge: 'Financial Security',
+      title: 'Protect What Matters Most',
+      highlight: 'Matters Most',
+      desc: "Expert insurance advisory and financial planning services. We help you build a secure future for your family with the right policies and investments.",
+      cta: 'Get Free Consultation',
+      btn1: 'Get Free Consultation',
+      callText: 'Call Now',
+      callNum: '+91 99728 75970'
+    },
+    stats: {
+      s1: { num: 'MDRT', label: 'Qualified' },
+      s2: { num: '1000+', label: 'Clients Served' },
+      s3: { num: '15+', label: 'Years Exp' }
+    },
+    story: {
+      name: 'Sachin Suraj Noronha',
+      tag: 'Guiding Minds & Assuring Lives',
+      quote: 'Protection is not a transaction; it is a promise kept to the people we love most.',
+      p1: 'With over fifteen years in the financial advisory landscape, Sachin bridges the gap between cold numbers and the warmth of human security.',
+      p2: "His approach is rooted in empathy, treating every client's legacy as if it were his own family's.",
+      img: 'assets/images/insurance_consultant.png'
+    },
+    milestones: [
+      { year: '2010', title: 'Foundations', desc: 'Early career in risk management. Recognized as the Rising Star of the Year.' },
+      { year: '2018', title: 'Expertise', desc: 'MDRT Lifetime Achievement. Joined the Million Dollar Round Table.' },
+      { year: 'PRESENT', title: 'Serene Sentinel', desc: 'Founding The Serene Sentinel, dedicated to peace and security.' }
+    ],
+    products: [
+      { icon: 'shield_with_heart', title: 'Term Life Insurance', desc: 'Maximum coverage at minimal cost. Pure financial protection.', link: 'insurance/term-life-insurance.html' },
+      { icon: 'local_hospital', title: 'Health Insurance', desc: 'Cashless hospitalization and comprehensive medical coverage.', link: 'insurance/health-plans.html' },
+      { icon: 'savings', title: 'Endowment Plans', desc: 'Savings and insurance combined. Build a corpus while staying protected.', link: 'insurance/endowment-plans.html' },
+      { icon: 'elderly', title: 'Retirement Planning', desc: 'Pension plans and annuities for a worry-free retirement.', link: 'insurance/pension-plans.html' },
+      { icon: 'school', title: 'Children Plans', desc: "Secure your child's educational milestones with disciplined, goal-based savings.", link: 'insurance/children-plans.html' },
+      { icon: 'real_estate_agent', title: 'ULIP Plans', desc: 'ULIPs and market-linked plans to grow your wealth with market participation.', link: 'insurance/ulip-plans.html' },
+      { icon: 'payments', title: 'Money Back Plans', desc: 'Periodic returns during the policy term to support short-term financial goals.', link: 'insurance/money-back-plans.html' },
+      { icon: 'all_inclusive', title: 'Whole Life Plans', desc: 'Lifelong protection and savings that help build a legacy for your family.', link: 'insurance/whole-life-plans.html' },
+      { icon: 'groups', title: 'Micro Insurance', desc: 'Affordable insurance solutions for low-income individuals and small groups.', link: 'insurance/micro-insurance.html' }
+    ]
+  };
+
+  function normalizeInsuranceData(data) {
+    const fallbackProducts = DEFAULT_INSURANCE_DATA.products;
+    const current = data || {};
+    const hero = { ...DEFAULT_INSURANCE_DATA.hero, ...(current.hero || {}) };
+    hero.btn1 = hero.btn1 || hero.cta || DEFAULT_INSURANCE_DATA.hero.btn1;
+    hero.cta = hero.cta || hero.btn1;
+    hero.callText = hero.callText || DEFAULT_INSURANCE_DATA.hero.callText;
+    hero.callNum = hero.callNum || DEFAULT_INSURANCE_DATA.hero.callNum;
+
+    const stats = current.stats || {};
+    const normalizedStats = {
+      s1: { ...DEFAULT_INSURANCE_DATA.stats.s1, ...(stats.s1 || {}) },
+      s2: { ...DEFAULT_INSURANCE_DATA.stats.s2, ...(stats.s2 || {}) },
+      s3: { ...DEFAULT_INSURANCE_DATA.stats.s3, ...(stats.s3 || {}) }
+    };
+
+    const story = { ...DEFAULT_INSURANCE_DATA.story, ...(current.story || {}) };
+    const milestones = Array.isArray(current.milestones) && current.milestones.length ? current.milestones : DEFAULT_INSURANCE_DATA.milestones;
+    const products = Array.isArray(current.products) && current.products.length ? current.products : fallbackProducts;
+
+    return { hero, stats: normalizedStats, story, milestones, products };
+  }
+
   (async function(){
     try {
       const response = window.VSBackend ? await VSBackend.getSiteContent('insurance') : null;
-      const INSURANCE_DATA = response?.content;
-      if(!INSURANCE_DATA) return;
+      const INSURANCE_DATA = normalizeInsuranceData(response?.content || DEFAULT_INSURANCE_DATA);
       const updateText = (selector, text, mode = 'text') => {
         const el = document.querySelector(selector);
         if(el && text !== undefined && text !== null && String(text).length) {
