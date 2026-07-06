@@ -822,7 +822,7 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
 
       <!-- ── FOOTER ── -->
       <div class="panel" id="panel-footer">
-        <div class="section-head"><h2>Footer</h2><p>Edit footer branding, links, and copyright info.</p></div>
+        <div class="section-head"><h2>Footer</h2><p>Edit footer branding, links, copyright, and year info.</p></div>
         <div class="edit-grid">
           <div class="edit-card">
             <div class="edit-card-header"><span class="ec-title"><span class="ec-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span> Footer Brand</span></div>
@@ -833,11 +833,10 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
             </div>
           </div>
           <div class="edit-card">
-            <div class="edit-card-header"><span class="ec-title"><span class="ec-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span> Copyright & Credits</span></div>
+            <div class="edit-card-header"><span class="ec-title"><span class="ec-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0;" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span> Copyright & Year</span></div>
             <div class="edit-card-body">
               <div class="field"><label>Copyright Owner</label><input type="text" id="ftr-copy" value="Vima Sneha"></div>
-              <div class="field"><label>Developer Credit Text</label><input type="text" id="ftr-dev" value="Developed by Appvertex · Built by Leston and Lenstar"></div>
-              <div class="field"><label>Developer URL</label><input type="text" id="ftr-devurl" value="https://appvertex.in"></div>
+              <div class="field"><label>Copyright Year</label><input type="text" id="ftr-year" value="2026"></div>
               <div class="field"><label>Footer Contact: Counselling Phone</label><input type="text" id="ftr-coun-phone" value="+91 99728 75970"></div>
               <div class="field"><label>Footer Contact: Insurance Phone</label><input type="text" id="ftr-ins-phone" value="+91 99459 33822"></div>
             </div>
@@ -1866,10 +1865,11 @@ function collectSimpleFields(){
   DATA.ftrTagline = f('ftr-tagline');
   DATA.ftrMini = f('ftr-mini');
   DATA.ftrCopy = f('ftr-copy');
-  DATA.ftrDev = f('ftr-dev');
-  DATA.ftrDevUrl = f('ftr-devurl');
+  DATA.ftrYear = f('ftr-year');
   DATA.ftrCounPhone = f('ftr-coun-phone');
   DATA.ftrInsPhone = f('ftr-ins-phone');
+  delete DATA.ftrDev;
+  delete DATA.ftrDevUrl;
   // theme
   DATA.themeColors = {
     primary: document.getElementById('color-primary-mauve')?.value,
@@ -1949,8 +1949,7 @@ function restoreFields(){
   s('ftr-tagline',DATA.ftrTagline);
   s('ftr-mini',DATA.ftrMini);
   s('ftr-copy',DATA.ftrCopy);
-  s('ftr-dev',DATA.ftrDev);
-  s('ftr-devurl',DATA.ftrDevUrl);
+  s('ftr-year',DATA.ftrYear || String(new Date().getFullYear()));
   s('ftr-coun-phone',DATA.ftrCounPhone);
   s('ftr-ins-phone',DATA.ftrInsPhone);
 }

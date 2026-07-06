@@ -126,9 +126,10 @@
       return {
         name: typeof data.brandName === "string" && data.brandName.trim() ? data.brandName.trim() : defaultBrandName,
         tagline: typeof data.brandTagline === "string" && data.brandTagline.trim() ? data.brandTagline.trim() : defaultTagline,
+        year: typeof data.ftrYear === "string" && data.ftrYear.trim() ? data.ftrYear.trim() : String(new Date().getFullYear()),
       };
     } catch {
-      return { name: defaultBrandName, tagline: defaultTagline };
+      return { name: defaultBrandName, tagline: defaultTagline, year: String(new Date().getFullYear()) };
     }
   };
 
@@ -144,7 +145,7 @@
 
     const yearEl = document.getElementById("year");
     if (yearEl) {
-      yearEl.textContent = String(new Date().getFullYear());
+      yearEl.textContent = String(branding.year || new Date().getFullYear());
     }
 
   const backToTopBtn = document.createElement("button");
