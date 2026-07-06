@@ -647,9 +647,9 @@ function renderExpertise(){
     card.innerHTML = `
       <div class="edit-card-header">Area ${i+1} <button class="del-btn" style="float:right" onclick="removeItem('expertise',${i})">×</button></div>
       <div class="edit-card-body">
-        <div class="field"><label>Icon Key</label><input type="text" value="${escapeHtml(e.icon)}" onchange="COUNSELLING_DATA.expertise[${i}].icon=this.value"></div>
-        <div class="field"><label>Title</label><input type="text" value="${escapeHtml(e.title)}" onchange="COUNSELLING_DATA.expertise[${i}].title=this.value"></div>
-        <div class="field"><label>Description</label><textarea onchange="COUNSELLING_DATA.expertise[${i}].desc=this.value">${escapeHtml(e.desc)}</textarea></div>
+        <div class="field"><label>Icon Key</label><input type="text" value="${escapeHtml(e.icon)}" oninput="COUNSELLING_DATA.expertise[${i}].icon=this.value"></div>
+        <div class="field"><label>Title</label><input type="text" value="${escapeHtml(e.title)}" oninput="COUNSELLING_DATA.expertise[${i}].title=this.value"></div>
+        <div class="field"><label>Description</label><textarea oninput="COUNSELLING_DATA.expertise[${i}].desc=this.value">${escapeHtml(e.desc)}</textarea></div>
       </div>`;
     c.appendChild(card);
   });
