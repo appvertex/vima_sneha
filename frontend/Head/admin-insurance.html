@@ -417,11 +417,11 @@ function renderStories(){
     card.innerHTML = `
       <div class="edit-card-header">Story ${i+1} <button class="del-btn" style="float:right" onclick="removeItem('stories',${i})">×</button></div>
       <div class="edit-card-body">
-        <div class="field"><label>Icon Key</label><input type="text" value="${escapeHtml(story.icon)}" onchange="INSURANCE_DATA.stories[${i}].icon=this.value"></div>
-        <div class="field"><label>Badge</label><input type="text" value="${escapeHtml(story.badge || story.title)}" onchange="INSURANCE_DATA.stories[${i}].badge=this.value"></div>
-        <div class="field"><label>Headline</label><input type="text" value="${escapeHtml(story.title)}" onchange="INSURANCE_DATA.stories[${i}].title=this.value"></div>
-        <div class="field"><label>Description</label><textarea onchange="INSURANCE_DATA.stories[${i}].desc=this.value" rows="4">${escapeHtml(story.desc)}</textarea></div>
-        <div class="field"><label>Footer Label</label><input type="text" value="${escapeHtml(story.label || '')}" onchange="INSURANCE_DATA.stories[${i}].label=this.value"></div>
+        <div class="field"><label>Icon Key</label><input type="text" value="${escapeHtml(story.icon)}" oninput="INSURANCE_DATA.stories[${i}].icon=this.value"></div>
+        <div class="field"><label>Badge</label><input type="text" value="${escapeHtml(story.badge || story.title)}" oninput="INSURANCE_DATA.stories[${i}].badge=this.value"></div>
+        <div class="field"><label>Headline</label><input type="text" value="${escapeHtml(story.title)}" oninput="INSURANCE_DATA.stories[${i}].title=this.value"></div>
+        <div class="field"><label>Description</label><textarea oninput="INSURANCE_DATA.stories[${i}].desc=this.value" rows="4">${escapeHtml(story.desc)}</textarea></div>
+        <div class="field"><label>Footer Label</label><input type="text" value="${escapeHtml(story.label || '')}" oninput="INSURANCE_DATA.stories[${i}].label=this.value"></div>
       </div>
     `;
     container.appendChild(card);
@@ -487,6 +487,21 @@ function removeItem(type, i){
   }
 }
 
+function syncStoriesFromUI() {
+  const cards = document.querySelectorAll('#stories-container .edit-card');
+  if (!cards.length) return;
+  cards.forEach((card, index) => {
+    const fields = card.querySelectorAll('input, textarea');
+    const story = INSURANCE_DATA.stories[index];
+    if (!story) return;
+    story.icon = fields[0]?.value || story.icon;
+    story.badge = fields[1]?.value || story.badge;
+    story.title = fields[2]?.value || story.title;
+    story.desc = fields[3]?.value || story.desc;
+    story.label = fields[4]?.value || story.label;
+  });
+}
+
 async function saveAll(){
   const h = INSURANCE_DATA.hero;
   h.badge = document.getElementById('hero-badge').value;
@@ -512,6 +527,7 @@ async function saveAll(){
   s.p1 = document.getElementById('story-p1').value;
   s.p2 = document.getElementById('story-p2').value;
   s.img = document.getElementById('story-img').value.replace(/^\.\.\/assets\//, 'assets/');
+  syncStoriesFromUI();
 
   await VSBackend.saveAdminContent('insurance', INSURANCE_DATA);
   REMOTE_INSURANCE_DATA = JSON.parse(JSON.stringify(INSURANCE_DATA));
