@@ -765,76 +765,20 @@
             <div class="max-w-7xl mx-auto">
                 <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
                     <div class="space-y-4 max-w-2xl">
-                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-bold text-xs uppercase tracking-widest">
+                        <div id="stories-badge" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-bold text-xs uppercase tracking-widest">
                             <span class="material-symbols-outlined !text-sm">forum</span>
-                            Client Feedback
+                            <span id="stories-badge-text">Client Feedback</span>
                         </div>
-                        <h2 class="text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight">Stories by <span class="text-primary italic">Care Area</span></h2>
-                        <p class="text-slate-500 font-medium text-lg leading-relaxed">A quick look at how counselling support helps different people move from overwhelm to steadier daily life.</p>
+                        <h2 class="text-4xl lg:text-6xl font-extrabold text-slate-900 tracking-tight"><span id="stories-title-prefix">Stories by</span> <span id="stories-highlight" class="text-primary italic">Care Area</span></h2>
+                        <p id="stories-desc" class="text-slate-500 font-medium text-lg leading-relaxed">A quick look at how counselling support helps different people move from overwhelm to steadier daily life.</p>
                     </div>
-                    <a href="contact.html" class="inline-flex items-center gap-2 text-primary font-extrabold hover:gap-3 transition-all">
+                    <a id="stories-cta" href="contact.html" class="inline-flex items-center gap-2 text-primary font-extrabold hover:gap-3 transition-all">
                         Start a Conversation
                         <span class="material-symbols-outlined !text-lg">arrow_forward</span>
                     </a>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                    <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-primary/5 flex flex-col gap-6">
-                        <div class="flex items-center justify-between gap-4">
-                            <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-                                <span class="material-symbols-outlined !text-3xl">school</span>
-                            </div>
-                            <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-primary">Students</span>
-                        </div>
-                        <p class="text-slate-600 font-medium leading-relaxed">"The sessions helped me handle exam fear and speak more openly at home. I felt calmer within a few weeks."</p>
-                        <div class="mt-auto pt-6 border-t border-slate-100">
-                            <p class="font-extrabold text-slate-900">Student Client</p>
-                            <p class="text-sm text-slate-400 font-bold">Exam Stress Support</p>
-                        </div>
-                    </article>
-
-                    <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-secondary/5 flex flex-col gap-6">
-                        <div class="flex items-center justify-between gap-4">
-                            <div class="w-14 h-14 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center">
-                                <span class="material-symbols-outlined !text-3xl">sentiment_satisfied</span>
-                            </div>
-                            <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-secondary">Emotional Care</span>
-                        </div>
-                        <p class="text-slate-600 font-medium leading-relaxed">"I finally had practical ways to manage anxious thoughts instead of feeling controlled by them every day."</p>
-                        <div class="mt-auto pt-6 border-t border-slate-100">
-                            <p class="font-extrabold text-slate-900">Individual Client</p>
-                            <p class="text-sm text-slate-400 font-bold">Anxiety Counselling</p>
-                        </div>
-                    </article>
-
-                    <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-primary/5 flex flex-col gap-6">
-                        <div class="flex items-center justify-between gap-4">
-                            <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
-                                <span class="material-symbols-outlined !text-3xl">family_restroom</span>
-                            </div>
-                            <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-primary">Family</span>
-                        </div>
-                        <p class="text-slate-600 font-medium leading-relaxed">"The guidance helped us listen without reacting. Conversations at home became lighter and more respectful."</p>
-                        <div class="mt-auto pt-6 border-t border-slate-100">
-                            <p class="font-extrabold text-slate-900">Parent Client</p>
-                            <p class="text-sm text-slate-400 font-bold">Family Communication</p>
-                        </div>
-                    </article>
-
-                    <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-slate-900/5 flex flex-col gap-6">
-                        <div class="flex items-center justify-between gap-4">
-                            <div class="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center">
-                                <span class="material-symbols-outlined !text-3xl">rocket_launch</span>
-                            </div>
-                            <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold text-slate-700">Growth</span>
-                        </div>
-                        <p class="text-slate-600 font-medium leading-relaxed">"Counselling gave me clarity, confidence, and a healthier routine when I was feeling stuck."</p>
-                        <div class="mt-auto pt-6 border-t border-slate-100">
-                            <p class="font-extrabold text-slate-900">Young Professional</p>
-                            <p class="text-sm text-slate-400 font-bold">Personal Growth</p>
-                        </div>
-                    </article>
-                </div>
+                <div id="stories-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6"></div>
             </div>
         </section>
 
@@ -1293,6 +1237,53 @@
                 if (!isActive) item.classList.add('active');
             });
           });
+        }
+
+        // Stories by Care Area
+        const stories = d.stories && typeof d.stories === 'object' ? d.stories : {};
+        const storyFallbacks = [
+          {icon:'school',tag:'Students',quote:'The sessions helped me handle exam fear and speak more openly at home. I felt calmer within a few weeks.',name:'Student Client',subtext:'Exam Stress Support'},
+          {icon:'sentiment_satisfied',tag:'Emotional Care',quote:'I finally had practical ways to manage anxious thoughts instead of feeling controlled by them every day.',name:'Individual Client',subtext:'Anxiety Counselling'},
+          {icon:'family_restroom',tag:'Family',quote:'The guidance helped us listen without reacting. Conversations at home became lighter and more respectful.',name:'Parent Client',subtext:'Family Communication'},
+          {icon:'rocket_launch',tag:'Growth',quote:'Counselling gave me clarity, confidence, and a healthier routine when I was feeling stuck.',name:'Young Professional',subtext:'Personal Growth'}
+        ];
+        const storyItems = Array.isArray(d.storyCards) && d.storyCards.length ? d.storyCards : storyFallbacks;
+        set('stories-badge-text', stories.badge || 'Client Feedback');
+        set('stories-title-prefix', stories.title || 'Stories by');
+        set('stories-highlight', stories.highlight || 'Care Area');
+        set('stories-desc', stories.desc || 'A quick look at how counselling support helps different people move from overwhelm to steadier daily life.');
+        const storyCta = document.getElementById('stories-cta');
+        if (storyCta) {
+          storyCta.innerHTML = `${escapeHtml(stories.ctaText || 'Start a Conversation')} <span class="material-symbols-outlined !text-lg">arrow_forward</span>`;
+          storyCta.href = stories.ctaLink || 'contact.html';
+        }
+        const storiesGrid = document.getElementById('stories-grid');
+        if (storiesGrid && Array.isArray(storyItems)) {
+          const storyThemes = [
+            { outer: 'bg-primary/10 text-primary', badge: 'text-primary' },
+            { outer: 'bg-secondary/10 text-secondary', badge: 'text-secondary' },
+            { outer: 'bg-primary/10 text-primary', badge: 'text-primary' },
+            { outer: 'bg-slate-900 text-white', badge: 'text-slate-700' }
+          ];
+          storiesGrid.innerHTML = storyItems.map((story, idx) => {
+            story = story && typeof story === 'object' ? story : {};
+            const theme = storyThemes[idx % storyThemes.length];
+            return `
+              <article class="glass p-8 rounded-4xl border border-white/50 shadow-lg shadow-slate-900/5 flex flex-col gap-6">
+                <div class="flex items-center justify-between gap-4">
+                  <div class="w-14 h-14 rounded-2xl ${theme.outer} flex items-center justify-center">
+                    <span class="material-symbols-outlined !text-3xl">${escapeHtml(story.icon)}</span>
+                  </div>
+                  <span class="text-[10px] uppercase tracking-[0.22em] font-extrabold ${theme.badge}">${escapeHtml(story.tag)}</span>
+                </div>
+                <p class="text-slate-600 font-medium leading-relaxed">"${escapeHtml(story.quote)}"</p>
+                <div class="mt-auto pt-6 border-t border-slate-100">
+                  <p class="font-extrabold text-slate-900">${escapeHtml(story.name)}</p>
+                  <p class="text-sm text-slate-400 font-bold">${escapeHtml(story.subtext)}</p>
+                </div>
+              </article>
+            `;
+          }).join('');
         }
 
       } catch(e) { console.warn("Counselling sync skipped:", e); }

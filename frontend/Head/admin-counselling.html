@@ -189,6 +189,7 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
       <div class="nav-item" onclick="showPanel('profile',this)">Counsellor Profile</div>
       <div class="nav-item" onclick="showPanel('milestones',this)">Professional Journey</div>
       <div class="nav-item" onclick="showPanel('faq',this)">FAQ Section</div>
+      <div class="nav-item" onclick="showPanel('stories',this)">Stories by Care Area</div>
     </nav>
     <div style="padding:1.5rem;"><button class="save-btn" style="width:100%;" onclick="logout()">Logout</button></div>
   </aside>
@@ -368,6 +369,24 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
         <button class="add-btn" onclick="addItem('faq')">+ Add New FAQ Item</button>
       </div>
 
+      <!-- STORIES PANEL -->
+      <div class="panel" id="panel-stories">
+        <div class="section-head"><h2>Stories by Care Area</h2><p>Edit the headline and story cards shown in the counselling testimonials section.</p></div>
+        <div class="edit-card" style="margin-bottom:1.5rem;">
+          <div class="edit-card-header">Section Content</div>
+          <div class="edit-card-body">
+            <div class="field"><label>Badge Text</label><input type="text" id="stories-badge"></div>
+            <div class="field"><label>Title</label><input type="text" id="stories-title"></div>
+            <div class="field"><label>Highlight Word</label><input type="text" id="stories-highlight"></div>
+            <div class="field"><label>Description</label><textarea id="stories-desc" rows="3"></textarea></div>
+            <div class="field"><label>CTA Text</label><input type="text" id="stories-cta-text"></div>
+            <div class="field"><label>CTA Link</label><input type="text" id="stories-cta-link"></div>
+          </div>
+        </div>
+        <div id="stories-container" class="edit-grid"></div>
+        <button class="add-btn" onclick="addItem('stories')">+ Add New Story Card</button>
+      </div>
+
     </div>
   </main>
 </div>
@@ -411,6 +430,20 @@ let COUNSELLING_DATA = {
     {q:'How many sessions will I need?', a:'The number varies depending on your individual goals and the complexity of the challenges. Some find relief in 4-6 sessions, while others prefer ongoing support.'},
     {q:'What is Hypnotherapy exactly?', a:'Hypnotherapy is a guided state of focused relaxation that allows us to work directly with the subconscious mind to break habits and reduce anxiety.'},
     {q:'Do you offer sessions for students?', a:'Yes, we specialize in student counselling, addressing issues like exam anxiety, peer pressure, and career confusion.'}
+  ],
+  stories: {
+    badge: 'Client Feedback',
+    title: 'Stories by',
+    highlight: 'Care Area',
+    desc: 'A quick look at how counselling support helps different people move from overwhelm to steadier daily life.',
+    ctaText: 'Start a Conversation',
+    ctaLink: 'contact.html'
+  },
+  storyCards: [
+    {icon:'school',tag:'Students',quote:'The sessions helped me handle exam fear and speak more openly at home. I felt calmer within a few weeks.',name:'Student Client',subtext:'Exam Stress Support'},
+    {icon:'sentiment_satisfied',tag:'Emotional Care',quote:'I finally had practical ways to manage anxious thoughts instead of feeling controlled by them every day.',name:'Individual Client',subtext:'Anxiety Counselling'},
+    {icon:'family_restroom',tag:'Family',quote:'The guidance helped us listen without reacting. Conversations at home became lighter and more respectful.',name:'Parent Client',subtext:'Family Communication'},
+    {icon:'rocket_launch',tag:'Growth',quote:'Counselling gave me clarity, confidence, and a healthier routine when I was feeling stuck.',name:'Young Professional',subtext:'Personal Growth'}
   ]
 };
 
@@ -684,6 +717,9 @@ function addItem(type){
   } else if(type === 'faq'){
     COUNSELLING_DATA.faq.push({q:'New Question?',a:'Answer here...'});
     renderFAQ();
+  } else if(type === 'stories'){
+    COUNSELLING_DATA.storyCards.push({icon:'star',tag:'New Area',quote:'Quote here...',name:'Client Name',subtext:'Section Title'});
+    renderStories();
   }
 }
 
@@ -694,6 +730,7 @@ function removeItem(type,i){
     else if(type === 'expertise') renderExpertise();
     else if(type === 'milestones') renderMilestones();
     else if(type === 'faq') renderFAQ();
+    else if(type === 'storyCards') renderStories();
   }
 }
 
@@ -730,6 +767,39 @@ function renderFAQ(){
   });
 }
 
+function renderStories(){
+  const s = COUNSELLING_DATA.stories || {};
+  const badge = document.getElementById('stories-badge');
+  const title = document.getElementById('stories-title');
+  const highlight = document.getElementById('stories-highlight');
+  const desc = document.getElementById('stories-desc');
+  const ctaText = document.getElementById('stories-cta-text');
+  const ctaLink = document.getElementById('stories-cta-link');
+  if (badge) badge.value = s.badge || '';
+  if (title) title.value = s.title || '';
+  if (highlight) highlight.value = s.highlight || '';
+  if (desc) desc.value = s.desc || '';
+  if (ctaText) ctaText.value = s.ctaText || '';
+  if (ctaLink) ctaLink.value = s.ctaLink || '';
+
+  const c = document.getElementById('stories-container');
+  c.innerHTML = '';
+  COUNSELLING_DATA.storyCards.forEach((story, i) => {
+    const card = document.createElement('div');
+    card.className = 'edit-card';
+    card.innerHTML = `
+      <div class="edit-card-header">Story Card ${i+1} <button class="del-btn" style="float:right" onclick="removeItem('storyCards',${i})">×</button></div>
+      <div class="edit-card-body">
+        <div class="field"><label>Icon Key</label><input type="text" value="${escapeHtml(story.icon)}" onchange="COUNSELLING_DATA.storyCards[${i}].icon=this.value"></div>
+        <div class="field"><label>Tag</label><input type="text" value="${escapeHtml(story.tag)}" onchange="COUNSELLING_DATA.storyCards[${i}].tag=this.value"></div>
+        <div class="field"><label>Quote</label><textarea rows="4" onchange="COUNSELLING_DATA.storyCards[${i}].quote=this.value">${escapeHtml(story.quote)}</textarea></div>
+        <div class="field"><label>Name</label><input type="text" value="${escapeHtml(story.name)}" onchange="COUNSELLING_DATA.storyCards[${i}].name=this.value"></div>
+        <div class="field"><label>Subtext</label><input type="text" value="${escapeHtml(story.subtext)}" onchange="COUNSELLING_DATA.storyCards[${i}].subtext=this.value"></div>
+      </div>`;
+    c.appendChild(card);
+  });
+}
+
 // ════════════════════════════════════════════════
 //  SAVE ALL CONTENT
 // ════════════════════════════════════════════════
@@ -747,6 +817,12 @@ async function saveAll(){
   COUNSELLING_DATA.profile.bioHead = document.getElementById('prof-bio-head').value;
   COUNSELLING_DATA.profile.bio = document.getElementById('prof-bio').value;
   COUNSELLING_DATA.profile.img = document.getElementById('prof-img').value;
+  COUNSELLING_DATA.stories.badge = document.getElementById('stories-badge').value;
+  COUNSELLING_DATA.stories.title = document.getElementById('stories-title').value;
+  COUNSELLING_DATA.stories.highlight = document.getElementById('stories-highlight').value;
+  COUNSELLING_DATA.stories.desc = document.getElementById('stories-desc').value;
+  COUNSELLING_DATA.stories.ctaText = document.getElementById('stories-cta-text').value;
+  COUNSELLING_DATA.stories.ctaLink = document.getElementById('stories-cta-link').value;
   COUNSELLING_DATA.sessions = SESSIONS;
   await VSBackend.saveAdminContent('counselling', COUNSELLING_DATA);
   REMOTE_COUNSELLING_DATA = JSON.parse(JSON.stringify(COUNSELLING_DATA));
@@ -823,6 +899,7 @@ async function init(){
   renderFeatures();
   renderMilestones();
   renderFAQ();
+  renderStories();
   renderSessions();
   updateStats();
   updateLiveBadge();
