@@ -226,45 +226,41 @@
         <div
           class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-secondary-dark font-bold text-sm uppercase tracking-widest">
           <span class="material-symbols-outlined !text-sm">shield</span>
-          Financial Security
+          <span id="hero-badge-text"></span>
         </div>
         <h1 class="text-5xl lg:text-8xl font-extrabold text-slate-900 leading-[1.05]">
-          Protect What <br /><span class="text-secondary italic underline decoration-secondary/20 decoration-8">Matters
-            Most</span>
+          <span id="hero-title-prefix"></span> <br /><span id="hero-title-highlight" class="text-secondary italic underline decoration-secondary/20 decoration-8"></span>
         </h1>
-        <p class="text-lg lg:text-xl text-slate-500 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
-          Expert insurance advisory and financial planning services. We help you build a secure future for your family
-          with the right policies and investments.
-        </p>
+        <p id="hero-desc" class="text-lg lg:text-xl text-slate-500 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0"></p>
         <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-          <button onclick="openContactModal('consult')" class="btn-gold w-full sm:w-auto">
-            Get Free Consultation
+          <button id="hero-cta-btn" onclick="openContactModal('consult')" class="btn-gold w-full sm:w-auto">
+            <span id="hero-cta-label"></span>
             <span class="material-symbols-outlined">arrow_forward</span>
           </button>
-          <a href="tel:+919945933822" class="flex items-center gap-3 font-extrabold text-slate-900 group">
+          <a id="hero-call-link" href="tel:+919945933822" class="flex items-center gap-3 font-extrabold text-slate-900 group">
             <span
               class="w-12 h-12 rounded-2xl bg-white shadow-lg flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all">
               <span class="material-symbols-outlined">call</span>
             </span>
-            Call Advisor
+            <span id="hero-call-text"></span>
           </a>
         </div>
 
         <!-- Trust badges -->
         <div class="flex items-center justify-center lg:justify-start gap-6 pt-8 border-t border-slate-200/50">
           <div class="flex flex-col text-left">
-            <span class="text-3xl font-extrabold text-slate-900">MDRT</span>
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Qualified</span>
+            <span id="trust-stat-1-num" class="text-3xl font-extrabold text-slate-900"></span>
+            <span id="trust-stat-1-label" class="text-xs font-bold text-slate-400 uppercase tracking-wider"></span>
           </div>
           <div class="w-[1px] h-10 bg-slate-200/50"></div>
           <div class="flex flex-col text-left">
-            <span class="text-3xl font-extrabold text-slate-900">1000+</span>
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Clients Served</span>
+            <span id="trust-stat-2-num" class="text-3xl font-extrabold text-slate-900"></span>
+            <span id="trust-stat-2-label" class="text-xs font-bold text-slate-400 uppercase tracking-wider"></span>
           </div>
           <div class="w-[1px] h-10 bg-slate-200/50"></div>
           <div class="flex flex-col text-left">
-            <span class="text-3xl font-extrabold text-slate-900">15+</span>
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Years Exp</span>
+            <span id="trust-stat-3-num" class="text-3xl font-extrabold text-slate-900"></span>
+            <span id="trust-stat-3-label" class="text-xs font-bold text-slate-400 uppercase tracking-wider"></span>
           </div>
         </div>
       </div>
@@ -356,48 +352,39 @@
           <div class="lg:col-span-5 relative">
             <div
               class="relative z-10 w-full aspect-[4/5] rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(123,76,112,0.06)]">
-              <img class="w-full h-full object-cover object-top"
+              <img id="story-image" class="w-full h-full object-cover object-top"
                 src="assets/images/insurance_consultant.png"
                 alt="Sachin Suraj Noronha - Principal Insurance Consultant" />
             </div>
             <div
               class="absolute -bottom-6 -right-6 md:-right-12 z-20 glass-reflection p-6 rounded-xl border border-outline-variant/15 shadow-xl max-w-[280px]">
-              <p class="text-secondary font-bold tracking-widest text-[10px] uppercase mb-2">MDRT STATUS</p>
-              <p class="text-on-surface font-medium leading-relaxed italic">"Protection is not a transaction; it is a
-                promise kept to the people we love most."</p>
+              <p id="story-tag" class="text-secondary font-bold tracking-widest text-[10px] uppercase mb-2"></p>
+              <p id="story-quote" class="text-on-surface font-medium leading-relaxed italic"></p>
             </div>
           </div>
 
           <div class="lg:col-span-7 space-y-8">
             <div>
-              <span class="text-primary font-bold tracking-widest text-xs uppercase mb-4 block">Guiding Minds & Assuring Lives</span>
+              <span id="story-tagline" class="text-primary font-bold tracking-widest text-xs uppercase mb-4 block"></span>
               <h2 class="text-5xl md:text-6xl font-extrabold text-on-surface tracking-[-0.02em] leading-[1.1]">
-                Sachin Suraj <br />
-                <span class="text-primary">Noronha</span>
+                <span id="story-name-line-1"></span> <br />
+                <span id="story-name-line-2" class="text-primary"></span>
               </h2>
             </div>
 
             <div class="space-y-6 max-w-2xl">
-              <p class="text-xl text-on-surface-variant leading-relaxed">
-                With over fifteen years in the financial advisory landscape, Sachin bridges the gap between cold numbers
-                and the warmth of human security. His approach is rooted in empathy, treating every client's legacy as
-                if it were his own family's.
-              </p>
-              <p class="text-lg text-on-surface-variant/80 leading-relaxed">
-                His journey began with a simple observation: most insurance conversations were filled with fear. Sachin
-                chose to fill them with clarity and peace, evolving into a specialist who harmonizes financial
-                strategies with emotional well-being.
-              </p>
+              <p id="story-p1" class="text-xl text-on-surface-variant leading-relaxed"></p>
+              <p id="story-p2" class="text-lg text-on-surface-variant/80 leading-relaxed"></p>
             </div>
 
             <div class="pt-4 flex flex-wrap gap-4">
               <div
                 class="px-6 py-3 bg-gradient-to-tr from-primary to-primary-container text-white rounded-xl font-semibold shadow-lg shadow-primary/20">
-                Personal Advisory
+                <span id="story-pill-1"></span>
               </div>
               <div
                 class="px-6 py-3 bg-surface-container-low text-secondary border border-secondary/10 rounded-xl font-semibold">
-                Legacy Planning
+                <span id="story-pill-2"></span>
               </div>
             </div>
           </div>
@@ -418,10 +405,9 @@
                   class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-secondary-container border-4 border-surface shadow-sm z-10">
                 </div>
                 <div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/5">
-                  <span class="text-secondary font-bold text-sm tracking-widest block mb-2">2010 — FOUNDATIONS</span>
-                  <h3 class="text-xl font-bold text-on-surface mb-3">Early Career in Risk Management</h3>
-                  <p class="text-on-surface-variant leading-relaxed">Recognized as the Rising Star of the Year, Sachin
-                    began his mission to redefine insurance as an empathetic service rather than a sales pitch.</p>
+                  <span id="milestone-1-year" class="text-secondary font-bold text-sm tracking-widest block mb-2"></span>
+                  <h3 id="milestone-1-title" class="text-xl font-bold text-on-surface mb-3"></h3>
+                  <p id="milestone-1-desc" class="text-on-surface-variant leading-relaxed"></p>
                 </div>
               </div>
 
@@ -430,10 +416,9 @@
                   class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-primary-container border-4 border-surface shadow-sm z-10">
                 </div>
                 <div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/5">
-                  <span class="text-primary font-bold text-sm tracking-widest block mb-2">2018 — EXPERTISE</span>
-                  <h3 class="text-xl font-bold text-on-surface mb-3">MDRT Lifetime Achievement</h3>
-                  <p class="text-on-surface-variant leading-relaxed">Joined the Million Dollar Round Table, setting a
-                    new standard for ethical advisory and client-first insurance solutions.</p>
+                  <span id="milestone-2-year" class="text-primary font-bold text-sm tracking-widest block mb-2"></span>
+                  <h3 id="milestone-2-title" class="text-xl font-bold text-on-surface mb-3"></h3>
+                  <p id="milestone-2-desc" class="text-on-surface-variant leading-relaxed"></p>
                 </div>
               </div>
 
@@ -442,10 +427,9 @@
                   class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-secondary border-4 border-surface shadow-sm z-10">
                 </div>
                 <div class="bg-surface-container-low p-8 rounded-xl border border-outline-variant/5">
-                  <span class="text-secondary font-bold text-sm tracking-widest block mb-2">PRESENT — SERENE SENTINEL</span>
-                  <h3 class="text-xl font-bold text-on-surface mb-3">Founding The Serene Sentinel</h3>
-                  <p class="text-on-surface-variant leading-relaxed">Launched a bespoke advisory firm dedicated to the
-                    intersection of mental peace and financial security for families across the globe.</p>
+                  <span id="milestone-3-year" class="text-secondary font-bold text-sm tracking-widest block mb-2"></span>
+                  <h3 id="milestone-3-title" class="text-xl font-bold text-on-surface mb-3"></h3>
+                  <p id="milestone-3-desc" class="text-on-surface-variant leading-relaxed"></p>
                 </div>
               </div>
             </div>
@@ -456,16 +440,11 @@
               class="relative bg-surface-container-lowest p-10 rounded-[2rem] shadow-[0_30px_60px_rgba(123,76,112,0.08)] border border-outline-variant/10">
               <span class="material-symbols-outlined text-secondary text-5xl opacity-20 absolute top-6 right-8"
                 style="font-variation-settings: 'FILL' 1;">format_quote</span>
-              <h4 class="text-2xl font-bold text-on-surface mb-6 leading-tight">A Message on Family Protection</h4>
+              <h4 id="story-side-title" class="text-2xl font-bold text-on-surface mb-6 leading-tight"></h4>
 
               <div class="space-y-6 text-on-surface-variant leading-relaxed">
-                <p>
-                  "In my years of practice, I've seen that the greatest asset isn't a portfolio, it's the
-                  <strong>confidence</strong> of knowing your family is safe no matter what tomorrow brings."
-                </p>
-                <p>
-                  "We don't just sell policies; we build sanctuaries of peace. My role is to be the architect of that serenity."
-                </p>
+                <p id="story-side-p1"></p>
+                <p id="story-side-p2"></p>
               </div>
 
               <div class="mt-8 pt-8 border-t border-outline-variant/20 flex items-center gap-4">
@@ -473,8 +452,8 @@
                   <span class="material-symbols-outlined text-on-secondary-fixed">verified_user</span>
                 </div>
                 <div>
-                  <p class="font-bold text-on-surface">Sachin Noronha</p>
-                  <p class="text-sm text-secondary font-medium">Principal Consultant</p>
+                  <p id="story-side-name" class="font-bold text-on-surface"></p>
+                  <p id="story-side-role" class="text-sm text-secondary font-medium"></p>
                 </div>
               </div>
             </div>
@@ -490,247 +469,17 @@
       </div>
 
       <div class="relative z-10 text-center mb-16 space-y-6">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 text-secondary font-bold text-xs uppercase tracking-widest">
-          Our Services
-        </div>
-        <h2 class="text-4xl lg:text-6xl font-extrabold text-slate-900">Comprehensive <span class="text-secondary italic">Coverage</span></h2>
-        <p class="text-slate-500 max-w-2xl mx-auto font-medium text-lg">Tailored solutions for every stage of your life's journey.</p>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 text-secondary font-bold text-xs uppercase tracking-widest"></div>
+        <h2 id="products-title" class="text-4xl lg:text-6xl font-extrabold text-slate-900"></h2>
+        <p id="products-desc" class="text-slate-500 max-w-2xl mx-auto font-medium text-lg"></p>
       </div>
 
       <div class="expertise-carousel-wrapper relative z-10 max-w-7xl mx-auto">
         <!-- Desktop Grid -->
-        <div class="expertise-grid">
-            <a href="insurance/term-life-insurance.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll">
-                <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined !text-3xl">shield_with_heart</span>
-                </div>
-                <h3 class="text-2xl font-extrabold text-slate-900">Term Life Insurance</h3>
-                <p class="text-slate-500 font-medium leading-relaxed">Maximum coverage at minimal cost. Pure financial protection for your loved ones.</p>
-                <div class="mt-auto flex items-center gap-2 text-secondary font-bold">
-                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
-                </div>
-            </a>
-            <a href="insurance/health-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-100">
-                <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined !text-3xl">local_hospital</span>
-                </div>
-                <h3 class="text-2xl font-extrabold text-slate-900">Health Insurance</h3>
-                <p class="text-slate-500 font-medium leading-relaxed">Cashless hospitalization and comprehensive medical coverage for your entire family.</p>
-                <div class="mt-auto flex items-center gap-2 text-primary font-bold">
-                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
-                </div>
-            </a>
-            <a href="insurance/endowment-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-200">
-                <div class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined !text-3xl">savings</span>
-                </div>
-                <h3 class="text-2xl font-extrabold text-slate-900">Endowment Plans</h3>
-                <p class="text-slate-500 font-medium leading-relaxed">Savings and insurance combined. Build a corpus while staying protected.</p>
-                <div class="mt-auto flex items-center gap-2 text-slate-900 font-bold">
-                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
-                </div>
-            </a>
-            <a href="insurance/pension-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll">
-                <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined !text-3xl">elderly</span>
-                </div>
-                <h3 class="text-2xl font-extrabold text-slate-900">Retirement Planning</h3>
-                <p class="text-slate-500 font-medium leading-relaxed">Pension plans and annuities to ensure a comfortable, worry-free retirement.</p>
-                <div class="mt-auto flex items-center gap-2 text-secondary font-bold">
-                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
-                </div>
-            </a>
-            <a href="insurance/children-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-100">
-                <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined !text-3xl">school</span>
-                </div>
-                <h3 class="text-2xl font-extrabold text-slate-900">Children Plans</h3>
-                <p class="text-slate-500 font-medium leading-relaxed">Secure your child's educational milestones with disciplined, goal-based savings.</p>
-                <div class="mt-auto flex items-center gap-2 text-primary font-bold">
-                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
-                </div>
-            </a>
-            <a href="insurance/ulip-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-200">
-                <div class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined !text-3xl">real_estate_agent</span>
-                </div>
-                <h3 class="text-2xl font-extrabold text-slate-900">ULIP Plans</h3>
-                <p class="text-slate-500 font-medium leading-relaxed">ULIPs and market-linked plans to grow your wealth with market participation.</p>
-                <div class="mt-auto flex items-center gap-2 text-slate-900 font-bold">
-                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
-                </div>
-            </a>
-            <a href="insurance/money-back-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll">
-                <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined !text-3xl">payments</span>
-                </div>
-                <h3 class="text-2xl font-extrabold text-slate-900">Money Back Plans</h3>
-                <p class="text-slate-500 font-medium leading-relaxed">Periodic returns during the policy term to support short-term financial goals.</p>
-                <div class="mt-auto flex items-center gap-2 text-secondary font-bold">
-                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
-                </div>
-            </a>
-            <a href="insurance/whole-life-plans.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-100">
-                <div class="w-16 h-16 rounded-3xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined !text-3xl">all_inclusive</span>
-                </div>
-                <h3 class="text-2xl font-extrabold text-slate-900">Whole Life Plans</h3>
-                <p class="text-slate-500 font-medium leading-relaxed">Lifelong protection and savings that help build a legacy for your family.</p>
-                <div class="mt-auto flex items-center gap-2 text-primary font-bold">
-                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
-                </div>
-            </a>
-            <a href="insurance/micro-insurance.html" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll reveal-delay-200">
-                <div class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-900 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
-                    <span class="material-symbols-outlined !text-3xl">groups</span>
-                </div>
-                <h3 class="text-2xl font-extrabold text-slate-900">Micro Insurance</h3>
-                <p class="text-slate-500 font-medium leading-relaxed">Affordable insurance solutions for low-income individuals and small groups.</p>
-                <div class="mt-auto flex items-center gap-2 text-slate-900 font-bold">
-                    Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
-                </div>
-            </a>
-        </div>
+        <div id="insurance-products-grid" class="expertise-grid"></div>
 
         <!-- Mobile Accordion (Layout D) -->
-        <div class="expertise-accordion space-y-4 px-4">
-            <p class="text-center text-slate-400 font-bold text-[10px] uppercase tracking-[0.2em] mb-6">Tap to expand coverage details</p>
-            
-            <!-- Acc Item 1 -->
-            <div class="expertise-acc-item active" onclick="toggleExpertiseAcc(this)">
-                <div class="expertise-acc-header">
-                    <div class="expertise-acc-icon bg-secondary/10 text-secondary">
-                        <span class="material-symbols-outlined !text-2xl">shield_with_heart</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800">Term Life Insurance</h3>
-                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
-                </div>
-                <div class="expertise-acc-content">
-                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Maximum coverage at minimal cost. Pure financial protection for your loved ones.</p>
-                    <a href="insurance/term-life-insurance.html" class="inline-flex items-center gap-2 text-xs font-bold text-secondary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
-                </div>
-            </div>
-
-            <!-- Acc Item 2 -->
-            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
-                <div class="expertise-acc-header">
-                    <div class="expertise-acc-icon bg-primary/10 text-primary">
-                        <span class="material-symbols-outlined !text-2xl">local_hospital</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800">Health Insurance</h3>
-                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
-                </div>
-                <div class="expertise-acc-content">
-                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Cashless hospitalization and comprehensive medical coverage for your entire family.</p>
-                    <a href="insurance/health-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-primary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
-                </div>
-            </div>
-
-            <!-- Acc Item 3 -->
-            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
-                <div class="expertise-acc-header">
-                    <div class="expertise-acc-icon bg-slate-100 text-slate-900">
-                        <span class="material-symbols-outlined !text-2xl">savings</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800">Endowment Plans</h3>
-                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
-                </div>
-                <div class="expertise-acc-content">
-                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Savings and insurance combined. Build a corpus while staying protected.</p>
-                    <a href="insurance/endowment-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-900">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
-                </div>
-            </div>
-
-            <!-- Acc Item 4 -->
-            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
-                <div class="expertise-acc-header">
-                    <div class="expertise-acc-icon bg-secondary/10 text-secondary">
-                        <span class="material-symbols-outlined !text-2xl">elderly</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800">Retirement Planning</h3>
-                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
-                </div>
-                <div class="expertise-acc-content">
-                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Pension plans and annuities to ensure a comfortable, worry-free retirement.</p>
-                    <a href="insurance/pension-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-secondary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
-                </div>
-            </div>
-
-            <!-- Acc Item 5 -->
-            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
-                <div class="expertise-acc-header">
-                    <div class="expertise-acc-icon bg-primary/10 text-primary">
-                        <span class="material-symbols-outlined !text-2xl">school</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800">Children Plans</h3>
-                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
-                </div>
-                <div class="expertise-acc-content">
-                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Secure your child's educational milestones with disciplined, goal-based savings.</p>
-                    <a href="insurance/children-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-primary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
-                </div>
-            </div>
-
-            <!-- Acc Item 6 -->
-            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
-                <div class="expertise-acc-header">
-                    <div class="expertise-acc-icon bg-slate-100 text-slate-900">
-                        <span class="material-symbols-outlined !text-2xl">real_estate_agent</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800">ULIP Plans</h3>
-                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
-                </div>
-                <div class="expertise-acc-content">
-                    <p class="text-slate-500 text-sm leading-relaxed mb-4">ULIPs and market-linked plans to grow your wealth with market participation.</p>
-                    <a href="insurance/ulip-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-900">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
-                </div>
-            </div>
-
-            <!-- Acc Item 7 -->
-            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
-                <div class="expertise-acc-header">
-                    <div class="expertise-acc-icon bg-secondary/10 text-secondary">
-                        <span class="material-symbols-outlined !text-2xl">payments</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800">Money Back Plans</h3>
-                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
-                </div>
-                <div class="expertise-acc-content">
-                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Periodic returns during the policy term to support short-term financial goals.</p>
-                    <a href="insurance/money-back-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-secondary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
-                </div>
-            </div>
-
-            <!-- Acc Item 8 -->
-            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
-                <div class="expertise-acc-header">
-                    <div class="expertise-acc-icon bg-primary/10 text-primary">
-                        <span class="material-symbols-outlined !text-2xl">all_inclusive</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800">Whole Life Plans</h3>
-                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
-                </div>
-                <div class="expertise-acc-content">
-                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Lifelong protection and savings that help build a legacy for your family.</p>
-                    <a href="insurance/whole-life-plans.html" class="inline-flex items-center gap-2 text-xs font-bold text-primary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
-                </div>
-            </div>
-
-            <!-- Acc Item 9 -->
-            <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
-                <div class="expertise-acc-header">
-                    <div class="expertise-acc-icon bg-slate-100 text-slate-900">
-                        <span class="material-symbols-outlined !text-2xl">groups</span>
-                    </div>
-                    <h3 class="font-bold text-slate-800">Micro Insurance</h3>
-                    <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
-                </div>
-                <div class="expertise-acc-content">
-                    <p class="text-slate-500 text-sm leading-relaxed mb-4">Affordable insurance solutions for low-income individuals and small groups.</p>
-                    <a href="insurance/micro-insurance.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-900">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
-                </div>
-            </div>
-        </div>
+        <div id="insurance-products-accordion" class="expertise-accordion space-y-4 px-4"></div>
       </div>
       
       <script>
@@ -1182,12 +931,130 @@
       const response = window.VSBackend ? await VSBackend.getSiteContent('insurance') : null;
       const INSURANCE_DATA = response?.content;
       if(!INSURANCE_DATA) return;
-      const updateText = (selector, text) => {
+      const updateText = (selector, text, mode = 'text') => {
         const el = document.querySelector(selector);
-        if(el && text) el.innerText = text;
+        if(el && text !== undefined && text !== null && String(text).length) {
+          if(mode === 'html') el.innerHTML = text;
+          else el.textContent = text;
+        }
+      };
+      const setButtonLabel = (selector, text) => {
+        const button = document.querySelector(selector);
+        if (!button || !text) return;
+        const label = button.querySelector('#hero-cta-label');
+        if (label) label.textContent = text;
       };
       const h = INSURANCE_DATA.hero || {};
-      updateText('p.text-lg.lg\\:text-xl', h.desc);
+      const s = INSURANCE_DATA.stats || {};
+      const story = INSURANCE_DATA.story || {};
+      const milestones = Array.isArray(INSURANCE_DATA.milestones) ? INSURANCE_DATA.milestones : [];
+      const products = Array.isArray(INSURANCE_DATA.products) ? INSURANCE_DATA.products : [];
+
+      updateText('#hero-badge-text', h.badge);
+      if (h.title) {
+        const title = String(h.title).trim();
+        const highlight = String(h.highlight || '').trim();
+        const titleEl = document.getElementById('hero-title-highlight');
+        const prefixEl = document.getElementById('hero-title-prefix');
+        if (titleEl) {
+          if (highlight && title.includes(highlight)) {
+            const [prefix] = title.split(highlight);
+            if (prefixEl) prefixEl.textContent = prefix.trim() || prefixEl.textContent;
+            titleEl.textContent = highlight;
+          } else {
+            if (prefixEl) prefixEl.textContent = title;
+            titleEl.textContent = highlight || titleEl.textContent;
+          }
+        }
+      } else {
+        updateText('#hero-title-highlight', h.highlight);
+      }
+      updateText('#hero-desc', h.desc);
+      setButtonLabel('#hero-cta-btn', h.btn1 || h.cta);
+      updateText('#hero-call-text', h.callText);
+      if (h.callNum) {
+        const callLink = document.getElementById('hero-call-link');
+        if (callLink) callLink.href = `tel:${String(h.callNum).replace(/\s+/g, '')}`;
+      }
+
+      updateText('#trust-stat-1-num', s.s1?.num);
+      updateText('#trust-stat-1-label', s.s1?.label);
+      updateText('#trust-stat-2-num', s.s2?.num);
+      updateText('#trust-stat-2-label', s.s2?.label);
+      updateText('#trust-stat-3-num', s.s3?.num);
+      updateText('#trust-stat-3-label', s.s3?.label);
+
+      if (story.img) {
+        const img = document.getElementById('story-image');
+        if (img) img.src = story.img;
+      }
+      updateText('#story-tagline', story.tag);
+      updateText('#story-quote', story.quote);
+      updateText('#story-name-line-1', String(story.name || '').split(' ').slice(0, 2).join(' ') || story.name);
+      const nameParts = String(story.name || '').trim().split(/\s+/);
+      updateText('#story-name-line-2', nameParts.slice(2).join(' ') || nameParts.slice(-1)[0]);
+      updateText('#story-p1', story.p1);
+      updateText('#story-p2', story.p2);
+      updateText('#story-side-name', story.name);
+
+      const timelineCards = [
+        ['#milestone-1-year', '#milestone-1-title', '#milestone-1-desc'],
+        ['#milestone-2-year', '#milestone-2-title', '#milestone-2-desc'],
+        ['#milestone-3-year', '#milestone-3-title', '#milestone-3-desc']
+      ];
+      timelineCards.forEach((selectors, index) => {
+        const item = milestones[index];
+        if (!item) return;
+        updateText(selectors[0], `${item.year} — ${String(item.title || '').toUpperCase()}`);
+        updateText(selectors[1], item.title);
+        updateText(selectors[2], item.desc);
+      });
+
+      updateText('#products-title', 'Comprehensive Coverage');
+      updateText('#products-desc', 'Tailored solutions for every stage of your life\'s journey.');
+      const productGrid = document.getElementById('insurance-products-grid');
+      if (productGrid && products.length) {
+        productGrid.innerHTML = products.map((product) => `
+          <a href="${String(product.link || '#')}" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll">
+              <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
+                  <span class="material-symbols-outlined !text-3xl">${String(product.icon || 'shield')}</span>
+              </div>
+              <h3 class="text-2xl font-extrabold text-slate-900">${String(product.title || '')}</h3>
+              <p class="text-slate-500 font-medium leading-relaxed">${String(product.desc || '')}</p>
+              <div class="mt-auto flex items-center gap-2 text-secondary font-bold">
+                  Learn More <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+              </div>
+          </a>
+        `).join('');
+      }
+      const accordion = document.getElementById('insurance-products-accordion');
+      if (accordion && products.length) {
+        accordion.innerHTML = `<p class="text-center text-slate-400 font-bold text-[10px] uppercase tracking-[0.2em] mb-6">Tap to expand coverage details</p>` + products.map((product) => `
+          <div class="expertise-acc-item" onclick="toggleExpertiseAcc(this)">
+            <div class="expertise-acc-header">
+              <div class="expertise-acc-icon ${String(product.icon || '').includes('savings') || String(product.icon || '').includes('payments') ? 'bg-secondary/10 text-secondary' : 'bg-primary/10 text-primary'}">
+                <span class="material-symbols-outlined !text-2xl">${String(product.icon || 'shield')}</span>
+              </div>
+              <h3 class="font-bold text-slate-800">${String(product.title || '')}</h3>
+              <span class="material-symbols-outlined expertise-acc-chevron">expand_more</span>
+            </div>
+            <div class="expertise-acc-content">
+              <p class="text-slate-500 text-sm leading-relaxed mb-4">${String(product.desc || '')}</p>
+              <a href="${String(product.link || '#')}" class="inline-flex items-center gap-2 text-xs font-bold text-primary">EXPLORE PLAN <span class="material-symbols-outlined !text-sm">arrow_forward</span></a>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      updateText('#story-side-title', story.tag || 'A Message on Family Protection');
+      updateText('#story-side-p1', story.p1);
+      updateText('#story-side-p2', story.p2);
+      updateText('#story-side-role', 'Principal Consultant');
+
+      const finalCta = document.querySelector('section.section-padding:last-of-type h2');
+      if (finalCta && h.highlight) {
+        finalCta.innerHTML = `Secure your <span class="text-secondary">${String(h.highlight).toLowerCase()}</span>, today.`;
+      }
     } catch(e) { console.error("Error syncing insurance data:", e); }
   })();
   </script>
