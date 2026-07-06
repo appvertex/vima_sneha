@@ -15,6 +15,14 @@ export function createAdminUiRoutes() {
     ['/Head/admin-counselling.html', ADMIN_UI.counselling],
     ['/Head/admin-insurance', ADMIN_UI.insurance],
     ['/Head/admin-insurance.html', ADMIN_UI.insurance],
+    ['/Head/admin-gallery', ADMIN_UI.gallery],
+    ['/Head/admin-gallery.html', ADMIN_UI.gallery],
+    ['/Head/admin-news', ADMIN_UI.news],
+    ['/Head/admin-news.html', ADMIN_UI.news],
+    ['/Head/admin-contact', ADMIN_UI.contact],
+    ['/Head/admin-contact.html', ADMIN_UI.contact],
+    ['/Head/admin-insurance-pages', ADMIN_UI.insurancePages],
+    ['/Head/admin-insurance-pages.html', ADMIN_UI.insurancePages],
     ['/Head/admin-pages', ADMIN_UI.pages],
     ['/Head/admin-pages.html', ADMIN_UI.pages]
   ];

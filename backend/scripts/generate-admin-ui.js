@@ -13,6 +13,10 @@ const files = {
   main: 'admin.html',
   counselling: 'admin-counselling.html',
   insurance: 'admin-insurance.html',
+  gallery: 'admin-gallery.html',
+  news: 'admin-news.html',
+  contact: 'admin-contact.html',
+  insurancePages: 'admin-insurance-pages.html',
   pages: 'admin-pages.html'
 };
 
