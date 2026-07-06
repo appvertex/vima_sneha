@@ -1079,7 +1079,7 @@
       const productGrid = document.getElementById('insurance-products-grid');
       if (productGrid && products.length) {
         productGrid.innerHTML = products.map((product) => `
-          <a href="${String(product.link || '#')}" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll">
+          <a href="${String(product.link || '#')}" class="expertise-card glass p-10 rounded-4xl flex flex-col gap-6 h-full no-underline group cursor-pointer block reveal-on-scroll active">
               <div class="w-16 h-16 rounded-3xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
                   <span class="material-symbols-outlined !text-3xl">${String(product.icon || 'shield')}</span>
               </div>
