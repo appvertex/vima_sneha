@@ -77,7 +77,153 @@
         { type: 'hours', icon: 'schedule', title: 'Hours', value: 'Mon - Sat: 9 AM - 7 PM', sub: 'Sunday by appointment', href: '' }
       ]
     },
-    insurancePages: {}
+    insurancePages: {
+      'term-life-insurance.html': {
+        navTitle: 'Term Life Insurance',
+        badge: 'Term Plans',
+        title: 'Pure Protection.',
+        highlight: 'Zero Compromise.',
+        desc: "Term insurance is the simplest and most affordable form of life insurance. It provides high life cover at a low premium, ensuring your family's lifestyle remains protected even in your absence.",
+        image: 'assets/images/hero-insurance.png',
+        metaDesc: 'Explore the best term life insurance plans by LIC, offered by Vima Sneha. Maximum protection for your family at affordable premiums.',
+        ctaText: 'Consult an Expert',
+        trustTitle: '100% Secure',
+        trustDesc: 'IRDAI Approved Plans',
+        products: [
+          { name: 'New Jeevan Amar', planNo: 'Plan No: 955', icon: 'verified_user', button: 'Get Details', points: ['High life cover at very nominal and affordable cost', 'Flexible premium payment: Single, Regular or Limited', 'Special lower premium rates for women', 'Tax benefits on premiums paid under Sec 80C'] },
+          { name: 'Saral Jeevan Bima', planNo: 'Plan No: 859', icon: 'shield', button: 'Get Details', points: ['Standard pure risk life insurance plan', 'Simple and easy to understand features', 'Limited Premium Paying Term available', 'Ideal for first-time insurance buyers'] },
+          { name: 'Yuva Term', planNo: 'Plan No: 875', icon: 'rocket_launch', button: 'Get Details', points: ['Specially designed for youngsters & professionals', 'Attractive High Sum Assured Rebates', 'Special lower premium rates for women', 'Available through digital & offline channels'] }
+        ]
+      },
+      'health-plans.html': {
+        navTitle: 'Health Plans',
+        badge: 'Family Wellness',
+        title: 'Comprehensive Care.',
+        highlight: 'Absolute Peace.',
+        desc: "Don't let medical expenses drain your savings. LIC's health plans provide robust financial support during health emergencies, ensuring the best treatment for your family.",
+        image: 'assets/images/hero-wellness.png',
+        metaDesc: "Comprehensive health insurance from LIC. Protect yourself and your family with Vima Sneha's health plans.",
+        ctaText: 'Consult an Expert',
+        trustTitle: '100% Secure',
+        trustDesc: 'IRDAI Approved Plans',
+        products: [
+          { name: 'Arogya Rakshak', planNo: 'Plan No: 906', icon: 'medical_services', button: 'Get Details', points: ['Fixed benefit health insurance cover', 'Hospital Cash Benefit (HCB)', 'Major Surgical Benefit (MSB)'] },
+          { name: 'Cancer Cover', planNo: 'Plan No: 905', icon: 'shield_moon', button: 'Get Details', points: ['Fixed benefit for Cancer detection', 'Waiver of Premium benefit'] }
+        ]
+      },
+      'endowment-plans.html': {
+        navTitle: 'Endowment Plans',
+        badge: 'Savings & Protection',
+        title: 'Wealth Creation.',
+        highlight: 'Guaranteed Legacy.',
+        desc: "Endowment plans offer a unique combination of protection and savings. They help you build a substantial corpus for your life goals while ensuring your family's financial security.",
+        image: 'assets/images/hero-insurance.png',
+        metaDesc: 'Secure your future with LIC Endowment Plans. Build a corpus and stay protected with Vima Sneha\'s expert guidance.',
+        ctaText: 'Consult an Expert',
+        trustTitle: '100% Secure',
+        trustDesc: 'IRDAI Approved Plans',
+        products: [
+          { name: 'New Endowment Assurance', planNo: 'Plan No: 714', icon: 'savings', button: 'Get Details', points: ['Encourage Long Term Savings', 'Guaranteed Addition at Rs. 50', 'Choice of Premium Payment Term'] },
+          { name: 'New Jeevan Anand', planNo: 'Plan No: 715', icon: 'celebration', button: 'Get Details', points: ['Risk cover continues even after Maturity', 'Financial Protection throughout your life'] },
+          { name: 'Jeevan Lakshya', planNo: 'Plan No: 733', icon: 'target', button: 'Get Details', points: ['Annual Income Benefit for family', 'Limited Premium Payment Term'] }
+        ]
+      },
+      'pension-plans.html': {
+        navTitle: 'Pension & Retirement Plans',
+        badge: 'Retire in Style',
+        title: 'Golden Years.',
+        highlight: 'Guaranteed Income.',
+        desc: "Retirement planning is about ensuring you can maintain your lifestyle and financial independence even after you stop working. LIC's pension plans provide a steady stream of income for life.",
+        image: 'assets/images/hero-family.png',
+        metaDesc: 'Plan a secure retirement with LIC pension plans and annuities from Vima Sneha.',
+        ctaText: 'Consult an Expert',
+        trustTitle: '100% Secure',
+        trustDesc: 'IRDAI Approved Plans',
+        products: [
+          { name: 'New Jeevan Shanti', planNo: 'Plan No: 858', icon: 'account_balance', button: 'Get Details', points: ['Single premium Deferred Annuity plan'] },
+          { name: 'Jeevan Akshay VII', planNo: 'Plan No: 857', icon: 'elderly', button: 'Get Details', points: ['Immediate Annuity plan'] }
+        ]
+      },
+      'children-plans.html': {
+        navTitle: 'Children Plans',
+        badge: 'Securing Milestones',
+        title: 'Nurture Dreams.',
+        highlight: 'Secure Futures.',
+        desc: "Secure your child's education and marriage milestones with disciplined, goal-based savings. Ensure their dreams are fulfilled, even in your absence.",
+        image: 'assets/images/hero-family.png',
+        metaDesc: "Secure your child's future with LIC children plans from Vima Sneha.",
+        ctaText: 'Consult an Expert',
+        trustTitle: '100% Secure',
+        trustDesc: 'IRDAI Approved Plans',
+        products: [
+          { name: "New Children's Money Back", planNo: 'Plan No: 732', icon: 'child_care', button: 'Get Details', points: ['Ideal for education milestones'] },
+          { name: 'Jeevan Tarun', planNo: 'Plan No: 734', icon: 'school', button: 'Get Details', points: ['Guaranteed returns between age 20-24'] }
+        ]
+      },
+      'ulip-plans.html': {
+        navTitle: 'ULIP Plans',
+        badge: 'Market Participation',
+        title: 'Wealth Growth.',
+        highlight: 'Dynamic Returns.',
+        desc: 'Unit Linked Insurance Plans (ULIPs) offer the best of both worlds: high growth potential through market-linked investments and the safety of life insurance.',
+        image: 'assets/images/hero-insurance.png',
+        metaDesc: 'Grow your wealth with LIC ULIP plans and market-linked insurance solutions.',
+        ctaText: 'Consult an Expert',
+        trustTitle: '100% Secure',
+        trustDesc: 'IRDAI Approved Plans',
+        products: [
+          { name: 'SIIP', planNo: 'Plan No: 752', icon: 'trending_up', button: 'Get Details', points: ['Guaranteed addition after every 5 years'] },
+          { name: 'Nivesh Plus', planNo: 'Plan No: 749', icon: 'paid', button: 'Get Details', points: ['Single premium payment unit linked plan'] }
+        ]
+      },
+      'money-back-plans.html': {
+        navTitle: 'Money Back Plans',
+        badge: 'Liquidity & Protection',
+        title: 'Periodic Returns.',
+        highlight: 'Continuous Safety.',
+        desc: 'Money back plans provide periodic payouts during the policy term, helping you meet short-term financial needs while keeping your life cover intact.',
+        image: 'assets/images/hero-insurance.png',
+        metaDesc: 'Explore LIC money back plans for regular payouts and protection.',
+        ctaText: 'Consult an Expert',
+        trustTitle: '100% Secure',
+        trustDesc: 'IRDAI Approved Plans',
+        products: [
+          { name: 'New Money Back 20 Years', planNo: 'Plan No: 720', icon: 'payments', button: 'Get Details', points: ['Limited Premium Paying Term'] },
+          { name: 'Bima Shree', planNo: 'Plan No: 748', icon: 'workspace_premium', button: 'Get Details', points: ['Designed for High Networth Individuals'] }
+        ]
+      },
+      'whole-life-plans.html': {
+        navTitle: 'Whole Life Plans',
+        badge: 'Lifetime Security',
+        title: 'Lifelong Cover.',
+        highlight: 'Endless Protection.',
+        desc: "Whole life insurance provides coverage for your entire lifetime. It's a perfect way to build a legacy for your family while enjoying guaranteed returns during your lifetime.",
+        image: 'assets/images/hero-family.png',
+        metaDesc: 'Secure lifelong protection with LIC whole life plans from Vima Sneha.',
+        ctaText: 'Consult an Expert',
+        trustTitle: '100% Secure',
+        trustDesc: 'IRDAI Approved Plans',
+        products: [
+          { name: 'Jeevan Umang', planNo: 'Plan No: 945', icon: 'all_inclusive', button: 'Get Details', points: ['Whole life assurance plan with profits'] },
+          { name: 'Jeevan Utsav', planNo: 'Plan No: 771', icon: 'festival', button: 'Get Details', points: ['Guaranteed income benefit for lifetime'] }
+        ]
+      },
+      'micro-insurance.html': {
+        navTitle: 'Micro Insurance',
+        badge: 'Inclusion for All',
+        title: 'Small Premiums.',
+        highlight: 'Big Security.',
+        desc: 'Micro insurance plans are specifically designed to provide affordable life cover to low-income groups. They offer essential protection at very nominal costs.',
+        image: 'assets/images/hero-insurance.png',
+        metaDesc: 'Affordable LIC micro insurance plans from Vima Sneha for broader financial protection.',
+        ctaText: 'Consult an Expert',
+        trustTitle: '100% Secure',
+        trustDesc: 'IRDAI Approved Plans',
+        products: [
+          { name: 'Micro Bachat', planNo: 'Plan No: 751', icon: 'groups', button: 'Get Details', points: ['Life micro insurance plan with savings'] }
+        ]
+      }
+    }
   };
 
   function read() {

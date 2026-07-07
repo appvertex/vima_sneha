@@ -287,7 +287,14 @@
   }
 
   function pathToKeys(path) {
-    return String(path).replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
+    const parts = [];
+    const input = String(path);
+    const re = /\[(?:"([^"]+)"|'([^']+)'|(\d+))\]|[^.[\]]+/g;
+    let match;
+    while ((match = re.exec(input))) {
+      parts.push(match[1] ?? match[2] ?? match[3] ?? match[0]);
+    }
+    return parts.filter(Boolean);
   }
 
   function getPath(root, path) {
@@ -540,6 +547,7 @@
   }
 
   function renderInsurancePages() {
+    const activeKey = JSON.stringify(activePlan);
     return `
       <section class="section">
         <div class="section-head"><div><h2>Choose Detail Page</h2><p>Switch between the individual insurance pages.</p></div></div>
@@ -553,11 +561,11 @@
       <section class="section">
         <div class="section-head"><div><h2>Hero Story</h2><p>Content shown on the selected insurance detail page.</p></div></div>
         <div class="edit-grid">
-          <div class="edit-card"><div class="edit-card-body">${field(`insurancePages.${activePlan}.badge`,'Badge')}${field(`insurancePages.${activePlan}.title`,'Title')}${field(`insurancePages.${activePlan}.highlight`,'Highlight')}${field(`insurancePages.${activePlan}.desc`,'Description',{type:'textarea',rows:4})}</div></div>
-          <div class="edit-card"><div class="edit-card-body">${field(`insurancePages.${activePlan}.image`,'Image Path or URL')}${field(`insurancePages.${activePlan}.metaDesc`,'Meta Description')}${field(`insurancePages.${activePlan}.ctaText`,'Hero Button Text')}${field(`insurancePages.${activePlan}.trustTitle`,'Trust Title')}${field(`insurancePages.${activePlan}.trustDesc`,'Trust Description',{type:'textarea',rows:3})}</div></div>
+          <div class="edit-card"><div class="edit-card-body">${field(`insurancePages[${activeKey}].badge`,'Badge')}${field(`insurancePages[${activeKey}].title`,'Title')}${field(`insurancePages[${activeKey}].highlight`,'Highlight')}${field(`insurancePages[${activeKey}].desc`,'Description',{type:'textarea',rows:4})}</div></div>
+          <div class="edit-card"><div class="edit-card-body">${field(`insurancePages[${activeKey}].image`,'Image Path or URL')}${field(`insurancePages[${activeKey}].metaDesc`,'Meta Description')}${field(`insurancePages[${activeKey}].ctaText`,'Hero Button Text')}${field(`insurancePages[${activeKey}].trustTitle`,'Trust Title')}${field(`insurancePages[${activeKey}].trustDesc`,'Trust Description',{type:'textarea',rows:3})}</div></div>
         </div>
       </section>
-      ${objectListSection('Products', `insurancePages.${activePlan}.products`, [
+      ${objectListSection('Products', `insurancePages[${activeKey}].products`, [
         { key: 'name', label: 'Name' },
         { key: 'planNo', label: 'Plan No' },
         { key: 'icon', label: 'Icon Key' },
