@@ -418,7 +418,7 @@
         <div class="edit-grid">
           ${values.map((item, index) => `
             <div class="edit-card">
-              <div class="edit-card-header">Item ${index + 1} <button class="del-btn" style="float:right" onclick="removeListItem('${path}', ${index})">×</button></div>
+          <div class="edit-card-header">Item ${index + 1} <button class="del-btn" type="button" style="float:right" onclick="removeListItem('${path}', ${index})">×</button></div>
               <div class="edit-card-body">
                 <div class="field">
                   <label>Value</label>
@@ -428,7 +428,7 @@
             </div>
           `).join('')}
         </div>
-        <button class="add-btn" onclick="addListItem('${path}', ${JSON.stringify(defaultValue)})">+ Add Item</button>
+        <button class="add-btn" type="button" onclick="addListItem('${path}', ${JSON.stringify(defaultValue)})">+ Add Item</button>
       </section>
     `;
   }
@@ -446,7 +446,7 @@
         <div class="edit-grid">
           ${values.map((item, index) => `
             <div class="edit-card">
-              <div class="edit-card-header">${esc(title.slice(0, -1) || 'Item')} ${index + 1} <button class="del-btn" style="float:right" onclick="removeListItem('${path}', ${index})">×</button></div>
+              <div class="edit-card-header">${esc(title.slice(0, -1) || 'Item')} ${index + 1} <button class="del-btn" type="button" style="float:right" onclick="removeListItem('${path}', ${index})">×</button></div>
               <div class="edit-card-body">
                 ${fields.map((f) => field(`${path}[${index}].${f.key}`, f.label, f)).join('')}
                 ${typeof item.points !== 'undefined' ? pointsEditor(path, index) : ''}
@@ -454,7 +454,7 @@
             </div>
           `).join('')}
         </div>
-        <button class="add-btn" onclick="addObjectItem('${path}', ${JSON.stringify(defaultItem)})">+ Add ${esc(title.slice(0, -1) || 'Item')}</button>
+        <button class="add-btn" type="button" onclick="addObjectItem('${path}', ${JSON.stringify(defaultItem)})">+ Add ${esc(title.slice(0, -1) || 'Item')}</button>
       </section>
     `;
   }
@@ -554,7 +554,7 @@
         <div class="pill-row">
           ${PLAN_FILES.map((file) => {
             const label = STATE.insurancePages?.[file]?.navTitle || file.replace('.html', '').replace(/[-_]/g, ' ');
-            return `<button class="plan-pill ${file === activePlan ? 'active' : ''}" onclick="setPlan('${file}')">${esc(label)}</button>`;
+            return `<button type="button" class="plan-pill ${file === activePlan ? 'active' : ''}" onclick="setPlan('${file}')">${esc(label)}</button>`;
           }).join('')}
         </div>
       </section>
