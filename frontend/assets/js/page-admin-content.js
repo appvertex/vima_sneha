@@ -494,7 +494,7 @@
           VSBackend.request('/api/site/news')
         ]);
         const siteContent = siteResponse?.content || {};
-        const siteNews = siteContent.news || {};
+        const siteNews = siteContent.news || siteContent;
         const siteArticles = Array.isArray(siteNews.articles) ? siteNews.articles : [];
         const dbArticles = Array.isArray(newsResponse?.articles) ? newsResponse.articles : [];
         const articles = siteArticles.length ? siteArticles : dbArticles;
