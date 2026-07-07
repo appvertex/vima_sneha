@@ -355,7 +355,7 @@
 
   function articleCard(article) {
     const category = article.category || '';
-    return `<article class="news-card scroll-reveal" data-category="${esc(category)}">
+    return `<article class="news-card scroll-reveal revealed" data-category="${esc(category)}">
       <div class="news-card-img-wrap">
         <img src="${esc(article.image || 'data:image/gif;base64,R0lGODlhAQABAAAAACw=')}" alt="${esc(article.title)}" />
         <div class="news-card-img-overlay"></div>
