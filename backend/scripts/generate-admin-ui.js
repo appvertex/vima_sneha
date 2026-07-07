@@ -5,8 +5,15 @@ import { fileURLToPath } from 'node:url';
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const root = resolve(scriptDir, '..', '..');
 const frontendHead = resolve(root, 'frontend', 'Head');
+const frontendAssets = resolve(root, 'frontend', 'assets');
 const outFile = resolve(root, 'backend', 'src', 'admin-ui.generated.js');
 const pagesAssetBase = 'https://vima-sneha.pages.dev/assets/';
+const inlineEditorPages = new Set([
+  'admin-gallery.html',
+  'admin-news.html',
+  'admin-contact.html',
+  'admin-insurance-pages.html'
+]);
 
 const files = {
   login: 'admin-login.html',
@@ -23,7 +30,22 @@ const files = {
 const generated = {};
 for (const [key, filename] of Object.entries(files)) {
   const source = readFileSync(resolve(frontendHead, filename), 'utf8');
-  generated[key] = source.replaceAll('../assets/', pagesAssetBase);
+  let html = source;
+  if (inlineEditorPages.has(filename)) {
+    const editorCss = readFileSync(resolve(frontendAssets, 'css', 'admin-section-editor.css'), 'utf8');
+    const editorJs = readFileSync(resolve(frontendAssets, 'js', 'admin-section-editor.js'), 'utf8');
+    html = html
+      .replace(
+        '<link rel="stylesheet" href="../assets/css/admin-section-editor.css">',
+        `<style>\n${editorCss}\n</style>`
+      )
+      .replace(
+        '<script src="../assets/js/admin-section-editor.js?v=20260706"></script>',
+        `<script>\n${editorJs}\n</script>`
+      );
+  }
+  html = html.replaceAll('../assets/', pagesAssetBase);
+  generated[key] = html;
 }
 
 const moduleSource = `export const ADMIN_UI = ${JSON.stringify(generated, null, 2)};
