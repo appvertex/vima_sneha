@@ -90,6 +90,145 @@
     ]
   };
 
+  function buildInsurancePageDefaults({
+    navTitle,
+    badge,
+    title,
+    highlight,
+    desc,
+    metaDesc,
+    ctaText = 'Consult an Expert',
+    trustTitle = '100% Secure',
+    trustDesc = 'IRDAI Approved Plans',
+    products
+  }) {
+    return {
+      navTitle,
+      badge,
+      title,
+      highlight,
+      desc,
+      image: 'https://vima-sneha.pages.dev/assets/images/hero-insurance.png',
+      metaDesc,
+      ctaText,
+      trustTitle,
+      trustDesc,
+      products
+    };
+  }
+
+  const DEFAULT_INSURANCE_PAGES = {
+    'term-life-insurance.html': buildInsurancePageDefaults({
+      navTitle: 'Term Life Insurance',
+      badge: 'Term Plans',
+      title: 'Pure Protection.',
+      highlight: 'Zero Compromise.',
+      desc: "Term insurance is the simplest and most affordable form of life insurance. It provides high life cover at a low premium, ensuring your family's lifestyle remains protected even in your absence.",
+      metaDesc: 'Explore the best term life insurance plans by LIC, offered by Vima Sneha. Maximum protection for your family at affordable premiums.',
+      products: [
+        { name: 'New Jeevan Amar', planNo: 'Plan No: 955', icon: 'verified_user', button: 'Get Details', points: ['High life cover at very nominal and affordable cost', 'Flexible premium payment: Single, Regular or Limited', 'Special lower premium rates for women', 'Tax benefits on premiums paid under Sec 80C'] },
+        { name: 'Saral Jeevan Bima', planNo: 'Plan No: 859', icon: 'shield', button: 'Get Details', points: ['Standard pure risk life insurance plan', 'Simple and easy to understand features', 'Limited Premium Paying Term available', 'Ideal for first-time insurance buyers'] },
+        { name: 'Yuva Term', planNo: 'Plan No: 875', icon: 'rocket_launch', button: 'Get Details', points: ['Specially designed for youngsters & professionals', 'Attractive High Sum Assured Rebates', 'Special lower premium rates for women', 'Available through digital & offline channels'] }
+      ]
+    }),
+    'health-plans.html': buildInsurancePageDefaults({
+      navTitle: 'Health Plans',
+      badge: 'Family Wellness',
+      title: 'Comprehensive Care.',
+      highlight: 'Absolute Peace.',
+      desc: "Don't let medical expenses drain your savings. LIC's health plans provide robust financial support during health emergencies, ensuring the best treatment for your family.",
+      metaDesc: "Comprehensive health insurance from LIC. Protect yourself and your family with Vima Sneha's health plans.",
+      products: [
+        { name: 'Arogya Rakshak', planNo: 'Plan No: 906', icon: 'medical_services', button: 'Get Details', points: ['Fixed benefit health insurance cover', 'Hospital Cash Benefit (HCB)', 'Major Surgical Benefit (MSB)'] },
+        { name: 'Cancer Cover', planNo: 'Plan No: 905', icon: 'shield_moon', button: 'Get Details', points: ['Fixed benefit for Cancer detection', 'Waiver of Premium benefit'] }
+      ]
+    }),
+    'endowment-plans.html': buildInsurancePageDefaults({
+      navTitle: 'Endowment Plans',
+      badge: 'Savings & Protection',
+      title: 'Wealth Creation.',
+      highlight: 'Guaranteed Legacy.',
+      desc: "Endowment plans offer a unique combination of protection and savings. They help you build a substantial corpus for your life goals while ensuring your family's financial security.",
+      metaDesc: 'Secure your future with LIC Endowment Plans. Build a corpus and stay protected with Vima Sneha\'s expert guidance.',
+      products: [
+        { name: 'New Endowment Assurance', planNo: 'Plan No: 714', icon: 'savings', button: 'Get Details', points: ['Encourage Long Term Savings', 'Guaranteed Addition at Rs. 50', 'Choice of Premium Payment Term'] },
+        { name: 'New Jeevan Anand', planNo: 'Plan No: 715', icon: 'celebration', button: 'Get Details', points: ['Risk cover continues even after Maturity', 'Financial Protection throughout your life'] },
+        { name: 'Jeevan Lakshya', planNo: 'Plan No: 733', icon: 'target', button: 'Get Details', points: ['Annual Income Benefit for family', 'Limited Premium Payment Term'] }
+      ]
+    }),
+    'pension-plans.html': buildInsurancePageDefaults({
+      navTitle: 'Pension & Retirement Plans',
+      badge: 'Retire in Style',
+      title: 'Golden Years.',
+      highlight: 'Guaranteed Income.',
+      desc: "Retirement planning is about ensuring you can maintain your lifestyle and financial independence even after you stop working. LIC's pension plans provide a steady stream of income for life.",
+      metaDesc: 'Plan a secure retirement with LIC pension plans and annuities from Vima Sneha.',
+      products: [
+        { name: 'New Jeevan Shanti', planNo: 'Plan No: 858', icon: 'account_balance', button: 'Get Details', points: ['Single premium Deferred Annuity plan'] },
+        { name: 'Jeevan Akshay VII', planNo: 'Plan No: 857', icon: 'elderly', button: 'Get Details', points: ['Immediate Annuity plan'] }
+      ]
+    }),
+    'children-plans.html': buildInsurancePageDefaults({
+      navTitle: 'Children Plans',
+      badge: 'Securing Milestones',
+      title: 'Nurture Dreams.',
+      highlight: 'Secure Futures.',
+      desc: "Secure your child's education and marriage milestones with disciplined, goal-based savings. Ensure their dreams are fulfilled, even in your absence.",
+      metaDesc: "Secure your child's future with LIC children plans from Vima Sneha.",
+      products: [
+        { name: "New Children's Money Back", planNo: 'Plan No: 732', icon: 'child_care', button: 'Get Details', points: ['Ideal for education milestones'] },
+        { name: 'Jeevan Tarun', planNo: 'Plan No: 734', icon: 'school', button: 'Get Details', points: ['Guaranteed returns between age 20-24'] }
+      ]
+    }),
+    'ulip-plans.html': buildInsurancePageDefaults({
+      navTitle: 'ULIP Plans',
+      badge: 'Market Participation',
+      title: 'Wealth Growth.',
+      highlight: 'Dynamic Returns.',
+      desc: "Unit Linked Insurance Plans (ULIPs) offer the best of both worlds: high growth potential through market-linked investments and the safety of life insurance.",
+      metaDesc: 'Grow your wealth with LIC ULIP plans and market-linked insurance solutions.',
+      products: [
+        { name: 'SIIP', planNo: 'Plan No: 752', icon: 'trending_up', button: 'Get Details', points: ['Guaranteed addition after every 5 years'] },
+        { name: 'Nivesh Plus', planNo: 'Plan No: 749', icon: 'paid', button: 'Get Details', points: ['Single premium payment unit linked plan'] }
+      ]
+    }),
+    'money-back-plans.html': buildInsurancePageDefaults({
+      navTitle: 'Money Back Plans',
+      badge: 'Liquidity & Protection',
+      title: 'Periodic Returns.',
+      highlight: 'Continuous Safety.',
+      desc: 'Money back plans provide periodic payouts during the policy term, helping you meet short-term financial needs while keeping your life cover intact.',
+      metaDesc: 'Explore LIC money back plans for regular payouts and protection.',
+      products: [
+        { name: 'New Money Back 20 Years', planNo: 'Plan No: 720', icon: 'payments', button: 'Get Details', points: ['Limited Premium Paying Term'] },
+        { name: 'Bima Shree', planNo: 'Plan No: 748', icon: 'workspace_premium', button: 'Get Details', points: ['Designed for High Networth Individuals'] }
+      ]
+    }),
+    'whole-life-plans.html': buildInsurancePageDefaults({
+      navTitle: 'Whole Life Plans',
+      badge: 'Lifetime Security',
+      title: 'Lifelong Cover.',
+      highlight: 'Endless Protection.',
+      desc: "Whole life insurance provides coverage for your entire lifetime. It's a perfect way to build a legacy for your family while enjoying guaranteed returns during your lifetime.",
+      metaDesc: 'Secure lifelong protection with LIC whole life plans from Vima Sneha.',
+      products: [
+        { name: 'Jeevan Umang', planNo: 'Plan No: 945', icon: 'all_inclusive', button: 'Get Details', points: ['Whole life assurance plan with profits'] },
+        { name: 'Jeevan Utsav', planNo: 'Plan No: 771', icon: 'festival', button: 'Get Details', points: ['Guaranteed income benefit for lifetime'] }
+      ]
+    }),
+    'micro-insurance.html': buildInsurancePageDefaults({
+      navTitle: 'Micro Insurance',
+      badge: 'Inclusion for All',
+      title: 'Small Premiums.',
+      highlight: 'Big Security.',
+      desc: 'Micro insurance plans are specifically designed to provide affordable life cover to low-income groups. They offer essential protection at very nominal costs.',
+      metaDesc: 'Affordable LIC micro insurance plans from Vima Sneha for broader financial protection.',
+      products: [
+        { name: 'Micro Bachat', planNo: 'Plan No: 751', icon: 'groups', button: 'Get Details', points: ['Life micro insurance plan with savings'] }
+      ]
+    })
+  };
+
   const PAGE_META = {
     gallery: {
       title: 'Gallery Admin',
@@ -167,7 +306,10 @@
     if (MODE === 'insurancePages') {
       STATE.insurancePages = STATE.insurancePages || {};
       PLAN_FILES.forEach((file) => {
-        STATE.insurancePages[file] = merge(clone(DEFAULT_INSURANCE_PLAN), STATE.insurancePages[file] || {});
+        STATE.insurancePages[file] = merge(
+          clone(DEFAULT_INSURANCE_PAGES[file] || DEFAULT_INSURANCE_PLAN),
+          STATE.insurancePages[file] || {}
+        );
       });
     }
   }
@@ -402,7 +544,10 @@
       <section class="section">
         <div class="section-head"><div><h2>Choose Detail Page</h2><p>Switch between the individual insurance pages.</p></div></div>
         <div class="pill-row">
-          ${PLAN_FILES.map((file) => `<button class="plan-pill ${file === activePlan ? 'active' : ''}" onclick="setPlan('${file}')">${esc(file.replace('.html', '').replace(/[-_]/g, ' '))}</button>`).join('')}
+          ${PLAN_FILES.map((file) => {
+            const label = STATE.insurancePages?.[file]?.navTitle || file.replace('.html', '').replace(/[-_]/g, ' ');
+            return `<button class="plan-pill ${file === activePlan ? 'active' : ''}" onclick="setPlan('${file}')">${esc(label)}</button>`;
+          }).join('')}
         </div>
       </section>
       <section class="section">
@@ -503,7 +648,7 @@
     const response = await window.VSBackend.getAdminContent(key);
     const content = response?.content || {};
     if (MODE === 'insurancePages') {
-      STATE = merge(clone(DEFAULTS.insurancePages), content);
+      STATE = merge(clone(DEFAULT_INSURANCE_PAGES), content);
       ensureStateShape();
     } else {
       STATE = merge(clone(DEFAULTS[MODE]), content);
