@@ -334,9 +334,6 @@
     }
     const grid = document.getElementById('news-grid');
     if (grid) grid.innerHTML = normal.map(article => articleCard(article)).join('');
-    setText('.newsletter-section h2', data.newsletterTitle);
-    setText('.newsletter-section p', data.newsletterDesc);
-    setText('#newsletter-subscribe', data.newsletterButtonText);
   }
 
   function normalizeNewsArticle(article, index) {
