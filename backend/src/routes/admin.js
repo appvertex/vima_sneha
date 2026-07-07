@@ -2,7 +2,7 @@ import { Hono } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 import { json } from '../lib/http.js';
 import { destroySession, loginAdmin, requireAdminSession } from '../lib/auth.js';
-import { readJson, safePageKey } from '../lib/content.js';
+import { normalizeContentForPageKey, readJson, safePageKey } from '../lib/content.js';
 
 export function createAdminRoutes() {
   const app = new Hono();
@@ -63,7 +63,8 @@ export function createAdminRoutes() {
     const row = await c.env.DB.prepare('SELECT page_key, content_json, updated_at FROM site_content WHERE page_key = ? LIMIT 1')
       .bind(pageKey)
       .first();
-    return json({ ok: true, pageKey, content: row ? JSON.parse(row.content_json || '{}') : {}, updatedAt: row?.updated_at || null });
+    const content = row ? JSON.parse(row.content_json || '{}') : {};
+    return json({ ok: true, pageKey, content: normalizeContentForPageKey(pageKey, content), updatedAt: row?.updated_at || null });
   });
 
   app.put('/content/:pageKey', async (c) => {

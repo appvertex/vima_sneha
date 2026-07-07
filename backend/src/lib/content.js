@@ -16,3 +16,11 @@ export async function readJson(request) {
   }
 }
 
+export function normalizeContentForPageKey(pageKey, content) {
+  if (pageKey !== 'pages') return content || {};
+  const data = content || {};
+  if (data.insurancePages && typeof data.insurancePages === 'object' && !Array.isArray(data.insurancePages)) {
+    return data;
+  }
+  return { insurancePages: data };
+}
