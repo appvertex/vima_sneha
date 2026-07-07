@@ -90,9 +90,9 @@
         trustTitle: '100% Secure',
         trustDesc: 'IRDAI Approved Plans',
         products: [
-          { name: 'New Jeevan Amar', planNo: 'Plan No: 955', icon: 'verified_user', button: 'Get Details', points: ['High life cover at very nominal and affordable cost', 'Flexible premium payment: Single, Regular or Limited', 'Special lower premium rates for women', 'Tax benefits on premiums paid under Sec 80C'] },
-          { name: 'Saral Jeevan Bima', planNo: 'Plan No: 859', icon: 'shield', button: 'Get Details', points: ['Standard pure risk life insurance plan', 'Simple and easy to understand features', 'Limited Premium Paying Term available', 'Ideal for first-time insurance buyers'] },
-          { name: 'Yuva Term', planNo: 'Plan No: 875', icon: 'rocket_launch', button: 'Get Details', points: ['Specially designed for youngsters & professionals', 'Attractive High Sum Assured Rebates', 'Special lower premium rates for women', 'Available through digital & offline channels'] }
+          { name: 'New Jeevan Amar', planNo: 'Plan No: 955', icon: 'verified_user', button: 'Get Details', pdf: '', points: ['High life cover at very nominal and affordable cost', 'Flexible premium payment: Single, Regular or Limited', 'Special lower premium rates for women', 'Tax benefits on premiums paid under Sec 80C'] },
+          { name: 'Saral Jeevan Bima', planNo: 'Plan No: 859', icon: 'shield', button: 'Get Details', pdf: '', points: ['Standard pure risk life insurance plan', 'Simple and easy to understand features', 'Limited Premium Paying Term available', 'Ideal for first-time insurance buyers'] },
+          { name: 'Yuva Term', planNo: 'Plan No: 875', icon: 'rocket_launch', button: 'Get Details', pdf: '', points: ['Specially designed for youngsters & professionals', 'Attractive High Sum Assured Rebates', 'Special lower premium rates for women', 'Available through digital & offline channels'] }
         ]
       },
       'health-plans.html': {
@@ -107,8 +107,8 @@
         trustTitle: '100% Secure',
         trustDesc: 'IRDAI Approved Plans',
         products: [
-          { name: 'Arogya Rakshak', planNo: 'Plan No: 906', icon: 'medical_services', button: 'Get Details', points: ['Fixed benefit health insurance cover', 'Hospital Cash Benefit (HCB)', 'Major Surgical Benefit (MSB)'] },
-          { name: 'Cancer Cover', planNo: 'Plan No: 905', icon: 'shield_moon', button: 'Get Details', points: ['Fixed benefit for Cancer detection', 'Waiver of Premium benefit'] }
+          { name: 'Arogya Rakshak', planNo: 'Plan No: 906', icon: 'medical_services', button: 'Get Details', pdf: '', points: ['Fixed benefit health insurance cover', 'Hospital Cash Benefit (HCB)', 'Major Surgical Benefit (MSB)'] },
+          { name: 'Cancer Cover', planNo: 'Plan No: 905', icon: 'shield_moon', button: 'Get Details', pdf: '', points: ['Fixed benefit for Cancer detection', 'Waiver of Premium benefit'] }
         ]
       },
       'endowment-plans.html': {
@@ -123,9 +123,9 @@
         trustTitle: '100% Secure',
         trustDesc: 'IRDAI Approved Plans',
         products: [
-          { name: 'New Endowment Assurance', planNo: 'Plan No: 714', icon: 'savings', button: 'Get Details', points: ['Encourage Long Term Savings', 'Guaranteed Addition at Rs. 50', 'Choice of Premium Payment Term'] },
-          { name: 'New Jeevan Anand', planNo: 'Plan No: 715', icon: 'celebration', button: 'Get Details', points: ['Risk cover continues even after Maturity', 'Financial Protection throughout your life'] },
-          { name: 'Jeevan Lakshya', planNo: 'Plan No: 733', icon: 'target', button: 'Get Details', points: ['Annual Income Benefit for family', 'Limited Premium Payment Term'] }
+          { name: 'New Endowment Assurance', planNo: 'Plan No: 714', icon: 'savings', button: 'Get Details', pdf: '', points: ['Encourage Long Term Savings', 'Guaranteed Addition at Rs. 50', 'Choice of Premium Payment Term'] },
+          { name: 'New Jeevan Anand', planNo: 'Plan No: 715', icon: 'celebration', button: 'Get Details', pdf: '', points: ['Risk cover continues even after Maturity', 'Financial Protection throughout your life'] },
+          { name: 'Jeevan Lakshya', planNo: 'Plan No: 733', icon: 'target', button: 'Get Details', pdf: '', points: ['Annual Income Benefit for family', 'Limited Premium Payment Term'] }
         ]
       },
       'pension-plans.html': {
@@ -140,8 +140,8 @@
         trustTitle: '100% Secure',
         trustDesc: 'IRDAI Approved Plans',
         products: [
-          { name: 'New Jeevan Shanti', planNo: 'Plan No: 858', icon: 'account_balance', button: 'Get Details', points: ['Single premium Deferred Annuity plan'] },
-          { name: 'Jeevan Akshay VII', planNo: 'Plan No: 857', icon: 'elderly', button: 'Get Details', points: ['Immediate Annuity plan'] }
+          { name: 'New Jeevan Shanti', planNo: 'Plan No: 858', icon: 'account_balance', button: 'Get Details', pdf: '', points: ['Single premium Deferred Annuity plan'] },
+          { name: 'Jeevan Akshay VII', planNo: 'Plan No: 857', icon: 'elderly', button: 'Get Details', pdf: '', points: ['Immediate Annuity plan'] }
         ]
       },
       'children-plans.html': {
@@ -156,8 +156,8 @@
         trustTitle: '100% Secure',
         trustDesc: 'IRDAI Approved Plans',
         products: [
-          { name: "New Children's Money Back", planNo: 'Plan No: 732', icon: 'child_care', button: 'Get Details', points: ['Ideal for education milestones'] },
-          { name: 'Jeevan Tarun', planNo: 'Plan No: 734', icon: 'school', button: 'Get Details', points: ['Guaranteed returns between age 20-24'] }
+          { name: "New Children's Money Back", planNo: 'Plan No: 732', icon: 'child_care', button: 'Get Details', pdf: '', points: ['Ideal for education milestones'] },
+          { name: 'Jeevan Tarun', planNo: 'Plan No: 734', icon: 'school', button: 'Get Details', pdf: '', points: ['Guaranteed returns between age 20-24'] }
         ]
       },
       'ulip-plans.html': {
@@ -172,8 +172,8 @@
         trustTitle: '100% Secure',
         trustDesc: 'IRDAI Approved Plans',
         products: [
-          { name: 'SIIP', planNo: 'Plan No: 752', icon: 'trending_up', button: 'Get Details', points: ['Guaranteed addition after every 5 years'] },
-          { name: 'Nivesh Plus', planNo: 'Plan No: 749', icon: 'paid', button: 'Get Details', points: ['Single premium payment unit linked plan'] }
+          { name: 'SIIP', planNo: 'Plan No: 752', icon: 'trending_up', button: 'Get Details', pdf: '', points: ['Guaranteed addition after every 5 years'] },
+          { name: 'Nivesh Plus', planNo: 'Plan No: 749', icon: 'paid', button: 'Get Details', pdf: '', points: ['Single premium payment unit linked plan'] }
         ]
       },
       'money-back-plans.html': {
@@ -188,8 +188,8 @@
         trustTitle: '100% Secure',
         trustDesc: 'IRDAI Approved Plans',
         products: [
-          { name: 'New Money Back 20 Years', planNo: 'Plan No: 720', icon: 'payments', button: 'Get Details', points: ['Limited Premium Paying Term'] },
-          { name: 'Bima Shree', planNo: 'Plan No: 748', icon: 'workspace_premium', button: 'Get Details', points: ['Designed for High Networth Individuals'] }
+          { name: 'New Money Back 20 Years', planNo: 'Plan No: 720', icon: 'payments', button: 'Get Details', pdf: '', points: ['Limited Premium Paying Term'] },
+          { name: 'Bima Shree', planNo: 'Plan No: 748', icon: 'workspace_premium', button: 'Get Details', pdf: '', points: ['Designed for High Networth Individuals'] }
         ]
       },
       'whole-life-plans.html': {
@@ -204,8 +204,8 @@
         trustTitle: '100% Secure',
         trustDesc: 'IRDAI Approved Plans',
         products: [
-          { name: 'Jeevan Umang', planNo: 'Plan No: 945', icon: 'all_inclusive', button: 'Get Details', points: ['Whole life assurance plan with profits'] },
-          { name: 'Jeevan Utsav', planNo: 'Plan No: 771', icon: 'festival', button: 'Get Details', points: ['Guaranteed income benefit for lifetime'] }
+          { name: 'Jeevan Umang', planNo: 'Plan No: 945', icon: 'all_inclusive', button: 'Get Details', pdf: '', points: ['Whole life assurance plan with profits'] },
+          { name: 'Jeevan Utsav', planNo: 'Plan No: 771', icon: 'festival', button: 'Get Details', pdf: '', points: ['Guaranteed income benefit for lifetime'] }
         ]
       },
       'micro-insurance.html': {
@@ -220,7 +220,7 @@
         trustTitle: '100% Secure',
         trustDesc: 'IRDAI Approved Plans',
         products: [
-          { name: 'Micro Bachat', planNo: 'Plan No: 751', icon: 'groups', button: 'Get Details', points: ['Life micro insurance plan with savings'] }
+          { name: 'Micro Bachat', planNo: 'Plan No: 751', icon: 'groups', button: 'Get Details', pdf: '', points: ['Life micro insurance plan with savings'] }
         ]
       }
     }
@@ -451,7 +451,11 @@
   function planCard(product, index) {
     const color = index % 2 ? 'primary' : 'secondary';
     const points = Array.isArray(product.points) ? product.points : [];
-    return `<div class="glass p-8 md:p-12 rounded-4xl flex flex-col md:flex-row gap-10 items-center group hover:bg-white/80 transition-all duration-500">
+    const pdfUrl = String(product.pdf || '').trim();
+    const href = pdfUrl || '../contact.html';
+    const target = pdfUrl ? '_blank' : '_self';
+    const rel = pdfUrl ? 'noopener noreferrer' : '';
+    return `<a href="${esc(href)}" target="${target}" ${rel ? `rel="${rel}"` : ''} class="glass p-8 md:p-12 rounded-4xl flex flex-col md:flex-row gap-10 items-center group hover:bg-white/80 transition-all duration-500 no-underline block cursor-pointer">
       <div class="w-full md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left gap-4">
         <div class="w-20 h-20 rounded-3xl bg-${color}/10 text-${color} flex items-center justify-center group-hover:bg-${color} group-hover:text-white transition-all duration-500">
           <span class="material-symbols-outlined !text-4xl">${esc(product.icon || 'verified_user')}</span>
@@ -460,9 +464,9 @@
       </div>
       <div class="w-full md:w-2/3 space-y-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">${points.map(point => `<div class="flex items-start gap-3"><span class="material-symbols-outlined text-${color} mt-1">check_circle</span><p class="font-medium text-slate-600">${esc(point)}</p></div>`).join('')}</div>
-        <div class="flex flex-wrap gap-4"><button onclick="window.location.href='../contact.html'" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-primary transition-all active:scale-95 shadow-lg shadow-slate-900/10">${esc(product.button || 'Get Details')}</button></div>
+        <div class="flex flex-wrap gap-4"><span class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-primary transition-all active:scale-95 shadow-lg shadow-slate-900/10 inline-flex items-center">${esc(product.button || 'Get Details')}</span></div>
       </div>
-    </div>`;
+    </a>`;
   }
 
   function label(value) {
