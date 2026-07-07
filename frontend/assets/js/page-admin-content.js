@@ -417,7 +417,8 @@
   }
 
   function renderInsurancePage(allData) {
-    const slug = location.pathname.split('/').pop();
+    const slugBase = location.pathname.split('/').pop();
+    const slug = slugBase.endsWith('.html') ? slugBase : `${slugBase}.html`;
     const page = allData.insurancePages && allData.insurancePages[slug];
     if (!page) return;
     document.title = `${page.title || 'Insurance Plans'} - Vima Sneha`;
@@ -478,7 +479,7 @@
     if (path.endsWith('/gallery.html') || path.endsWith('gallery.html')) return 'gallery';
     if (path.endsWith('/news.html') || path.endsWith('news.html')) return 'news';
     if (path.endsWith('/contact.html') || path.endsWith('contact.html')) return 'contact';
-    if (path.includes('/insurance/') && path.endsWith('.html')) return 'pages';
+    if (path.includes('/insurance/')) return 'pages';
     return '';
   }
 
