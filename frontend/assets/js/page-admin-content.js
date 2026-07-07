@@ -477,7 +477,7 @@
   function pageKeyForPath() {
     const path = location.pathname;
     if (path.endsWith('/gallery.html') || path.endsWith('gallery.html')) return 'gallery';
-    if (path.endsWith('/news.html') || path.endsWith('news.html')) return 'news';
+    if (path === '/news' || path === '/news/' || path.endsWith('/news.html') || path.endsWith('news.html')) return 'news';
     if (path.endsWith('/contact.html') || path.endsWith('contact.html')) return 'contact';
     if (path.includes('/insurance/')) return 'pages';
     return '';
