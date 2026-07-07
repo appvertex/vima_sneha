@@ -547,6 +547,6 @@
     if (path.endsWith('/gallery.html') || path.endsWith('gallery.html')) renderGallery(data.gallery);
     if (path.endsWith('/news.html') || path.endsWith('news.html')) renderNews(data.news);
     if (path.endsWith('/contact.html') || path.endsWith('contact.html')) renderContact(data.contact);
-    if (path.includes('/insurance/') && path.endsWith('.html')) renderInsurancePage(data);
+    if (path.includes('/insurance/')) renderInsurancePage(data);
   });
 })();
