@@ -101,7 +101,7 @@ export function createAdminRoutes() {
     return json({ ok: true, key, url });
   });
 
-  app.get('/news', async (c) => {
+  app.get('/articles/news', async (c) => {
     const rows = await c.env.DB.prepare(
       'SELECT id, title, body, image_url, published_at FROM news_articles ORDER BY published_at DESC, id DESC'
     ).all();

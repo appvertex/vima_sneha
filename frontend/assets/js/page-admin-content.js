@@ -485,13 +485,24 @@
       if (pageKey === 'news') {
         const [siteResponse, newsResponse] = await Promise.all([
           VSBackend.getSiteContent('news'),
-          VSBackend.request('/api/site/news')
+          VSBackend.request('/api/site/articles/news')
         ]);
         const siteContent = siteResponse?.content || {};
         const siteNews = siteContent.news || siteContent;
         const siteArticles = Array.isArray(siteNews.articles) ? siteNews.articles : [];
         const dbArticles = Array.isArray(newsResponse?.articles) ? newsResponse.articles : [];
-        const articles = siteArticles.length ? siteArticles : dbArticles;
+        const seen = new Set();
+        const articles = [...siteArticles, ...dbArticles].filter((article) => {
+          const key = [
+            article?.id || '',
+            article?.title || '',
+            article?.date || article?.published_at || '',
+            article?.image || article?.image_url || ''
+          ].join('|');
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
 
         return merge(read(), {
           ...siteContent,
