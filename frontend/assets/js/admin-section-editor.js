@@ -30,21 +30,17 @@
       ]
     },
     news: {
-      badge: 'News & Updates',
-      title: 'Latest News',
-      highlight: 'News',
-      desc: 'Stay informed with the latest insights, events, and announcements from our mental health and financial security practice.',
-      categories: ['all', 'counselling', 'insurance', 'wellness', 'community', 'announcement'],
-      featuredBadge: 'Featured Story',
-      newsletterBadge: 'Stay Updated',
-      newsletterTitle: 'Never Miss an Update',
-      newsletterDesc: 'Subscribe to our newsletter for the latest counselling insights, insurance tips, and community events delivered straight to your inbox.',
-      newsletterButtonText: 'Subscribe',
-      articles: [
-        { featured: true, category: 'counselling', image: 'assets/images/hero-counselling.png', title: 'Breaking the Stigma: Why Mental Health Awareness Matters More Than Ever', excerpt: 'As we navigate an increasingly complex world, understanding and prioritising mental health has become essential.', date: 'April 20, 2026', readTime: '5 min read', author: "Maria Mildred D'Souza", avatar: 'MM' },
-        { featured: false, category: 'counselling', image: 'assets/images/counselling_session.jpg', title: 'Understanding Exam Stress: A Guide for Students and Parents', excerpt: 'Learn practical strategies to manage exam anxiety and create a supportive environment for academic success.', date: 'April 18, 2026', readTime: '4 min read', author: "Maria D'Souza", avatar: 'MM' },
-        { featured: false, category: 'insurance', image: 'assets/images/hero-insurance.png', title: '5 Essential Insurance Plans Every Family Should Consider', excerpt: "Discover the key insurance plans that form the foundation of a robust financial safety net for your family's future security.", date: 'April 15, 2026', readTime: '6 min read', author: 'Sachin Noronha', avatar: 'SN' }
-      ]
+      badge: '',
+      title: '',
+      highlight: '',
+      desc: '',
+      categories: [],
+      featuredBadge: '',
+      newsletterBadge: '',
+      newsletterTitle: '',
+      newsletterDesc: '',
+      newsletterButtonText: '',
+      articles: []
     },
     contact: {
       badge: 'Reach Out',
@@ -519,7 +515,7 @@
         { key: 'readTime', label: 'Read Time' },
         { key: 'author', label: 'Author' },
         { key: 'avatar', label: 'Avatar' }
-      ], { featured: false, category: 'announcement', image: '', title: 'New Article', excerpt: 'Add the summary your visitors should skim first.', date: 'May 19, 2026', readTime: '3 min read', author: 'Vima Sneha Team', avatar: 'VS' })}
+      ], { featured: false, category: '', image: '', title: '', excerpt: '', date: '', readTime: '', author: '', avatar: '' })}
     `;
   }
 

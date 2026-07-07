@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>News & Updates | Vima Sneha</title>
-    <meta name="description" content="Stay updated with the latest news, announcements, and insights from Vima Sneha — covering mental health, counselling, insurance, and community events." />
+    <title>News | Vima Sneha</title>
+    <meta name="description" content="News page for Vima Sneha." />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/logo.png" />
@@ -661,339 +661,82 @@
 
     <!-- ── MAIN CONTENT ── -->
     <main class="pt-20 lg:pt-40 pb-32 md:pb-24 scroll-smooth" style="background-color: #EFE3EA;">
-
-        <!-- ── HERO BANNER ── -->
         <section class="news-hero">
-        <!-- Decorative particles -->
-        <div class="hero-particle w-3 h-3 bg-white/30" style="top: 20%; left: 15%; animation: hero-float-1 6s ease-in-out infinite;"></div>
-        <div class="hero-particle w-4 h-4 bg-gold-light/40" style="top: 35%; right: 20%; animation: hero-float-2 8s ease-in-out infinite;"></div>
-        <div class="hero-particle w-2 h-2 bg-white/20" style="bottom: 30%; left: 25%; animation: hero-float-3 7s ease-in-out infinite;"></div>
-        <div class="hero-particle w-5 h-5 bg-primary-light/20" style="top: 15%; right: 35%; animation: hero-float-1 9s ease-in-out infinite 1s;"></div>
-        <div class="hero-particle w-2.5 h-2.5 bg-white/25" style="bottom: 40%; right: 10%; animation: hero-float-2 5s ease-in-out infinite 0.5s;"></div>
-
-        <!-- Blurred decorative orbs -->
-        <div class="absolute w-80 h-80 rounded-full blur-[80px] opacity-20 bg-[#D4A853]" style="top: -50px; right: -40px; z-index: 0;"></div>
-        <div class="absolute w-64 h-64 rounded-full blur-[60px] opacity-15 bg-white" style="bottom: -30px; left: -20px; z-index: 0;"></div>
-
-        <div class="hero-content">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white/90 text-xs font-bold tracking-widest uppercase mb-6">
-                <span class="material-symbols-outlined text-sm" style="font-size: 14px;">newspaper</span>
-                News & Updates
+            <div class="hero-particle w-3 h-3 bg-white/30" style="top: 20%; left: 15%; animation: hero-float-1 6s ease-in-out infinite;"></div>
+            <div class="hero-particle w-4 h-4 bg-gold-light/40" style="top: 35%; right: 20%; animation: hero-float-2 8s ease-in-out infinite;"></div>
+            <div class="hero-particle w-2 h-2 bg-white/20" style="bottom: 30%; left: 25%; animation: hero-float-3 7s ease-in-out infinite;"></div>
+            <div class="hero-particle w-5 h-5 bg-primary-light/20" style="top: 15%; right: 35%; animation: hero-float-1 9s ease-in-out infinite 1s;"></div>
+            <div class="hero-particle w-2.5 h-2.5 bg-white/25" style="bottom: 40%; right: 10%; animation: hero-float-2 5s ease-in-out infinite 0.5s;"></div>
+            <div class="absolute w-80 h-80 rounded-full blur-[80px] opacity-20 bg-[#D4A853]" style="top: -50px; right: -40px; z-index: 0;"></div>
+            <div class="absolute w-64 h-64 rounded-full blur-[60px] opacity-15 bg-white" style="bottom: -30px; left: -20px; z-index: 0;"></div>
+            <div class="hero-content">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white/90 text-xs font-bold tracking-widest uppercase mb-6">
+                    <span class="material-symbols-outlined text-sm" style="font-size: 14px;">newspaper</span>
+                    <span> </span>
+                </div>
+                <h1></h1>
+                <p></p>
             </div>
-            <h1>Latest <span class="italic" style="background: linear-gradient(135deg, #F0D08A, #D4A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">News</span></h1>
-            <p>Stay informed with the latest insights, events, and announcements from our mental health and financial security practice.</p>
-        </div>
         </section>
 
-        <!-- CATEGORY FILTERS -->
         <section class="max-w-7xl mx-auto px-6 -mt-6 relative z-10 mb-12">
-            <div class="category-bar scroll-reveal" id="category-filter">
-                <button class="category-pill active" data-category="all">All News</button>
-                <button class="category-pill" data-category="counselling">
-                    <span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">spa</span>
-                    Counselling
-                </button>
-                <button class="category-pill" data-category="insurance">
-                    <span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">shield</span>
-                    Insurance
-                </button>
-                <button class="category-pill" data-category="wellness">
-                    <span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">favorite</span>
-                    Wellness
-                </button>
-                <button class="category-pill" data-category="community">
-                    <span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">groups</span>
-                    Community
-                </button>
-                <button class="category-pill" data-category="announcement">
-                    <span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">campaign</span>
-                    Announcements
-                </button>
-            </div>
+            <div class="category-bar scroll-reveal" id="category-filter"></div>
         </section>
 
-        <!-- FEATURED ARTICLE -->
         <section class="max-w-7xl mx-auto px-6 mb-16">
-            <div class="featured-card scroll-reveal" data-category="counselling" id="featured-article">
+            <div class="featured-card scroll-reveal" data-category="" id="featured-article">
                 <div class="featured-card-bg">
-                    <img src="assets/images/hero-counselling.png" alt="Featured article – Mental health awareness" />
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
                 </div>
                 <div class="featured-card-overlay"></div>
                 <div class="featured-card-content">
                     <div class="featured-badge">
                         <span class="material-symbols-outlined" style="font-size: 13px;">star</span>
-                        Featured Story
+                        <span> </span>
                     </div>
-                    <h2>Breaking the Stigma: Why Mental Health <br class="hidden md:block"/>Awareness Matters More Than Ever</h2>
-                    <p>As we navigate an increasingly complex world, understanding and prioritising mental health has become essential. Discover how Vima Sneha is leading the way in compassionate counselling and community support.</p>
+                    <h2></h2>
+                    <p></p>
                     <div class="featured-meta">
-                        <span>
-                            <span class="material-symbols-outlined" style="font-size: 16px;">calendar_today</span>
-                            April 20, 2026
-                        </span>
-                        <span>
-                            <span class="material-symbols-outlined" style="font-size: 16px;">schedule</span>
-                            5 min read
-                        </span>
-                        <span>
-                            <span class="material-symbols-outlined" style="font-size: 16px;">person</span>
-                            Maria Mildred D'Souza
-                        </span>
+                        <span><span class="material-symbols-outlined" style="font-size: 16px;">calendar_today</span><span> </span></span>
+                        <span><span class="material-symbols-outlined" style="font-size: 16px;">schedule</span><span> </span></span>
+                        <span><span class="material-symbols-outlined" style="font-size: 16px;">person</span><span> </span></span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- NEWS GRID -->
         <section class="max-w-7xl mx-auto px-6 mb-16">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="news-grid">
-
-                <!-- Article 1 -->
-                <article class="news-card scroll-reveal" data-category="counselling">
-                    <div class="news-card-img-wrap">
-                        <img src="assets/images/counselling_session.jpg" alt="Counselling session at Vima Sneha" />
-                        <div class="news-card-img-overlay"></div>
-                        <span class="news-card-category cat-counselling">
-                            <span class="material-symbols-outlined" style="font-size: 12px;">spa</span>
-                            Counselling
-                        </span>
-                    </div>
-                    <div class="news-card-body">
-                        <div class="news-card-date">
-                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
-                            April 18, 2026
-                        </div>
-                        <h3 class="news-card-title">Understanding Exam Stress: A Guide for Students and Parents</h3>
-                        <p class="news-card-excerpt">Learn practical strategies to manage exam anxiety and create a supportive environment for academic success without compromising mental well-being.</p>
-                        <div class="news-card-footer">
-                            <div class="news-card-author">
-                                <div class="news-card-author-avatar">MM</div>
-                                <div class="news-card-author-info">
-                                    <span class="news-card-author-name">Maria D'Souza</span>
-                                    <span class="news-card-read-time">4 min read</span>
-                                </div>
-                            </div>
-                            <div class="news-card-arrow">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Article 2 -->
-                <article class="news-card scroll-reveal" data-category="insurance">
-                    <div class="news-card-img-wrap">
-                        <img src="assets/images/hero-insurance.png" alt="Insurance planning consultation" />
-                        <div class="news-card-img-overlay"></div>
-                        <span class="news-card-category cat-insurance">
-                            <span class="material-symbols-outlined" style="font-size: 12px;">shield</span>
-                            Insurance
-                        </span>
-                    </div>
-                    <div class="news-card-body">
-                        <div class="news-card-date">
-                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
-                            April 15, 2026
-                        </div>
-                        <h3 class="news-card-title">5 Essential Insurance Plans Every Family Should Consider</h3>
-                        <p class="news-card-excerpt">Discover the key insurance plans that form the foundation of a robust financial safety net for your family's future security.</p>
-                        <div class="news-card-footer">
-                            <div class="news-card-author">
-                                <div class="news-card-author-avatar">SN</div>
-                                <div class="news-card-author-info">
-                                    <span class="news-card-author-name">Sachin Noronha</span>
-                                    <span class="news-card-read-time">6 min read</span>
-                                </div>
-                            </div>
-                            <div class="news-card-arrow">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Article 3 -->
-                <article class="news-card scroll-reveal" data-category="wellness">
-                    <div class="news-card-img-wrap">
-                        <img src="assets/images/hero-counselling-premium.png" alt="Wellness and mental health" />
-                        <div class="news-card-img-overlay"></div>
-                        <span class="news-card-category cat-wellness">
-                            <span class="material-symbols-outlined" style="font-size: 12px;">favorite</span>
-                            Wellness
-                        </span>
-                    </div>
-                    <div class="news-card-body">
-                        <div class="news-card-date">
-                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
-                            April 12, 2026
-                        </div>
-                        <h3 class="news-card-title">The Power of Hypnotherapy: Transforming Lives Through Inner Healing</h3>
-                        <p class="news-card-excerpt">Explore the science behind hypnotherapy and how it's helping individuals overcome deep-seated challenges for lasting positive change.</p>
-                        <div class="news-card-footer">
-                            <div class="news-card-author">
-                                <div class="news-card-author-avatar">MM</div>
-                                <div class="news-card-author-info">
-                                    <span class="news-card-author-name">Maria D'Souza</span>
-                                    <span class="news-card-read-time">7 min read</span>
-                                </div>
-                            </div>
-                            <div class="news-card-arrow">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Article 4 -->
-                <article class="news-card scroll-reveal" data-category="community">
-                    <div class="news-card-img-wrap">
-                        <img src="assets/images/hero-counselling.png" alt="Community event at Vima Sneha" />
-                        <div class="news-card-img-overlay"></div>
-                        <span class="news-card-category cat-community">
-                            <span class="material-symbols-outlined" style="font-size: 12px;">groups</span>
-                            Community
-                        </span>
-                    </div>
-                    <div class="news-card-body">
-                        <div class="news-card-date">
-                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
-                            April 8, 2026
-                        </div>
-                        <h3 class="news-card-title">Community Workshop: Building Emotional Resilience Together</h3>
-                        <p class="news-card-excerpt">Our recent community workshop brought together families and educators to discuss practical approaches to building emotional strength.</p>
-                        <div class="news-card-footer">
-                            <div class="news-card-author">
-                                <div class="news-card-author-avatar">VS</div>
-                                <div class="news-card-author-info">
-                                    <span class="news-card-author-name">Vima Sneha Team</span>
-                                    <span class="news-card-read-time">3 min read</span>
-                                </div>
-                            </div>
-                            <div class="news-card-arrow">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Article 5 -->
-                <article class="news-card scroll-reveal" data-category="announcement">
-                    <div class="news-card-img-wrap">
-                        <img src="assets/images/hero-insurance.png" alt="Vima Sneha announcement" />
-                        <div class="news-card-img-overlay"></div>
-                        <span class="news-card-category cat-announcement">
-                            <span class="material-symbols-outlined" style="font-size: 12px;">campaign</span>
-                            Announcement
-                        </span>
-                    </div>
-                    <div class="news-card-body">
-                        <div class="news-card-date">
-                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
-                            April 5, 2026
-                        </div>
-                        <h3 class="news-card-title">MDRT Recognition: Sachin Noronha Honoured for Excellence</h3>
-                        <p class="news-card-excerpt">We're proud to announce that our insurance consultant has received the prestigious MDRT recognition for outstanding client service.</p>
-                        <div class="news-card-footer">
-                            <div class="news-card-author">
-                                <div class="news-card-author-avatar">SN</div>
-                                <div class="news-card-author-info">
-                                    <span class="news-card-author-name">Sachin Noronha</span>
-                                    <span class="news-card-read-time">2 min read</span>
-                                </div>
-                            </div>
-                            <div class="news-card-arrow">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Article 6 -->
-                <article class="news-card scroll-reveal" data-category="insurance">
-                    <div class="news-card-img-wrap">
-                        <img src="assets/images/hero-counselling-premium.png" alt="Financial planning tips" />
-                        <div class="news-card-img-overlay"></div>
-                        <span class="news-card-category cat-insurance">
-                            <span class="material-symbols-outlined" style="font-size: 12px;">shield</span>
-                            Insurance
-                        </span>
-                    </div>
-                    <div class="news-card-body">
-                        <div class="news-card-date">
-                            <span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>
-                            April 1, 2026
-                        </div>
-                        <h3 class="news-card-title">Child Education Plans: Investing in Your Child's Tomorrow</h3>
-                        <p class="news-card-excerpt">A comprehensive guide to choosing the right education plan that ensures your child's academic dreams are financially secured.</p>
-                        <div class="news-card-footer">
-                            <div class="news-card-author">
-                                <div class="news-card-author-avatar">SN</div>
-                                <div class="news-card-author-info">
-                                    <span class="news-card-author-name">Sachin Noronha</span>
-                                    <span class="news-card-read-time">5 min read</span>
-                                </div>
-                            </div>
-                            <div class="news-card-arrow">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-            </div>
-
-            <!-- No Results Message (hidden by default) -->
-            <div class="hidden text-center py-16" id="no-results">
-                <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-white/50 mb-6">
-                    <span class="material-symbols-outlined text-primary text-4xl">search_off</span>
-                </div>
-                <h3 class="text-xl font-bold text-dark-text mb-2">No articles found</h3>
-                <p class="text-light-text font-medium">Try selecting a different category to explore more content.</p>
-            </div>
-
-            <!-- Pagination -->
-            <div class="flex items-center justify-center gap-2 mt-12" id="pagination">
-                <button class="pagination-btn nav-arrow" aria-label="Previous page">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span>
-                </button>
-                <button class="pagination-btn active">1</button>
-                <button class="pagination-btn">2</button>
-                <button class="pagination-btn">3</button>
-                <button class="pagination-btn nav-arrow" aria-label="Next page">
-                    <span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
-                </button>
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="news-grid"></div>
+            <div class="hidden text-center py-16" id="no-results"></div>
+            <div class="flex items-center justify-center gap-2 mt-12" id="pagination"></div>
         </section>
 
-        <!-- NEWSLETTER SECTION -->
         <section class="max-w-5xl mx-auto px-6 mb-16">
             <div class="newsletter-section scroll-reveal">
                 <div class="relative z-10 text-center max-w-2xl mx-auto">
                     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/80 text-xs font-bold tracking-widest uppercase mb-6">
                         <span class="material-symbols-outlined" style="font-size: 14px;">mail</span>
-                        Stay Updated
+                        <span> </span>
                     </div>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-4">Never Miss an <span class="italic" style="color: #F0D08A;">Update</span></h2>
-                    <p class="text-white/70 font-medium mb-8 text-base md:text-lg leading-relaxed">Subscribe to our newsletter for the latest counselling insights, insurance tips, and community events delivered straight to your inbox.</p>
+                    <h2></h2>
+                    <p></p>
                     <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                        <input type="email" class="newsletter-glass-input" placeholder="Enter your email address" id="newsletter-email" />
-                        <button class="newsletter-btn" id="newsletter-subscribe">Subscribe</button>
+                        <input type="email" class="newsletter-glass-input" placeholder="" id="newsletter-email" />
+                        <button class="newsletter-btn" id="newsletter-subscribe"></button>
                     </div>
-                    <p class="text-white/40 text-xs font-medium mt-4">No spam, ever. Unsubscribe anytime.</p>
+                    <p class="text-white/40 text-xs font-medium mt-4"></p>
                 </div>
 
-                <!-- Floating decoration -->
                 <div class="absolute w-32 h-32 rounded-full blur-[50px] opacity-20 bg-[#F0D08A]" style="bottom: -20px; left: -20px;"></div>
                 <div class="absolute w-24 h-24 rounded-full blur-[40px] opacity-15 bg-white" style="top: -10px; right: -10px;"></div>
             </div>
         </section>
-
     </main>
 
     <!-- SITE FOOTER -->
     <div id="site-footer-root"></div>
     <script src="assets/js/footer.js?v=20260420-5"></script>
-    <script src="assets/js/page-admin-content.js?v=20260707-4"></script>
+    <script src="assets/js/page-admin-content.js?v=20260707-6"></script>
 
     <!-- ── INTERACTIVE SCRIPTS ── -->
     <script>

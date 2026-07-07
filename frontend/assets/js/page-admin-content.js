@@ -34,22 +34,17 @@
       ]
     },
     news: {
-      badge: 'News & Updates',
-      title: 'Latest News',
-      highlight: 'News',
-      desc: 'Stay informed with the latest insights, events, and announcements from our mental health and financial security practice.',
-      categories: ['all', 'counselling', 'insurance', 'wellness', 'community', 'announcement'],
-      featuredBadge: 'Featured Story',
-      newsletterBadge: 'Stay Updated',
-      newsletterTitle: 'Never Miss an Update',
-      newsletterDesc: 'Subscribe to our newsletter for the latest counselling insights, insurance tips, and community events delivered straight to your inbox.',
-      newsletterButtonText: 'Subscribe',
-      articles: [
-        { featured: true, category: 'counselling', image: 'assets/images/hero-counselling.png', title: 'Breaking the Stigma: Why Mental Health Awareness Matters More Than Ever', excerpt: 'As we navigate an increasingly complex world, understanding and prioritising mental health has become essential.', date: 'April 20, 2026', readTime: '5 min read', author: "Maria Mildred D'Souza", avatar: 'MM' },
-        { category: 'counselling', image: 'assets/images/counselling_session.jpg', title: 'Understanding Exam Stress: A Guide for Students and Parents', excerpt: 'Learn practical strategies to manage exam anxiety and create a supportive environment for academic success.', date: 'April 18, 2026', readTime: '4 min read', author: "Maria D'Souza", avatar: 'MM' },
-        { category: 'insurance', image: 'assets/images/hero-insurance.png', title: '5 Essential Insurance Plans Every Family Should Consider', excerpt: "Discover the key insurance plans that form the foundation of a robust financial safety net for your family's future security.", date: 'April 15, 2026', readTime: '6 min read', author: 'Sachin Noronha', avatar: 'SN' },
-        { category: 'wellness', image: 'assets/images/hero-counselling-premium.png', title: 'The Power of Hypnotherapy: Transforming Lives Through Inner Healing', excerpt: "Explore the science behind hypnotherapy and how it's helping individuals overcome deep-seated challenges.", date: 'April 12, 2026', readTime: '7 min read', author: "Maria D'Souza", avatar: 'MM' }
-      ]
+      badge: '',
+      title: '',
+      highlight: '',
+      desc: '',
+      categories: [],
+      featuredBadge: '',
+      newsletterBadge: '',
+      newsletterTitle: '',
+      newsletterDesc: '',
+      newsletterButtonText: '',
+      articles: []
     },
     contact: {
       badge: 'Reach Out',
@@ -317,8 +312,7 @@
     const filterWrap = document.getElementById('category-filter');
     if (filterWrap && Array.isArray(data.categories) && data.categories.length) {
       filterWrap.innerHTML = data.categories.map((category, index) => {
-        const isAll = category === 'all';
-        return `<button class="category-pill ${index === 0 ? 'active' : ''}" data-category="${esc(category)}">${isAll ? esc(label(category) === 'All' ? 'All News' : label(category)) : `<span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">${categoryIcon(category)}</span>${esc(label(category))}`}</button>`;
+        return `<button class="category-pill ${index === 0 ? 'active' : ''}" data-category="${esc(category)}">${category === 'all' ? esc(label(category)) : `<span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">${categoryIcon(category)}</span>${esc(label(category))}`}</button>`;
       }).join('');
     }
     const articles = Array.isArray(data.articles) ? data.articles : [];
@@ -326,11 +320,11 @@
     const normal = articles.filter(a => a !== featured);
     const f = document.getElementById('featured-article');
     if (f && featured) {
-      f.dataset.category = featured.category || 'counselling';
-      f.querySelector('img').src = featured.image || 'assets/images/hero-counselling.png';
-      f.querySelector('img').alt = featured.title || 'Featured article';
+      f.dataset.category = featured.category || '';
+      f.querySelector('img').src = featured.image || 'data:image/gif;base64,R0lGODlhAQABAAAAACw=';
+      f.querySelector('img').alt = featured.title || '';
       const badgeLabel = f.querySelector('.featured-badge');
-      if (badgeLabel) badgeLabel.lastChild.textContent = ' ' + (data.featuredBadge || 'Featured Story');
+      if (badgeLabel) badgeLabel.lastChild.textContent = ' ' + (data.featuredBadge || '');
       f.querySelector('h2').textContent = featured.title || '';
       f.querySelector('p').textContent = featured.excerpt || '';
       const meta = f.querySelectorAll('.featured-meta span');
@@ -348,22 +342,22 @@
   function normalizeNewsArticle(article, index) {
     return {
       featured: Boolean(article?.featured),
-      category: article?.category || 'announcement',
+      category: article?.category || '',
       image: article?.image || article?.image_url || '',
       title: article?.title || '',
       excerpt: article?.excerpt || article?.body || '',
       date: article?.date || formatDate(article?.published_at) || '',
-      readTime: article?.readTime || '3 min read',
-      author: article?.author || 'Vima Sneha',
-      avatar: article?.avatar || 'VS'
+      readTime: article?.readTime || '',
+      author: article?.author || '',
+      avatar: article?.avatar || ''
     };
   }
 
   function articleCard(article) {
-    const category = article.category || 'counselling';
+    const category = article.category || '';
     return `<article class="news-card scroll-reveal" data-category="${esc(category)}">
       <div class="news-card-img-wrap">
-        <img src="${esc(article.image || 'assets/images/hero-counselling.png')}" alt="${esc(article.title)}" />
+        <img src="${esc(article.image || 'data:image/gif;base64,R0lGODlhAQABAAAAACw=')}" alt="${esc(article.title)}" />
         <div class="news-card-img-overlay"></div>
         <span class="news-card-category cat-${esc(category)}"><span class="material-symbols-outlined" style="font-size: 12px;">${categoryIcon(category)}</span>${esc(label(category))}</span>
       </div>
@@ -372,7 +366,7 @@
         <h3 class="news-card-title">${esc(article.title)}</h3>
         <p class="news-card-excerpt">${esc(article.excerpt)}</p>
         <div class="news-card-footer">
-          <div class="news-card-author"><div class="news-card-author-avatar">${esc(article.avatar || 'VS')}</div><div class="news-card-author-info"><span class="news-card-author-name">${esc(article.author || 'Vima Sneha')}</span><span class="news-card-read-time">${esc(article.readTime || '3 min read')}</span></div></div>
+          <div class="news-card-author"><div class="news-card-author-avatar">${esc(article.avatar || '')}</div><div class="news-card-author-info"><span class="news-card-author-name">${esc(article.author || '')}</span><span class="news-card-read-time">${esc(article.readTime || '')}</span></div></div>
           <div class="news-card-arrow"><span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span></div>
         </div>
       </div>
@@ -545,7 +539,7 @@
     const data = await loadRemotePageData();
     const path = location.pathname;
     if (path.endsWith('/gallery.html') || path.endsWith('gallery.html')) renderGallery(data.gallery);
-    if (path.endsWith('/news.html') || path.endsWith('news.html')) renderNews(data.news);
+    if (path === '/news' || path === '/news/' || path.endsWith('/news.html') || path.endsWith('news.html')) renderNews(data.news);
     if (path.endsWith('/contact.html') || path.endsWith('contact.html')) renderContact(data.contact);
     if (path.includes('/insurance/')) renderInsurancePage(data);
   });
