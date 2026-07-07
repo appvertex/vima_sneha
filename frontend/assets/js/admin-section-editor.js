@@ -371,11 +371,12 @@
   function field(path, label, opts = {}) {
     const value = getPath(STATE, path) ?? '';
     const type = opts.type || 'text';
+    const pathArg = JSON.stringify(String(path));
     if (type === 'textarea') {
       return `
         <div class="field">
           <label>${esc(label)}</label>
-          <textarea rows="${opts.rows || 3}" oninput="setValue('${path}', this.value)">${esc(value)}</textarea>
+          <textarea rows="${opts.rows || 3}" oninput='setValue(${pathArg}, this.value)'>${esc(value)}</textarea>
         </div>
       `;
     }
@@ -383,7 +384,7 @@
       return `
         <div class="field">
           <label>${esc(label)}</label>
-          <select onchange="setValue('${path}', this.value)">
+          <select onchange='setValue(${pathArg}, this.value)'>
             ${opts.options.map((option) => `<option value="${esc(option)}" ${String(option) === String(value) ? 'selected' : ''}>${esc(option)}</option>`).join('')}
           </select>
         </div>
@@ -392,7 +393,7 @@
     if (type === 'checkbox') {
       return `
         <div class="field" style="display:flex;align-items:center;gap:10px;">
-          <input type="checkbox" ${value ? 'checked' : ''} onchange="setValue('${path}', this.checked)">
+          <input type="checkbox" ${value ? 'checked' : ''} onchange='setValue(${pathArg}, this.checked)'>
           <label style="margin:0">${esc(label)}</label>
         </div>
       `;
@@ -400,7 +401,7 @@
     return `
       <div class="field">
         <label>${esc(label)}</label>
-        <input type="text" value="${esc(value)}" oninput="setValue('${path}', this.value)">
+        <input type="text" value="${esc(value)}" oninput='setValue(${pathArg}, this.value)'>
       </div>
     `;
   }
@@ -418,17 +419,17 @@
         <div class="edit-grid">
           ${values.map((item, index) => `
             <div class="edit-card">
-          <div class="edit-card-header">Item ${index + 1} <button class="del-btn" type="button" style="float:right" onclick="removeListItem('${path}', ${index})">×</button></div>
+              <div class="edit-card-header">Item ${index + 1} <button class="del-btn" type="button" style="float:right" onclick='removeListItem(${JSON.stringify(String(path))}, ${index})'>×</button></div>
               <div class="edit-card-body">
                 <div class="field">
                   <label>Value</label>
-                  <input type="text" value="${esc(item)}" oninput="setListValue('${path}', ${index}, this.value)">
+                  <input type="text" value="${esc(item)}" oninput='setListValue(${JSON.stringify(String(path))}, ${index}, this.value)'>
                 </div>
               </div>
             </div>
           `).join('')}
         </div>
-        <button class="add-btn" type="button" onclick="addListItem('${path}', ${JSON.stringify(defaultValue)})">+ Add Item</button>
+        <button class="add-btn" type="button" onclick='addListItem(${JSON.stringify(String(path))}, ${JSON.stringify(defaultValue)})'>+ Add Item</button>
       </section>
     `;
   }
@@ -446,7 +447,7 @@
         <div class="edit-grid">
           ${values.map((item, index) => `
             <div class="edit-card">
-              <div class="edit-card-header">${esc(title.slice(0, -1) || 'Item')} ${index + 1} <button class="del-btn" type="button" style="float:right" onclick="removeListItem('${path}', ${index})">×</button></div>
+              <div class="edit-card-header">${esc(title.slice(0, -1) || 'Item')} ${index + 1} <button class="del-btn" type="button" style="float:right" onclick='removeListItem(${JSON.stringify(String(path))}, ${index})'>×</button></div>
               <div class="edit-card-body">
                 ${fields.map((f) => field(`${path}[${index}].${f.key}`, f.label, f)).join('')}
                 ${typeof item.points !== 'undefined' ? pointsEditor(path, index) : ''}
@@ -454,7 +455,7 @@
             </div>
           `).join('')}
         </div>
-        <button class="add-btn" type="button" onclick="addObjectItem('${path}', ${JSON.stringify(defaultItem)})">+ Add ${esc(title.slice(0, -1) || 'Item')}</button>
+        <button class="add-btn" type="button" onclick='addObjectItem(${JSON.stringify(String(path))}, ${JSON.stringify(defaultItem)})'>+ Add ${esc(title.slice(0, -1) || 'Item')}</button>
       </section>
     `;
   }
@@ -467,12 +468,12 @@
         <div class="field-list">
           ${points.map((point, pointIndex) => `
             <div class="list-row">
-              <input type="text" value="${esc(point)}" oninput="setListValue('${path}[${index}].points', ${pointIndex}, this.value)">
-              <button class="del-btn" type="button" onclick="removeListItem('${path}[${index}].points', ${pointIndex})">×</button>
+              <input type="text" value="${esc(point)}" oninput='setListValue(${JSON.stringify(`${path}[${index}].points`)}, ${pointIndex}, this.value)'>
+              <button class="del-btn" type="button" onclick='removeListItem(${JSON.stringify(`${path}[${index}].points`)}, ${pointIndex})'>×</button>
             </div>
           `).join('')}
         </div>
-        <button class="add-btn" type="button" onclick="addListItem('${path}[${index}].points', 'New benefit point')">+ Add Point</button>
+        <button class="add-btn" type="button" onclick='addListItem(${JSON.stringify(`${path}[${index}].points`)}, "New benefit point")'>+ Add Point</button>
       </div>
     `;
   }
@@ -554,7 +555,7 @@
         <div class="pill-row">
           ${PLAN_FILES.map((file) => {
             const label = STATE.insurancePages?.[file]?.navTitle || file.replace('.html', '').replace(/[-_]/g, ' ');
-            return `<button type="button" class="plan-pill ${file === activePlan ? 'active' : ''}" onclick="setPlan('${file}')">${esc(label)}</button>`;
+            return `<button type="button" class="plan-pill ${file === activePlan ? 'active' : ''}" onclick='setPlan(${JSON.stringify(file)})'>${esc(label)}</button>`;
           }).join('')}
         </div>
       </section>
