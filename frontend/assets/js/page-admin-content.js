@@ -330,7 +330,7 @@
       const badgeLabel = f.querySelector('.featured-badge');
       if (badgeLabel) badgeLabel.lastChild.textContent = ' ' + (data.featuredBadge || '');
       f.querySelector('h2').textContent = featured.title || '';
-      f.querySelector('p').textContent = featured.excerpt || '';
+      f.querySelector('p').textContent = shortExcerpt(featured.excerpt || featured.body || '', 180);
       const meta = f.querySelectorAll('.featured-meta span');
       if (meta[0]) meta[0].lastChild.textContent = ' ' + (featured.date || '');
       if (meta[1]) meta[1].lastChild.textContent = ' ' + (featured.readTime || '');
@@ -348,7 +348,7 @@
       image: article?.image || article?.image_url || '',
       title: article?.title || '',
       body: article?.body || '',
-      excerpt: article?.excerpt || shortExcerpt(article?.body || ''),
+      excerpt: shortExcerpt(article?.excerpt || article?.body || ''),
       date: article?.date || formatDate(article?.published_at) || '',
       readTime: article?.readTime || '',
       author: article?.author || '',
