@@ -305,9 +305,9 @@
       const badge = hero.querySelector('.inline-flex');
       const h1 = hero.querySelector('h1');
       const p = hero.querySelector('p');
-      if (badge) badge.lastChild.textContent = ' ' + (data.badge || '');
-      if (h1) h1.innerHTML = `${esc((data.title || '').replace(data.highlight || '', ''))}<span class="italic" style="background: linear-gradient(135deg, #F0D08A, #D4A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${esc(data.highlight || '')}</span>`;
-      if (p) p.textContent = data.desc || '';
+      if (badge && data.badge) badge.lastChild.textContent = ' ' + data.badge;
+      if (h1 && (data.title || data.highlight)) h1.innerHTML = `${esc((data.title || '').replace(data.highlight || '', ''))}<span class="italic" style="background: linear-gradient(135deg, #F0D08A, #D4A853); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${esc(data.highlight || '')}</span>`;
+      if (p && data.desc) p.textContent = data.desc;
     }
     const filterWrap = document.getElementById('category-filter');
     if (filterWrap && Array.isArray(data.categories) && data.categories.length) {
@@ -316,28 +316,15 @@
       }).join('');
     }
     const articles = Array.isArray(data.articles) ? data.articles : [];
-    const featured = articles.find(a => a.featured) || articles[0];
-    const normal = articles.filter(a => a !== featured);
     window.VSNewsArticles = articles;
-    const f = document.getElementById('featured-article');
-    if (f && featured) {
-      f.dataset.category = featured.category || '';
-      f.dataset.newsIndex = String(featured.index ?? 0);
-      f.setAttribute('role', 'button');
-      f.setAttribute('tabindex', '0');
-      f.querySelector('img').src = featured.image || 'data:image/gif;base64,R0lGODlhAQABAAAAACw=';
-      f.querySelector('img').alt = featured.title || '';
-      const badgeLabel = f.querySelector('.featured-badge');
-      if (badgeLabel) badgeLabel.lastChild.textContent = ' ' + (data.featuredBadge || '');
-      f.querySelector('h2').textContent = featured.title || '';
-      f.querySelector('p').textContent = shortExcerpt(featured.excerpt || featured.body || '', 180);
-      const meta = f.querySelectorAll('.featured-meta span');
-      if (meta[0]) meta[0].lastChild.textContent = ' ' + (featured.date || '');
-      if (meta[1]) meta[1].lastChild.textContent = ' ' + (featured.readTime || '');
-      if (meta[2]) meta[2].lastChild.textContent = ' ' + (featured.author || '');
-    }
+    const hasFeatured = articles.some(article => Boolean(article.featured));
     const grid = document.getElementById('news-grid');
-    if (grid) grid.innerHTML = normal.map(article => articleCard(article)).join('');
+    if (grid) grid.innerHTML = articles.map((article, index) => articleCard(article, index, hasFeatured ? Boolean(article.featured) : index === 0)).join('');
+    const noResults = document.getElementById('no-results');
+    if (noResults) {
+      noResults.classList.toggle('hidden', articles.length > 0);
+      if (!articles.length) noResults.innerHTML = '<div class="text-center text-slate-500 font-medium">No news articles have been added yet.</div>';
+    }
   }
 
   function normalizeNewsArticle(article, index) {
@@ -363,21 +350,24 @@
     return `${clean.slice(0, length).trimEnd()}…`;
   }
 
-  function articleCard(article) {
+  function articleCard(article, index = 0, isFeatured = false) {
     const category = article.category || '';
-    return `<article class="news-card scroll-reveal revealed" data-category="${esc(category)}" data-news-index="${esc(article.index ?? 0)}" role="button" tabindex="0">
+    const featured = Boolean(isFeatured);
+    return `<article class="news-card scroll-reveal revealed ${featured ? 'news-card--featured' : ''}" data-category="${esc(category)}" data-news-index="${esc(article.index ?? index)}" role="button" tabindex="0">
       <div class="news-card-img-wrap">
         <img src="${esc(article.image || 'data:image/gif;base64,R0lGODlhAQABAAAAACw=')}" alt="${esc(article.title)}" />
         <div class="news-card-img-overlay"></div>
         <span class="news-card-category cat-${esc(category)}"><span class="material-symbols-outlined" style="font-size: 12px;">${categoryIcon(category)}</span>${esc(label(category))}</span>
       </div>
-      <div class="news-card-body">
-        <div class="news-card-date"><span class="material-symbols-outlined" style="font-size: 14px;">calendar_today</span>${esc(article.date || '')}</div>
-        <h3 class="news-card-title">${esc(article.title)}</h3>
-        <p class="news-card-excerpt">${esc(article.excerpt)}</p>
-        <div class="news-card-footer">
-          <div class="news-card-author"><div class="news-card-author-avatar">${esc(article.avatar || '')}</div><div class="news-card-author-info"><span class="news-card-author-name">${esc(article.author || '')}</span><span class="news-card-read-time">${esc(article.readTime || '')}</span></div></div>
-          <div class="news-card-arrow"><span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span></div>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="news-date"><span class="material-symbols-outlined" style="font-size: 13px;">calendar_today</span>${esc(article.date || '')}</span>
+          <span class="news-tag">${esc(label(category) || 'News')}</span>
+        </div>
+        <h3>${esc(article.title)}</h3>
+        <p class="news-excerpt">${esc(article.excerpt || shortExcerpt(article.body || '', featured ? 220 : 140))}</p>
+        <div class="news-actions">
+          <span class="read-more-btn">Read More <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span></span>
         </div>
       </div>
     </article>`;
