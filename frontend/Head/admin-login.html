@@ -249,7 +249,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Redirection & UI Logic
   const tabs = document.querySelectorAll('.selector-item');
   const urlParams = new URLSearchParams(window.location.search);
-  const allowedRedirects = new Set(['admin.html', 'admin-counselling.html', 'admin-insurance.html']);
+  const allowedRedirects = new Set([
+    'admin.html',
+    'admin-counselling.html',
+    'admin-insurance.html',
+    'admin-gallery.html',
+    'admin-news.html',
+    'admin-contact.html',
+    'admin-insurance-pages.html',
+    'admin-pages.html'
+  ]);
   const redirectTarget = getSafeRedirect(urlParams.get('redirect'));
 
   function getSafeRedirect(value) {
@@ -269,6 +278,26 @@ document.addEventListener('DOMContentLoaded', () => {
     title.textContent = 'Insurance Portal';
     sub.textContent = 'Update insurance products and trust metrics.';
     badge.textContent = '🛡️ Insurance Admin';
+  } else if (redirectTarget === 'admin-news.html') {
+    title.textContent = 'News Editor';
+    sub.textContent = 'Edit news articles and publish updates.';
+    badge.textContent = '📰 News Admin';
+  } else if (redirectTarget === 'admin-gallery.html') {
+    title.textContent = 'Gallery Editor';
+    sub.textContent = 'Manage gallery content and featured visuals.';
+    badge.textContent = '🖼️ Gallery Admin';
+  } else if (redirectTarget === 'admin-contact.html') {
+    title.textContent = 'Contact Editor';
+    sub.textContent = 'Update contact copy and support cards.';
+    badge.textContent = '✉️ Contact Admin';
+  } else if (redirectTarget === 'admin-insurance-pages.html') {
+    title.textContent = 'Insurance Pages Editor';
+    sub.textContent = 'Manage the individual insurance detail pages.';
+    badge.textContent = '📄 Page Admin';
+  } else if (redirectTarget === 'admin-pages.html') {
+    title.textContent = 'Page Editors';
+    sub.textContent = 'Access the dedicated editors for each public page.';
+    badge.textContent = '🧩 Page Admin';
   } else {
     title.textContent = 'Main Dashboard';
     sub.textContent = 'Access central site management and settings.';
