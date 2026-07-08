@@ -619,6 +619,152 @@
             box-shadow: 0 8px 20px rgba(180, 127, 166, 0.35);
         }
 
+        /* ── ARTICLE MODAL ── */
+        .news-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .news-modal.hidden {
+            display: none;
+        }
+
+        .news-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(36, 14, 34, 0.68);
+            backdrop-filter: blur(10px);
+        }
+
+        .news-modal-panel {
+            position: relative;
+            z-index: 1;
+            width: min(920px, 100%);
+            max-height: min(88vh, 900px);
+            overflow: auto;
+            border-radius: 2rem;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(180, 127, 166, 0.18);
+            box-shadow: 0 30px 80px rgba(36, 14, 34, 0.35);
+        }
+
+        .news-modal-hero {
+            position: relative;
+            min-height: 260px;
+            background: linear-gradient(135deg, #4E2E4A, #7A4F72 45%, #B47FA6);
+        }
+
+        .news-modal-hero img {
+            width: 100%;
+            height: 100%;
+            min-height: 260px;
+            object-fit: cover;
+            opacity: 0.35;
+        }
+
+        .news-modal-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(20, 6, 18, 0.9), rgba(36, 14, 34, 0.35));
+        }
+
+        .news-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 9999px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark-text);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .news-modal-content {
+            padding: 1.5rem;
+        }
+
+        .news-modal-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .news-modal-title {
+            margin-top: 1rem;
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            line-height: 1.15;
+            letter-spacing: -0.04em;
+            color: var(--dark-text);
+            font-weight: 800;
+        }
+
+        .news-modal-meta {
+            margin-top: 0.85rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem 1rem;
+            color: var(--light-text);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .news-modal-summary {
+            margin-top: 1rem;
+            padding: 1rem 1.1rem;
+            border-radius: 1.25rem;
+            background: rgba(212, 168, 83, 0.08);
+            color: var(--dark-text);
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .news-modal-body {
+            margin-top: 1.25rem;
+            color: var(--dark-text);
+            font-size: 1rem;
+            line-height: 1.9;
+        }
+
+        .news-modal-body p + p {
+            margin-top: 1rem;
+        }
+
+        .news-modal-empty {
+            color: var(--light-text);
+            font-style: italic;
+        }
+
+        .news-card {
+            cursor: pointer;
+        }
+
+        .news-card:focus-visible,
+        .featured-card:focus-visible,
+        .news-modal-close:focus-visible {
+            outline: 3px solid rgba(212, 168, 83, 0.5);
+            outline-offset: 3px;
+        }
+
         .pagination-btn.nav-arrow {
             background: rgba(255, 255, 255, 0.6);
             border-color: rgba(180, 127, 166, 0.2);
@@ -713,10 +859,34 @@
 
     </main>
 
+    <div class="news-modal hidden" id="news-article-modal" aria-hidden="true">
+        <div class="news-modal-backdrop" data-news-close></div>
+        <div class="news-modal-panel" role="dialog" aria-modal="true" aria-labelledby="news-modal-title">
+            <div class="news-modal-hero">
+                <img data-news-modal-image src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
+                <div class="news-modal-hero-overlay"></div>
+                <button type="button" class="news-modal-close" aria-label="Close article" data-news-close>
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="news-modal-content">
+                <span class="news-modal-kicker" data-news-modal-category>News</span>
+                <h2 class="news-modal-title" id="news-modal-title" data-news-modal-title></h2>
+                <div class="news-modal-meta">
+                    <span data-news-modal-date></span>
+                    <span data-news-modal-author></span>
+                    <span data-news-modal-readtime></span>
+                </div>
+                <div class="news-modal-summary" data-news-modal-summary></div>
+                <div class="news-modal-body" data-news-modal-body></div>
+            </div>
+        </div>
+    </div>
+
     <!-- SITE FOOTER -->
     <div id="site-footer-root"></div>
     <script src="assets/js/footer.js?v=20260420-5"></script>
-    <script src="assets/js/page-admin-content.js?v=20260707-7"></script>
+    <script src="assets/js/page-admin-content.js?v=20260707-8"></script>
 
     <!-- ── INTERACTIVE SCRIPTS ── -->
     <script>
@@ -787,32 +957,6 @@
                     btn.classList.add('active');
                 });
             });
-
-            // ── NEWSLETTER SUBSCRIBE ──
-            const subscribeBtn = document.getElementById('newsletter-subscribe');
-            const emailInput = document.getElementById('newsletter-email');
-
-            if (subscribeBtn && emailInput) {
-                subscribeBtn.addEventListener('click', () => {
-                    const email = emailInput.value.trim();
-                    if (email && email.includes('@')) {
-                        subscribeBtn.textContent = 'Subscribed ✓';
-                        subscribeBtn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
-                        emailInput.value = '';
-                        setTimeout(() => {
-                            subscribeBtn.textContent = 'Subscribe';
-                            subscribeBtn.style.background = '';
-                        }, 3000);
-                    } else {
-                        emailInput.style.borderColor = '#ff6b6b';
-                        emailInput.style.boxShadow = '0 0 0 3px rgba(255, 107, 107, 0.2)';
-                        setTimeout(() => {
-                            emailInput.style.borderColor = '';
-                            emailInput.style.boxShadow = '';
-                        }, 2000);
-                    }
-                });
-            }
         });
     </script>
 </body>
