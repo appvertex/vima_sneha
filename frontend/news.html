@@ -876,7 +876,7 @@
     <!-- SITE FOOTER -->
     <div id="site-footer-root"></div>
     <script src="assets/js/footer.js?v=20260420-5"></script>
-    <script src="assets/js/page-admin-content.js?v=20260708-2"></script>
+    <script src="assets/js/page-admin-content.js?v=20260709-1"></script>
 
     <!-- ── INTERACTIVE SCRIPTS ── -->
     <script>
@@ -896,7 +896,6 @@
             // ── CATEGORY FILTER LOGIC ──
             const categoryBtns = document.querySelectorAll('.category-pill');
             const newsCards = document.querySelectorAll('#news-grid .news-card');
-            const featuredArticle = document.getElementById('featured-article');
             const noResults = document.getElementById('no-results');
 
             categoryBtns.forEach(btn => {
@@ -923,14 +922,6 @@
                             card.style.display = 'none';
                         }
                     });
-
-                    // Filter featured
-                    if (featuredArticle) {
-                        const featuredCategory = featuredArticle.dataset.category;
-                        const showFeatured = category === 'all' || featuredCategory === category;
-                        featuredArticle.closest('section').style.display = showFeatured ? '' : 'none';
-                        if (showFeatured) visibleCount++;
-                    }
 
                     // Show/hide no results
                     if (noResults) {

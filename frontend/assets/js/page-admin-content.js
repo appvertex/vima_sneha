@@ -299,6 +299,39 @@
     }[category] || 'article';
   }
 
+  function normalizeCategoryValue(value) {
+    return String(value || '')
+      .trim()
+      .toLowerCase()
+      .replace(/[_\s]+/g, '-')
+      .replace(/-+/g, '-');
+  }
+
+  function newsArticleTimestamp(article) {
+    const raw = article?.published_at ?? article?.date ?? 0;
+    const numeric = Number(raw);
+    if (Number.isFinite(numeric) && numeric > 1000000000) return numeric;
+    const parsed = Date.parse(raw);
+    if (Number.isFinite(parsed)) return Math.floor(parsed / 1000);
+    return 0;
+  }
+
+  function buildNewsCategories(data, articles) {
+    const categories = [];
+    const seen = new Set();
+    const add = (value) => {
+      const normalized = normalizeCategoryValue(value);
+      if (!normalized || normalized === 'all' || seen.has(normalized)) return;
+      seen.add(normalized);
+      categories.push(normalized);
+    };
+
+    (Array.isArray(data?.categories) ? data.categories : []).forEach(add);
+    (Array.isArray(articles) ? articles : []).forEach((article) => add(article?.category));
+
+    return ['all', ...categories];
+  }
+
   function renderNews(data) {
     const hero = document.querySelector('.hero-content');
     if (hero) {
@@ -310,16 +343,18 @@
       if (p && data.desc) p.textContent = data.desc;
     }
     const filterWrap = document.getElementById('category-filter');
-    if (filterWrap && Array.isArray(data.categories) && data.categories.length) {
-      filterWrap.innerHTML = data.categories.map((category, index) => {
-        return `<button class="category-pill ${index === 0 ? 'active' : ''}" data-category="${esc(category)}">${category === 'all' ? esc(label(category)) : `<span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">${categoryIcon(category)}</span>${esc(label(category))}`}</button>`;
+    const articles = Array.isArray(data.articles) ? data.articles.slice() : [];
+    const categories = buildNewsCategories(data, articles);
+    if (filterWrap && categories.length) {
+      filterWrap.innerHTML = categories.map((category, index) => {
+        const icon = category === 'all' ? 'newspaper' : categoryIcon(category);
+        return `<button class="category-pill ${index === 0 ? 'active' : ''}" data-category="${esc(category)}">${category === 'all' ? esc(label(category)) : `<span class="material-symbols-outlined text-sm mr-1" style="font-size: 14px;">${icon}</span>${esc(label(category))}`}</button>`;
       }).join('');
     }
-    const articles = Array.isArray(data.articles) ? data.articles : [];
+    articles.sort((a, b) => newsArticleTimestamp(b) - newsArticleTimestamp(a));
     window.VSNewsArticles = articles;
-    const hasFeatured = articles.some(article => Boolean(article.featured));
     const grid = document.getElementById('news-grid');
-    if (grid) grid.innerHTML = articles.map((article, index) => articleCard(article, index, hasFeatured ? Boolean(article.featured) : index === 0)).join('');
+    if (grid) grid.innerHTML = articles.map((article, index) => articleCard(article, index)).join('');
     const noResults = document.getElementById('no-results');
     if (noResults) {
       noResults.classList.toggle('hidden', articles.length > 0);
@@ -328,18 +363,20 @@
   }
 
   function normalizeNewsArticle(article, index) {
+    const category = normalizeCategoryValue(article?.category || '');
     return {
       index,
       featured: Boolean(article?.featured),
-      category: article?.category || '',
+      category,
       image: article?.image || article?.image_url || '',
       title: article?.title || '',
       body: article?.body || '',
       excerpt: shortExcerpt(article?.excerpt || article?.body || ''),
       date: article?.date || formatDate(article?.published_at) || '',
       readTime: article?.readTime || '',
-      author: article?.author || '',
-      avatar: article?.avatar || ''
+      author: article?.author || article?.uploaded_by || article?.uploadedBy || 'Vima Sneha',
+      avatar: article?.avatar || '',
+      published_at: article?.published_at || ''
     };
   }
 
@@ -350,30 +387,24 @@
     return `${clean.slice(0, length).trimEnd()}…`;
   }
 
-  function articleCard(article, index = 0, isFeatured = false) {
-    const category = article.category || '';
-    const featured = Boolean(isFeatured);
+  function articleCard(article, index = 0) {
+    const category = normalizeCategoryValue(article.category || '');
+    const author = String(article.author || 'Vima Sneha').trim();
     const hasImage = Boolean(article.image && article.image !== 'data:image/gif;base64,R0lGODlhAQABAAAAACw=');
     const imgBlock = hasImage
       ? `<img src="${esc(article.image)}" alt="${esc(article.title)}" loading="lazy" />`
       : `<div class="news-card-img-placeholder">📰</div>`;
-    const excerptText = article.excerpt || shortExcerpt(article.body || '', featured ? 260 : 160);
-    return `<article class="news-card scroll-reveal revealed ${featured ? 'news-card--featured' : ''}" data-category="${esc(category)}" data-news-index="${esc(article.index ?? index)}" role="button" tabindex="0" aria-label="Read article: ${esc(article.title)}">
+    return `<article class="news-card scroll-reveal revealed" data-category="${esc(category)}" data-news-index="${esc(article.index ?? index)}" role="button" tabindex="0" aria-label="Read article: ${esc(article.title)}">
       <div class="news-card-img-wrap">
         ${imgBlock}
         <div class="news-card-img-overlay"></div>
-        ${category ? `<span class="news-card-category cat-${esc(category)}"><span class="material-symbols-outlined" style="font-size:12px;">${categoryIcon(category)}</span>${esc(label(category))}</span>` : ''}
       </div>
       <div class="news-body">
         <div class="news-meta">
           ${article.date ? `<span class="news-date"><span class="material-symbols-outlined">calendar_today</span>${esc(article.date)}</span>` : ''}
-          ${category ? `<span class="news-tag">${esc(label(category))}</span>` : ''}
+          ${author ? `<span class="news-tag"><span class="material-symbols-outlined" style="font-size:14px;">person</span>Uploaded by ${esc(author)}</span>` : ''}
         </div>
         <h3>${esc(article.title)}</h3>
-        ${excerptText ? `<p class="news-excerpt">${esc(excerptText)}</p>` : ''}
-        <div class="news-actions">
-          <span class="read-more-btn">Read Article <span class="material-symbols-outlined">arrow_forward</span></span>
-        </div>
       </div>
     </article>`;
   }
@@ -653,13 +684,15 @@
           if (seen.has(key)) return false;
           seen.add(key);
           return true;
-        });
+        }).sort((a, b) => newsArticleTimestamp(b) - newsArticleTimestamp(a));
+        const categories = buildNewsCategories(siteNews, articles);
 
         return merge(read(), {
           ...siteContent,
           news: {
             ...defaults.news,
             ...siteNews,
+            categories,
             articles: articles.map((article, index) => normalizeNewsArticle(article, index))
           }
         });
