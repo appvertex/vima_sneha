@@ -563,7 +563,7 @@ body{font-family:'Poppins',sans-serif;color:var(--dt);background:var(--bg);min-h
   <div class="main-content" id="main-content">
 
       <!-- ── NAVBAR & BRANDING ── -->
-      <div class="panel" id="panel-navbar">
+      <div class="panel active" id="panel-navbar">
         <div class="section-head"><h2>Navbar & Branding</h2><p>Edit logo text, tagline, navigation links, and CTA button.</p></div>
         <div class="edit-grid">
           <div class="edit-card">
@@ -1169,14 +1169,14 @@ async function initDashboard(){
   renderListEditor('coun-tags-editor', DATA.counTags, ()=>markUnsaved());
   renderListEditor('ins-tags-editor', DATA.insTags, ()=>markUnsaved());
   renderGalleryCards();
-  await Promise.all([loadNewsLibrary(), loadGalleryLibrary()]);
+  gotoPanel('navbar');
+  await Promise.allSettled([loadNewsLibrary(), loadGalleryLibrary()]);
   renderTestimonials();
   initColorSync();
   restorePhotoPreview('coun-photo-preview', 'coun-photo-filename-row', 'coun-photo-filename', DATA.counPhoto, DATA.counPhotoFilename);
   restorePhotoPreview('ins-photo-preview', 'ins-photo-filename-row', 'ins-photo-filename', DATA.insPhoto, DATA.insPhotoFilename);
   updateStatsCount();
   if (typeof vsBindDataIcons === 'function') vsBindDataIcons();
-  gotoPanel('navbar');
 }
 
 /* ═══════════════════════════════════════════════
@@ -1457,14 +1457,24 @@ function formatDateLabel(value){
 }
 
 async function loadNewsLibrary(){
-  const response = await VSBackend.request('/api/admin/news');
-  NEWS_LIBRARY = Array.isArray(response?.articles) ? response.articles : [];
+  try{
+    const response = await VSBackend.request('/api/admin/news');
+    NEWS_LIBRARY = Array.isArray(response?.articles) ? response.articles : [];
+  }catch(err){
+    console.warn('Failed to load news library', err);
+    NEWS_LIBRARY = [];
+  }
   renderNewsLibrary();
 }
 
 async function loadGalleryLibrary(){
-  const response = await VSBackend.request('/api/admin/gallery');
-  GALLERY_LIBRARY = Array.isArray(response?.items) ? response.items : [];
+  try{
+    const response = await VSBackend.request('/api/admin/gallery');
+    GALLERY_LIBRARY = Array.isArray(response?.items) ? response.items : [];
+  }catch(err){
+    console.warn('Failed to load gallery library', err);
+    GALLERY_LIBRARY = [];
+  }
   renderGalleryLibrary();
 }
 

@@ -353,29 +353,40 @@
   function articleCard(article, index = 0, isFeatured = false) {
     const category = article.category || '';
     const featured = Boolean(isFeatured);
-    return `<article class="news-card scroll-reveal revealed ${featured ? 'news-card--featured' : ''}" data-category="${esc(category)}" data-news-index="${esc(article.index ?? index)}" role="button" tabindex="0">
+    const hasImage = Boolean(article.image && article.image !== 'data:image/gif;base64,R0lGODlhAQABAAAAACw=');
+    const imgBlock = hasImage
+      ? `<img src="${esc(article.image)}" alt="${esc(article.title)}" loading="lazy" />`
+      : `<div class="news-card-img-placeholder">📰</div>`;
+    const excerptText = article.excerpt || shortExcerpt(article.body || '', featured ? 260 : 160);
+    return `<article class="news-card scroll-reveal revealed ${featured ? 'news-card--featured' : ''}" data-category="${esc(category)}" data-news-index="${esc(article.index ?? index)}" role="button" tabindex="0" aria-label="Read article: ${esc(article.title)}">
       <div class="news-card-img-wrap">
-        <img src="${esc(article.image || 'data:image/gif;base64,R0lGODlhAQABAAAAACw=')}" alt="${esc(article.title)}" />
+        ${imgBlock}
         <div class="news-card-img-overlay"></div>
-        <span class="news-card-category cat-${esc(category)}"><span class="material-symbols-outlined" style="font-size: 12px;">${categoryIcon(category)}</span>${esc(label(category))}</span>
+        ${category ? `<span class="news-card-category cat-${esc(category)}"><span class="material-symbols-outlined" style="font-size:12px;">${categoryIcon(category)}</span>${esc(label(category))}</span>` : ''}
       </div>
       <div class="news-body">
         <div class="news-meta">
-          <span class="news-date"><span class="material-symbols-outlined" style="font-size: 13px;">calendar_today</span>${esc(article.date || '')}</span>
-          <span class="news-tag">${esc(label(category) || 'News')}</span>
+          ${article.date ? `<span class="news-date"><span class="material-symbols-outlined">calendar_today</span>${esc(article.date)}</span>` : ''}
+          ${category ? `<span class="news-tag">${esc(label(category))}</span>` : ''}
         </div>
         <h3>${esc(article.title)}</h3>
-        <p class="news-excerpt">${esc(article.excerpt || shortExcerpt(article.body || '', featured ? 220 : 140))}</p>
+        ${excerptText ? `<p class="news-excerpt">${esc(excerptText)}</p>` : ''}
         <div class="news-actions">
-          <span class="read-more-btn">Read More <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span></span>
+          <span class="read-more-btn">Read Article <span class="material-symbols-outlined">arrow_forward</span></span>
         </div>
       </div>
     </article>`;
   }
 
   function articleBodyHtml(article) {
-    const text = String(article?.body || article?.excerpt || '').trim();
-    if (!text) return '<p class="news-modal-empty">No article body was provided in the admin panel.</p>';
+    const text = String(article?.body || '').trim();
+    if (!text) {
+      // Fallback to excerpt if no body
+      const excerptText = String(article?.excerpt || '').trim();
+      if (!excerptText) return '<p class="news-modal-empty">Full article content has not been added yet.</p>';
+      return excerptText.split(/\n{2,}/).map((p) => `<p>${esc(p).replace(/\n/g, '<br>')}</p>`).join('');
+    }
+    // Split on double newlines for paragraphs, single newlines become <br>
     return text
       .split(/\n{2,}/)
       .map((paragraph) => `<p>${esc(paragraph).replace(/\n/g, '<br>')}</p>`)
@@ -388,28 +399,84 @@
     if (!article) return;
     const modal = document.getElementById('news-article-modal');
     if (!modal) return;
-    const title = modal.querySelector('[data-news-modal-title]');
-    const date = modal.querySelector('[data-news-modal-date]');
-    const category = modal.querySelector('[data-news-modal-category]');
-    const image = modal.querySelector('[data-news-modal-image]');
-    const body = modal.querySelector('[data-news-modal-body]');
-    const author = modal.querySelector('[data-news-modal-author]');
-    const readTime = modal.querySelector('[data-news-modal-readtime]');
-    const summary = modal.querySelector('[data-news-modal-summary]');
-    if (title) title.textContent = article.title || '';
-    if (date) date.textContent = article.date || '';
-    if (category) category.textContent = label(article.category || 'news');
-    if (image) {
-      image.src = article.image || 'data:image/gif;base64,R0lGODlhAQABAAAAACw=';
-      image.alt = article.title || '';
+
+    const titleEl    = modal.querySelector('[data-news-modal-title]');
+    const dateEl     = modal.querySelector('[data-news-modal-date]');
+    const categoryEl = modal.querySelector('[data-news-modal-category]');
+    const imageEl    = modal.querySelector('[data-news-modal-image]');
+    const bodyEl     = modal.querySelector('[data-news-modal-body]');
+    const authorEl   = modal.querySelector('[data-news-modal-author]');
+    const readTimeEl = modal.querySelector('[data-news-modal-readtime]');
+    const summaryEl  = modal.querySelector('[data-news-modal-summary]');
+    const heroEl     = modal.querySelector('.news-modal-hero') || document.getElementById('news-modal-hero');
+
+    const categoryLabel = label(article.category || 'news');
+    const hasImage = Boolean(article.image && article.image !== 'data:image/gif;base64,R0lGODlhAQABAAAAACw=');
+
+    if (titleEl) titleEl.textContent = article.title || '';
+    if (categoryEl) categoryEl.textContent = categoryLabel;
+
+    // Date with icon
+    if (dateEl) {
+      if (article.date) {
+        dateEl.innerHTML = `<span class="material-symbols-outlined">calendar_today</span>${esc(article.date)}`;
+      } else {
+        dateEl.innerHTML = '';
+      }
     }
-    if (body) body.innerHTML = articleBodyHtml(article);
-    if (author) author.textContent = article.author || '';
-    if (readTime) readTime.textContent = article.readTime || '';
-    if (summary) summary.textContent = article.excerpt || shortExcerpt(article.body || '');
+
+    // Author with icon
+    if (authorEl) {
+      if (article.author) {
+        authorEl.innerHTML = `<span class="material-symbols-outlined">person</span>${esc(article.author)}`;
+      } else {
+        authorEl.innerHTML = '';
+      }
+    }
+
+    // Read time with icon
+    if (readTimeEl) {
+      if (article.readTime) {
+        readTimeEl.innerHTML = `<span class="material-symbols-outlined">schedule</span>${esc(article.readTime)}`;
+      } else {
+        readTimeEl.innerHTML = '';
+      }
+    }
+
+    // Hero image - show or hide
+    if (imageEl) {
+      imageEl.src = article.image || 'data:image/gif;base64,R0lGODlhAQABAAAAACw=';
+      imageEl.alt = article.title || '';
+    }
+    if (heroEl) {
+      heroEl.classList.toggle('no-image', !hasImage);
+    }
+
+    // Full article body
+    if (bodyEl) bodyEl.innerHTML = articleBodyHtml(article);
+
+    // Summary / excerpt - hide the block if empty to avoid showing the same text twice
+    const excerptText = String(article.excerpt || '').trim();
+    if (summaryEl) {
+      if (excerptText) {
+        summaryEl.textContent = excerptText;
+        summaryEl.style.display = '';
+      } else {
+        summaryEl.style.display = 'none';
+      }
+    }
+
+    // Hide divider if no summary
+    const dividerEl = modal.querySelector('.news-modal-divider');
+    if (dividerEl) dividerEl.style.display = excerptText ? '' : 'none';
+
     modal.classList.remove('hidden');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('overflow-hidden');
+
+    // Scroll panel back to top
+    const panel = modal.querySelector('.news-modal-panel');
+    if (panel) panel.scrollTop = 0;
   }
 
   function closeNewsArticleModal() {
