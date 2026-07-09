@@ -18,14 +18,17 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Install backend dependencies
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
         working-directory: backend
         run: npm ci
 
       - name: Build worker admin UI
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
         working-directory: backend
         run: npm run build:admin-ui
 
       - name: Deploy backend Worker
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
         uses: cloudflare/wrangler-action@v3
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -33,6 +36,12 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: backend
           command: deploy
+          workingDirectory: backend
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Skip build/deploy (missing credentials)
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN == '' || secrets.CLOUDFLARE_ACCOUNT_ID == '' }}
+        run: |
+          echo "Cloudflare credentials not set; skipping build and deploy."
+          echo "To enable deployment, add secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID."
