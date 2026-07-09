@@ -510,12 +510,13 @@
         { key: 'category', label: 'Category' },
         { key: 'image', label: 'Image Path or URL' },
         { key: 'title', label: 'Title' },
-        { key: 'excerpt', label: 'Excerpt', type: 'textarea', rows: 3 },
+        { key: 'excerpt', label: 'Short Excerpt', type: 'textarea', rows: 3 },
+        { key: 'body', label: 'Full Article', type: 'textarea', rows: 10 },
         { key: 'date', label: 'Date' },
         { key: 'readTime', label: 'Read Time' },
         { key: 'author', label: 'Author' },
         { key: 'avatar', label: 'Avatar' }
-      ], { featured: false, category: '', image: '', title: '', excerpt: '', date: '', readTime: '', author: '', avatar: '' })}
+      ], { featured: false, category: '', image: '', title: '', excerpt: '', body: '', date: '', readTime: '', author: '', avatar: '' })}
     `;
   }
 

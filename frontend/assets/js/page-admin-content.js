@@ -379,8 +379,8 @@
       category,
       image: article?.image || article?.image_url || '',
       title: article?.title || '',
-      body: article?.body || '',
-      excerpt: shortExcerpt(article?.excerpt || article?.body || ''),
+      body: article?.body || article?.content || article?.full_article || '',
+      excerpt: shortExcerpt(article?.excerpt || article?.summary || article?.body || article?.content || ''),
       date: article?.date || formatDate(article?.published_at) || '',
       readTime: article?.readTime || '',
       author: article?.author || article?.uploaded_by || article?.uploadedBy || 'Vima Sneha',
@@ -507,20 +507,13 @@
     // Full article body
     if (bodyEl) bodyEl.innerHTML = articleBodyHtml(article);
 
-    // Summary / excerpt - hide the block if empty to avoid showing the same text twice
-    const excerptText = String(article.excerpt || '').trim();
+    // Keep the article reading flow focused on the full body.
     if (summaryEl) {
-      if (excerptText) {
-        summaryEl.textContent = excerptText;
-        summaryEl.style.display = '';
-      } else {
-        summaryEl.style.display = 'none';
-      }
+      summaryEl.style.display = 'none';
     }
 
-    // Hide divider if no summary
     const dividerEl = modal.querySelector('.news-modal-divider');
-    if (dividerEl) dividerEl.style.display = excerptText ? '' : 'none';
+    if (dividerEl) dividerEl.style.display = 'none';
 
     modal.classList.remove('hidden');
     modal.setAttribute('aria-hidden', 'false');

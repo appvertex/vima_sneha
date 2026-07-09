@@ -40,7 +40,7 @@ for (const [key, filename] of Object.entries(files)) {
         `<style>\n${editorCss}\n</style>`
       )
       .replace(
-        '<script src="../assets/js/admin-section-editor.js?v=20260706"></script>',
+        /<script src="\.\.\/assets\/js\/admin-section-editor\.js[^"]*"><\/script>/,
         `<script>\n${editorJs}\n</script>`
       );
   }
