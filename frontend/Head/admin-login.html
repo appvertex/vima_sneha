@@ -353,14 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter') window.login();
   });
 
-  // If already logged in, redirect away
-  (async () => {
-    try {
-      const response = await fetch(`${API_BASE}/api/admin/me`, { credentials: 'include' });
-      if (!response.ok) return;
-      window.location.href = redirectTarget;
-    } catch (error) {}
-  })();
 });
 </script>
 </body>
