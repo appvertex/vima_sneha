@@ -600,9 +600,12 @@
         .news-modal-panel {
             position: relative;
             z-index: 1;
-            width: min(920px, 100%);
-            max-height: min(88vh, 900px);
-            overflow: auto;
+            width: min(1020px, 100%);
+            height: min(92vh, 960px);
+            max-height: 92vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
             border-radius: 2rem;
             background: rgba(255, 255, 255, 0.96);
             border: 1px solid rgba(180, 127, 166, 0.18);
@@ -612,7 +615,7 @@
         /* ── ARTICLE MODAL HERO ── */
         .news-modal-hero {
             position: relative;
-            height: 280px;
+            height: 240px;
             background: linear-gradient(135deg, #4E2E4A, #7A4F72 45%, #B47FA6);
             overflow: hidden;
             border-radius: 2rem 2rem 0 0;
@@ -679,6 +682,9 @@
 
         .news-modal-content {
             padding: 1.75rem 2rem 2.5rem;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            min-height: 0;
         }
 
         .news-modal-kicker {
@@ -772,7 +778,7 @@
 
         /* No-image hero styling */
         .news-modal-hero.no-image {
-            height: 160px;
+            height: 150px;
         }
 
         .news-card {
