@@ -259,12 +259,7 @@ function joinSession(){
   document.getElementById('jitsi-frame').src = src;
 
   secondsElapsed = 0;
-  timerInterval = setInterval(() => {
-    secondsElapsed++;
-    const m = String(Math.floor(secondsElapsed/60)).padStart(2,'0');
-    const s = String(secondsElapsed%60).padStart(2,'0');
-    document.getElementById('call-timer').textContent = m + ':' + s;
-  }, 1000);
+  document.getElementById('call-timer').textContent = '00:00';
 }
 
 function leaveCall(){
