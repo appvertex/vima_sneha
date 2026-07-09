@@ -372,6 +372,7 @@
 
   function normalizeNewsArticle(article, index) {
     const category = normalizeCategoryValue(article?.category || '');
+    const bodyText = article?.body || article?.content || article?.full_article || article?.excerpt || article?.summary || '';
     return {
       index,
       featured: Boolean(article?.featured),
@@ -379,7 +380,7 @@
       category,
       image: article?.image || article?.image_url || '',
       title: article?.title || '',
-      body: article?.body || article?.content || article?.full_article || '',
+      body: bodyText,
       excerpt: shortExcerpt(article?.excerpt || article?.summary || article?.body || article?.content || ''),
       date: article?.date || formatDate(article?.published_at) || '',
       readTime: article?.readTime || '',

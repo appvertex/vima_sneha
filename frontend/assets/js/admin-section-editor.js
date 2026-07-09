@@ -657,6 +657,14 @@
     if (MODE === 'insurancePages') {
       STATE = merge(clone(DEFAULT_INSURANCE_PAGES), content);
       ensureStateShape();
+    } else if (MODE === 'news') {
+      STATE = merge(clone(DEFAULTS[MODE]), content);
+      STATE.articles = Array.isArray(STATE.articles)
+        ? STATE.articles.map((article) => ({
+            ...article,
+            body: article?.body || article?.content || article?.full_article || article?.excerpt || article?.summary || ''
+          }))
+        : [];
     } else {
       STATE = merge(clone(DEFAULTS[MODE]), content);
     }
