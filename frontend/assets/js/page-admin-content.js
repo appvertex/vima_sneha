@@ -332,6 +332,14 @@
     return ['all', ...categories];
   }
 
+  function articleKey(article, index = 0) {
+    const title = normalizeCategoryValue(article?.title || 'article');
+    const date = normalizeCategoryValue(article?.date || article?.published_at || '');
+    const category = normalizeCategoryValue(article?.category || '');
+    const image = normalizeCategoryValue((article?.image || article?.image_url || '').split('/').pop() || '');
+    return [title, date, category, image, index].filter(Boolean).join('-') || String(index);
+  }
+
   function renderNews(data) {
     const hero = document.querySelector('.hero-content');
     if (hero) {
@@ -367,6 +375,7 @@
     return {
       index,
       featured: Boolean(article?.featured),
+      key: article?.key || article?.newsKey || article?.news_key || articleKey(article, index),
       category,
       image: article?.image || article?.image_url || '',
       title: article?.title || '',
@@ -390,11 +399,12 @@
   function articleCard(article, index = 0) {
     const category = normalizeCategoryValue(article.category || '');
     const author = String(article.author || 'Vima Sneha').trim();
+    const key = String(article.key || article.newsKey || article.news_key || articleKey(article, index));
     const hasImage = Boolean(article.image && article.image !== 'data:image/gif;base64,R0lGODlhAQABAAAAACw=');
     const imgBlock = hasImage
       ? `<img src="${esc(article.image)}" alt="${esc(article.title)}" loading="lazy" />`
       : `<div class="news-card-img-placeholder">📰</div>`;
-    return `<article class="news-card scroll-reveal revealed" data-category="${esc(category)}" data-news-index="${esc(article.index ?? index)}" role="button" tabindex="0" aria-label="Read article: ${esc(article.title)}">
+    return `<article class="news-card scroll-reveal revealed" data-category="${esc(category)}" data-news-index="${esc(article.index ?? index)}" data-news-key="${esc(key)}" role="button" tabindex="0" aria-label="Read article: ${esc(article.title)}" onclick="openNewsArticleByKey('${esc(key)}')">
       <div class="news-card-img-wrap">
         ${imgBlock}
         <div class="news-card-img-overlay"></div>
@@ -426,8 +436,19 @@
 
   function openNewsArticleByIndex(index) {
     const articles = Array.isArray(window.VSNewsArticles) ? window.VSNewsArticles : [];
-    const article = articles.find((item) => String(item.index) === String(index));
+    const article = articles.find((item, articleIndex) => String(item.index) === String(index) || String(item.key || item.newsKey || item.news_key || articleKey(item, articleIndex)) === String(index));
     if (!article) return;
+    openNewsArticle(article);
+  }
+
+  function openNewsArticleByKey(key) {
+    const articles = Array.isArray(window.VSNewsArticles) ? window.VSNewsArticles : [];
+    const article = articles.find((item, articleIndex) => String(item.key || item.newsKey || item.news_key || articleKey(item, articleIndex)) === String(key));
+    if (!article) return;
+    openNewsArticle(article);
+  }
+
+  function openNewsArticle(article) {
     const modal = document.getElementById('news-article-modal');
     if (!modal) return;
 
@@ -524,6 +545,11 @@
     document.addEventListener('click', (event) => {
       const trigger = event.target.closest('[data-news-index]');
       if (!trigger) return;
+      const key = trigger.dataset.newsKey;
+      if (key) {
+        openNewsArticleByKey(key);
+        return;
+      }
       const index = trigger.dataset.newsIndex;
       if (typeof index === 'undefined') return;
       openNewsArticleByIndex(index);
@@ -534,7 +560,9 @@
       if (!trigger) return;
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        openNewsArticleByIndex(trigger.dataset.newsIndex);
+        const key = trigger.dataset.newsKey;
+        if (key) openNewsArticleByKey(key);
+        else openNewsArticleByIndex(trigger.dataset.newsIndex);
       }
     });
     const modal = document.getElementById('news-article-modal');
@@ -548,6 +576,7 @@
   }
 
   window.openNewsArticleByIndex = openNewsArticleByIndex;
+  window.openNewsArticleByKey = openNewsArticleByKey;
   window.closeNewsArticleModal = closeNewsArticleModal;
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', bindNewsArticleModal, { once: true });
@@ -679,7 +708,8 @@
             article?.id || '',
             article?.title || '',
             article?.date || article?.published_at || '',
-            article?.image || article?.image_url || ''
+            article?.image || article?.image_url || '',
+            article?.key || article?.newsKey || article?.news_key || ''
           ].join('|');
           if (seen.has(key)) return false;
           seen.add(key);
