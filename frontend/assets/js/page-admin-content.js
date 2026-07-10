@@ -516,6 +516,17 @@
     const dividerEl = modal.querySelector('.news-modal-divider');
     if (dividerEl) dividerEl.style.display = 'none';
 
+    // Hide the shared navbar while reading the article.
+    document.body.classList.add('news-article-open');
+    const mobileMenu = document.getElementById('vs-mobile-menu-overlay');
+    const mobileMenuOpenBtn = document.getElementById('vs-mobile-menu-open');
+    if (mobileMenu) {
+      mobileMenu.classList.remove('is-open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+    }
+    document.body.classList.remove('vs-menu-open');
+    if (mobileMenuOpenBtn) mobileMenuOpenBtn.setAttribute('aria-expanded', 'false');
+
     modal.classList.remove('hidden');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('overflow-hidden');
@@ -531,6 +542,7 @@
     modal.classList.add('hidden');
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('overflow-hidden');
+    document.body.classList.remove('news-article-open');
   }
 
   function bindNewsArticleModal() {
